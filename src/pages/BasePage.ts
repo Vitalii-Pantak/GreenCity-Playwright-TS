@@ -1,13 +1,14 @@
-import {Page, Locator} from "@playwright/test";
-import {HeaderComponent} from "../components/HeaderComponent";
-import {FooterComponent} from "../components/FooterComponents";
+import { Page, Locator, expect } from "@playwright/test";
+import { HeaderComponent } from "../components/HeaderComponent";
+import { FooterComponent } from "../components/FooterComponents";
+import { Base } from "./Base";
 
-export abstract class BasePage {    
+export abstract class BasePage extends Base {    
 
-    public page: Page;
+
 
     constructor(page: Page) {
-        this.page = page;
+        super(page);
     }
 
     get Header() {
