@@ -3,6 +3,7 @@ import { BaseComponent } from "./BaseComponent";
 import { SignInModal } from "./Auth/SignInModal";
 import { SignUpModal } from "./Auth/SignUpModal";
 import { Menu } from "../enums/enums";
+import { EcoNewsPage } from "../pages/EcoNewsPage";
 
 export class HeaderComponent extends BaseComponent {
     private logo: Locator;
@@ -33,6 +34,7 @@ export class HeaderComponent extends BaseComponent {
 
     public async openEcoNews() {
         await this.clickMenuLink(Menu.ECO_NEWS);
+        return new EcoNewsPage(this.page);
     }
 
     public async openEvents() {

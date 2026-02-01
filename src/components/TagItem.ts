@@ -9,15 +9,22 @@ export class TagItem extends BaseComponent {
     constructor(root: Locator) {
         super(root);
         this.name = root.locator("span");
-        this.removeTag = root.locator("a.global-tag");
+        this.removeTag = root.locator("div");
     }
 
-    public async getTagName() {
-        await this.name.innerText();
+    public async getTagName(): Promise<string> {
+        return await this.name.innerText();
     }
 
-    public async isSelected() {
-        const tag = await this.removeTag.getAttribute("class")
-        // return tag 
+    public async isSelected(): Promise<boolean> {
+        const tag = await this.removeTag.getAttribute("class");
+        if (tag === "global-tag-close-icon") {
+            return true;
+        }
+        return false;
+    }
+
+    public async selectTag() {
+        await this.root.click();
     }
 }

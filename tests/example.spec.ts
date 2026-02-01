@@ -3,6 +3,7 @@ import {EcoNewsPage} from "../src/pages/EcoNewsPage";
 import {HomePage} from "../src/pages/HomePage";
 import { Menu } from "../src/enums/enums";
 import { link } from "fs";
+import { CreateNewsModalComponent } from "../src/components/CreateNewsModalComponent";
 
 test("has title", async ({ page }) => {
     await page.goto("https://www.greencity.cx.ua/#/greenCity");
@@ -78,7 +79,6 @@ test.only("Sign In ", async ({ page }) => {
     await auth.enterPassword("Gsdfuhoiewf123_");
     // await auth.clickSignUpLink();
     await auth.clickShowHidePassword();
-
     // await auth.submit();
     await page.pause();
 
@@ -102,4 +102,80 @@ test("Sign UP ", async ({ page }) => {
     // await auth.submit();
     await page.pause();
 
+});
+
+
+
+test("Sign UP asd ", async ({ page }) => {
+    await page.setViewportSize({width: 1920, height: 1080})
+    await page.goto("https://www.greencity.cx.ua/#/greenCity");
+    const homePage = new HomePage(page);
+    const news = await homePage.Header.openEcoNews();
+
+    // await news.waitForPage();
+
+    // console.log(await news.getAllTags())
+    // console.log(await news.getAllTags2())
+    // // console.log(await news.getAllTags3())
+
+    // const tags = await news.getAllTags3();
+    // for (const tag of tags) {
+    //     console.log(await tag.getTagName());
+    // }
+
+    console.log(await news.getAllTagsByName());
+    // console.log(await news.getAllTagsByName2());
+
+    await news.selectTags(['News'])
+    console.log(await news.isTagSelected('Ads'));
+    console.log(await news.isTagSelected('News'));
+    console.log(await news.isTagSelected('Events'));
+    console.log(await news.isTagSelected('Education'));
+    await news.switchToListView();
+    await page.pause();
+});
+
+
+
+test("create nes", async ({ page }) => {
+    await page.setViewportSize({width: 1920, height: 1080})
+    await page.goto("https://www.greencity.cx.ua/#/greenCity");
+    const homePage = new HomePage(page);
+    const news = await homePage.Header.openEcoNews();
+    const auth = await news.Header.clickSignIN();
+    await auth.enterEmail("pantakvv@gmail.com");
+    await auth.enterPassword("Gsdfuhoiewf123_");
+    await auth.submit();
+    await homePage.Header.openEcoNews();
+    const createNews = await news.createNews();
+    // await createNews.enterTitle("KEPASA AMIGO!");
+        // await page.pause();
+    // await createNews.enterContent("asdjhasgdijagdjhasgdasdasdasdas")
+    await createNews.enterContent("A")
+
+    console.log(await createNews.isPublishButtonEnabled())
+    // await page.pause();
+    const modal = await createNews.clickCancel();
+    const title = await modal.getWarningTitle();
+    const subtitle = await modal.getWarningSubTitle();
+    console.log(title, subtitle)
+    await modal.clickContinueEditing();
+    await createNews.selectTags(['News', 'Ads', 'Education'])
+    // await createNews.enterSource("www//woof.com");
+    // await page.pause();
+    const preview = await createNews.clickPreview();
+    await page.waitForTimeout(2000);
+    console.log(await preview.getTags());
+
+    console.log(await preview.getNewsText());
+    console.log(await preview.getNewsTitle());
+    console.log(await preview.getPageTitle());
+    console.log(await preview.getPublishDate());
+    console.log(await preview.getPublisherName());
+    console.log(await preview.getSourceLink());
+    // await page.waitForTimeout(2000);
+
+
+    
+    // await page.pause();
 });
