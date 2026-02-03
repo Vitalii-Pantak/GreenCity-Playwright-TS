@@ -4,6 +4,8 @@ import { SignInModal } from "./Auth/SignInModal";
 import { SignUpModal } from "./Auth/SignUpModal";
 import { Menu } from "../enums/enums";
 import { EcoNewsPage } from "../pages/EcoNewsPage";
+import { MySpacePage } from "../MySpace/MySpacePage";
+import { AboutUsPage } from "../pages/AboutUsPage";
 
 export class HeaderComponent extends BaseComponent {
     private logo: Locator;
@@ -14,7 +16,7 @@ export class HeaderComponent extends BaseComponent {
     private signUP: Locator;
     private authModal: Locator;
     private page: Page;
-    // private langDropDown: Locator;
+    private langDropDown: Locator;
 
     constructor(root: Locator) {
         super(root);
@@ -26,38 +28,41 @@ export class HeaderComponent extends BaseComponent {
         this.signIN = root.locator("a.header_sign-in-link");
         this.signUP = root.locator("div.header_sign-up-btn");
         this.authModal = root.locator("app-auth-modal");
+        this.langDropDown = root.getByLabel("language switcher");
     }
 
-    private async clickMenuLink(linkName: string): Promise<void> {
+    async clickMenuLink(linkName: string): Promise<void> {
         await this.root.getByRole("link", {name: linkName}).click();
     }
 
-    public async openEcoNews() {
+    async openEcoNews() {
         await this.clickMenuLink(Menu.ECO_NEWS);
         return new EcoNewsPage(this.page);
     }
 
-    public async openEvents() {
+    async openEvents() {
         await this.clickMenuLink(Menu.EVENTS);
     }
 
-    public async openPlaces() {
+    async openPlaces() {
         await this.clickMenuLink(Menu.PLACES);
     }
 
-    public async openAboutUs() {
+    async openAboutUs() {
         await this.clickMenuLink(Menu.ABOUT_US);
+        return new AboutUsPage(this.page);
     }
 
-    public async openMySpace() {
+    async openMySpace() {
         await this.clickMenuLink(Menu.MY_SPACE);
+        return new MySpacePage(this.page);
     }
 
-    public async openUBSCourier() {
+    async openUBSCourier() {
         await this.clickMenuLink(Menu.UBS_COURIER);
     }
 
-    public async openHomePage() {
+    async openHomePage() {
         await this.logo.click();
     }
 

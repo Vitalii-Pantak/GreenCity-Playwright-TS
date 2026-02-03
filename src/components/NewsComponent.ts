@@ -1,4 +1,4 @@
-import { Page, Locator } from "@playwright/test";
+import { Locator } from "@playwright/test";
 import { BaseComponent } from "./BaseComponent";
 
 
@@ -16,35 +16,35 @@ export class NewsComponent extends BaseComponent {
         this.userData = root.locator(".user-data-added-news span");
     }
 
-    public async getTitle(): Promise<string> {
+    async getTitle(): Promise<string> {
         return await this.title.innerText();
     }
 
-    public async getDescription(): Promise<string> {
+    async getDescription(): Promise<string> {
         return await this.description.innerText();
     }
 
-    public async getTags(): Promise<string> {
+    async getTags(): Promise<string> {
         return await this.tags.innerText();
     }
 
-    public async getPublishDate(): Promise<string> {
+    async getPublishDate(): Promise<string> {
         return await this.userData.first().innerText();
     }
 
-    public async getPublisherName(): Promise<string> {
+    async getPublisherName(): Promise<string> {
         return await this.userData.nth(1).innerText();
     }
 
-    public async getCommentsCount(): Promise<number> {
+    async getCommentsCount(): Promise<number> {
         return parseInt(await this.userData.nth(2).innerText());
     }
 
-    public async getLikesCount(): Promise<number> {
+    async getLikesCount(): Promise<number> {
         return parseInt(await this.userData.nth(3).innerText());
     }
 
-    public openNews() {
-        return this.root.click();
+    async openNews() {
+        return await this.root.click();
     }
 }

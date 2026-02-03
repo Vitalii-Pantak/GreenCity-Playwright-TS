@@ -33,31 +33,31 @@ export class EcoNewsPage extends BasePage {
 
     private newsItems = this.page.locator(".gallery-view-li-active");
 
-    public async getTitle(): Promise<string> {
+    async getTitle(): Promise<string> {
         return (await this.mainTitle.innerText()).trim();
     }
 
-    public async clickSearchIcon(): Promise<void> {
+    async clickSearchIcon(): Promise<void> {
         await this.searchIcon.click();
     }
 
-    public async clickBookmarkIcon(): Promise<void> {
+    async clickBookmarkIcon(): Promise<void> {
         await this.bookmark.click();
     }
 
-    public async clickCalendarIcon(): Promise<void> {
+    async clickCalendarIcon(): Promise<void> {
         await this.calendar.click();
     }
 
-    public async switchToListView(): Promise<void> {
+    async switchToListView(): Promise<void> {
         await this.listViewBtn.click();
     }
 
-    public async swithToTableView(): Promise<void> {
+    async swithToTableView(): Promise<void> {
         await this.tableViewBtn.click();
     }
 
-    public async getSearchItemsCount(): Promise<number> {
+    async getSearchItemsCount(): Promise<number> {
         await this.waitForPage();
         const resultString = await this.searchItemsCounter.innerText();
         return parseInt(resultString);
@@ -67,11 +67,11 @@ export class EcoNewsPage extends BasePage {
         return new NewsComponent(this.newsItems.nth(number - 1));
     }
 
-    private async waitForPage(): Promise<void> {
+    async waitForPage(): Promise<void> {
         await this.waitForVisible(this.gridLocator);
     } 
 
-    private async getAllTags(): Promise<TagItem[]> {
+    async getAllTags(): Promise<TagItem[]> {
         await this.waitForPage();
         const list: TagItem[] = [];
         const items = await this.tagsList.all();

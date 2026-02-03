@@ -51,13 +51,15 @@ test("MAIN PAGE asdasd", async ({ page }) => {
 
 
 
-test.only("News PAGE ", async ({ page }) => {
+test("News PAGE ", async ({ page }) => {
     await page.goto("https://www.greencity.cx.ua/#/greenCity/news");
+    const homePage = new HomePage(page)
     const newsPage = new EcoNewsPage(page);
 
     const num = await newsPage.getSearchItemsCount();
     console.log(num);
-    const signin = await newsPage.Header.clickSignUP();
+    const signin = await homePage.Header.clickSignUP();
+    
     
     // console.log(await signin.getTitle());
 
@@ -69,7 +71,7 @@ test.only("News PAGE ", async ({ page }) => {
 
 });
 
-test.only("Sign In ", async ({ page }) => {
+test("Sign In ", async ({ page }) => {
     await page.setViewportSize({width: 1920, height: 1080})
     await page.goto("https://www.greencity.cx.ua/#/greenCity");
     const homePage = new HomePage(page);
@@ -142,7 +144,7 @@ test("create nes", async ({ page }) => {
     await page.goto("https://www.greencity.cx.ua/#/greenCity");
     const homePage = new HomePage(page);
     const news = await homePage.Header.openEcoNews();
-    const auth = await news.Header.clickSignIN();
+    const auth = await homePage.Header.clickSignIN();
     await auth.enterEmail("pantakvv@gmail.com");
     await auth.enterPassword("Gsdfuhoiewf123_");
     await auth.submit();

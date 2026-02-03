@@ -1,4 +1,4 @@
-import { Page, Locator } from "@playwright/test";
+import { Locator } from "@playwright/test";
 import { BaseComponent } from "./BaseComponent";
 import { Menu } from "../enums/enums";
 
@@ -26,55 +26,55 @@ export class FooterComponent extends BaseComponent {
         await this.root.getByRole("link", {name: linkName}).click();
     } 
 
-    public async openEcoNews() {
+    async openEcoNews() {
         await this.clickFooterLink(Menu.ECO_NEWS);
     }
 
-    public async openEvents() {
+    async openEvents() {
         await this.clickFooterLink(Menu.EVENTS);
     }
 
-    public async openPlaces() {
+    async openPlaces() {
         await this.clickFooterLink(Menu.PLACES);
     }
 
-    public async openAboutUs() {
+    async openAboutUs() {
         await this.clickFooterLink(Menu.ABOUT_US);
     }
 
-    public async openMySpace() {
+    async openMySpace() {
         await this.clickFooterLink(Menu.MY_SPACE);
     }
 
-    public async openUBSCourier() {
+    async openUBSCourier() {
         await this.clickFooterLink(Menu.UBS_COURIER);
     }
 
-    public async openHomePage() {
+    async openHomePage() {
         await this.logo.click();
     }
 
-    public async followTwitter() {
+    async followTwitter() {
         await this.twitter.click();
     }
 
-    public async followLinkedin() {
+    async followLinkedin() {
         await this.linkedin.click();
     }
 
-    public async followFacebook() {
+    async followFacebook() {
         await this.facebook.click();
     }
 
-    public async followInstagram() {
+    async followInstagram() {
         await this.instagram.click();
     }
 
-    public async followYouTube() {
+    async followYouTube() {
         await this.youtube.click();
     }
 
-    public async getCopyrightText(): Promise<string> {
+    async getCopyrightText(): Promise<string> {
         return (await this.copyright.innerText()).trim()
     }
 }

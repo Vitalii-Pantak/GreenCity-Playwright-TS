@@ -1,8 +1,7 @@
 import { Page, Locator } from "@playwright/test";
-import { Base } from "../../pages/Base";
+import { BasePage } from "../../pages/BasePage";
 
-
-export abstract class AuthModalBasePage extends Base {
+export abstract class AuthModalBasePage extends BasePage {
     protected title: Locator;
     protected subTitle: Locator;
     protected closeBtn: Locator;

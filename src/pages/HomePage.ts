@@ -2,6 +2,8 @@ import { Page, Locator } from "@playwright/test";
 import { BasePage } from "./BasePage";
 import { StatsComponent } from "../components/HomePage/StatsComponent";
 import { NewsSubscribeComponent } from "../components/HomePage/NewsSubscribeComponent";
+import { HeaderComponent } from "../components/HeaderComponent";
+import { FooterComponent } from "../components/FooterComponents";
 
 
 export class HomePage extends BasePage {
@@ -24,31 +26,41 @@ export class HomePage extends BasePage {
         this.newsSubscribeSection = page.locator("section#subscription");
     }
 
-    public async clickMainButton(): Promise<void> {
+    get Header() {
+        const headerLocator = this.page.locator("app-header");
+        return new HeaderComponent(headerLocator);
+    }
+
+    get Footer() {
+        const footerLocator = this.page.locator("app-footer footer");
+        return new FooterComponent(footerLocator); 
+    }
+
+    async clickMainButton(): Promise<void> {
         await this.mainContentButton.click();
     }
 
-    public async getMainHeading(): Promise<string> {
+    async getMainHeading(): Promise<string> {
         return await this.mainContentHeading.innerText();
     }
 
-    public async getMainContentText(): Promise<string> {        
+    async getMainContentText(): Promise<string> {        
         return await this.mainContentText.innerText();
     }
 
-    public async getEventsTitle(): Promise<string> {
+    async getEventsTitle(): Promise<string> {
         return await this.eventsTitle.innerText();
     }
 
-    public async clickReadAllNews(): Promise<void> {
+    async clickReadAllNews(): Promise<void> {
         await this.readAllNewsLink.click();
     }
 
-    public statsComponent(): StatsComponent {
+    statsComponent(): StatsComponent {
         return new StatsComponent(this.statsSection);
     }
 
-    public SubscribeComponent() {
+    SubscribeComponent() {
         return new NewsSubscribeComponent(this.newsSubscribeSection);
     }
 } 

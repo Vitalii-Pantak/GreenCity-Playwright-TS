@@ -2,18 +2,12 @@ import { Page, Locator } from "@playwright/test";
 import { BasePage } from "./BasePage";
 
 export class AboutUsPage extends BasePage {
-    // About Us Section
     private aboutUstitle: Locator;
     private aboutUsDescription: Locator;
     private aboutUsButton: Locator;
-
-    // Our Vision Section
     private ourVisionTitle: Locator;
     private ourVisionDescrition: Locator;
-    private ourVisionButton: Locator;
-
-    // Gallery Section
-    
+    private ourVisionButton: Locator;    
 
     constructor(page: Page) {
         super(page);
@@ -25,27 +19,27 @@ export class AboutUsPage extends BasePage {
         this.ourVisionButton = page.locator("div.vision-section button");
     }
 
-    public async getAboutUsTitle(): Promise<string> {
+    async getAboutUsTitle(): Promise<string> {
         return (await this.aboutUstitle.innerText()).trim();
     }
 
-    public async getAboutUsDescription(): Promise<string> {
+    async getAboutUsDescription(): Promise<string> {
         return (await this.aboutUsDescription.innerText()).trim()
     }
 
-    public async clickAboutUsButton(): Promise<void> {
+    async clickAboutUsButton(): Promise<void> {
         await this.aboutUsButton.click();
     }
 
-    public async getOurVisionTitle(): Promise<string> {
+    async getOurVisionTitle(): Promise<string> {
         return (await this.ourVisionTitle.innerText()).trim();
     }
 
-    public async getOurVisionDescription(): Promise<string> {
+    async getOurVisionDescription(): Promise<string> {
         return (await this.ourVisionDescrition.innerText()).trim();
     }
 
-    public async clickOurVisionButton(): Promise<void> {
+    async clickOurVisionButton(): Promise<void> {
         await this.ourVisionButton.click();
     }
 }

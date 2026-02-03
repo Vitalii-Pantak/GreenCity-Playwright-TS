@@ -1,4 +1,4 @@
-import { Page, Locator } from "@playwright/test";
+import { Locator } from "@playwright/test";
 import { BaseComponent } from "./BaseComponent";
 
 

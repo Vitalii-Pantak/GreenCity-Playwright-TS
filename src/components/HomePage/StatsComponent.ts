@@ -21,31 +21,31 @@ export class StatsComponent extends BaseComponent {
         this.discountLink = root.locator("a").last();
     }
 
-    public async getSectionTitle(): Promise<string> {
+    async getSectionTitle(): Promise<string> {
         return await this.sectionTitle.innerText();
     }
 
-    public async getBagsCounter(): Promise<number> {
+    async getBagsCounter(): Promise<number> {
         return parseInt(await this.bagsCounter.innerText());
     }
 
-    public async getCupsCounter(): Promise<number> {
+    async getCupsCounter(): Promise<number> {
         return parseInt(await this.cupsCounter.innerText());
     }    
 
-    public async clickEcoBagButton(): Promise<void> {
+    async clickEcoBagButton(): Promise<void> {
         await this.ecoBagButton.click();
     }
 
-    public async clickCupButton(): Promise<void> {
+    async clickCupButton(): Promise<void> {
         await this.cupButton.click();
     }
 
-    public async clickBuyEcoBagsLink(): Promise<void> {
+    async clickBuyEcoBagsLink(): Promise<void> {
         await this.buyEcoBagLink.click();
     }
 
-    public async clickDiscountDrinkLink(): Promise<void> {
+    async clickDiscountDrinkLink(): Promise<void> {
         await this.discountLink.click();
     }
 }
