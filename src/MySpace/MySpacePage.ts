@@ -35,9 +35,9 @@ export class MySpacePage extends BasePage {
         this.myHabbitsBtn = page.locator("[aria-posinset='1']");
         this.myNewsBtn = page.locator("[aria-posinset='2']");
         this.myEventsBtn = page.locator("[aria-posinset='3']");
-        this.myHabbitsTab = page.locator("#mat-tab-content-0-0");
-        this.myNewsTab = page.locator("#mat-tab-content-0-1");
-        this.myEventsTab = page.locator("#mat-tab-content-0-2")
+        this.myHabbitsTab = page.locator("mat-tab-body[role=tabpanel]").first();
+        this.myNewsTab = page.locator("mat-tab-body[role=tabpanel]").nth(1);
+        this.myEventsTab = page.locator("mat-tab-body[role=tabpanel]").nth(2);
     }
 
     async getProfileName(): Promise<string> {
@@ -73,18 +73,26 @@ export class MySpacePage extends BasePage {
     }
 
     async switchToMyHabbitsTab(): Promise<MySpaceHabbitsTabPage> {
+        await this.waitForPage();
         await this.myHabbitsBtn.click();
         return new MySpaceHabbitsTabPage(this.myHabbitsTab);
     }
 
     async switchToMyNewsTab(): Promise<MySpaceNewsTabPage> {
+        await this.waitForPage();
         await this.myNewsBtn.click();
         return new MySpaceNewsTabPage(this.myNewsTab);
     }
 
     async switchToMyEventsTab(): Promise<MySpaceEventsTabPage> {
+        await this.waitForPage();
         await this.myEventsBtn.click();
         return new MySpaceEventsTabPage(this.myEventsTab);
+    }
+
+    private async waitForPage() {
+        const panel = this.page.locator("div.add-friends");
+        await this.waitForVisible(panel);
     }
 }
 

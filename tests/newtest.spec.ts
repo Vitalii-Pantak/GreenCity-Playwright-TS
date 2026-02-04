@@ -44,13 +44,13 @@ test.only("has profile", async ({ page }) => {
     console.log(await mySpacePage.getProfileName());
     console.log(await mySpacePage.getProfileRate());
     console.log(await mySpacePage.getPublishedNewsCount());
-    // await mySpacePage.switchToMyNewsTab();
-    // await page.waitForTimeout(1000);
-    // await mySpacePage.switchToMyEventsTab();
-    // await page.waitForTimeout(1000);
-    // await mySpacePage.switchToMyHabbitsTab();
-    // await page.waitForTimeout(5000);
-    // await page.pause();
+    await mySpacePage.switchToMyNewsTab();
+    await page.waitForTimeout(1000);
+    await mySpacePage.switchToMyEventsTab();
+    await page.waitForTimeout(1000);
+    await mySpacePage.switchToMyHabbitsTab();
+    await page.waitForTimeout(5000);
+    await page.pause();
 
 
 
@@ -71,12 +71,30 @@ test.only("has profile xx", async ({ page }) => {
     
     console.log(await habbitsTab.getTabHabbitsCount());
     console.log(await habbitsTab.getAquiredHabbitsCount());
+});
 
 
-    
+test.only("has profile news", async ({ page }) => {
+    await page.setViewportSize({width: 1920, height: 1080})
+    await page.goto("https://www.greencity.cx.ua/#/greenCity");
+    const homePage = new HomePage(page);
+    const auth = await homePage.Header.clickSignIN();
+    await auth.enterEmail("pantakvv@gmail.com");
+    await auth.enterPassword("Gsdfuhoiewf123_");
+    await auth.submit();  
+    const space = await homePage.Header.openMySpace();
+    const myNews = await space.switchToMyNewsTab();
+    // const habbitsTab = new MySpaceHabbitsTabPage(page);
+    // await page.waitForTimeout(1500);
+    console.log(await myNews.getNewsCount());
+    // await myNews.clickFavourities()
+    // await page.pause();
+    await homePage.Header.openAboutUs();
+    await homePage.Header.openMySpace();
+    await space.switchToMyNewsTab();
+        console.log(await myNews.getNewsCount());
+    await myNews.clickFavourities()
+    await page.pause();
 
-
-
-
-
+    // console.log(await myNews.getAquiredHabbitsCount());
 });

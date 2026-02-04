@@ -1,5 +1,6 @@
 import { Page, Locator } from "@playwright/test";
 import { BasePage } from "./BasePage";
+import { AboutUsGalleryComponent } from "../components/AboutUsGalleryComponent";
 
 export class AboutUsPage extends BasePage {
     private aboutUstitle: Locator;
@@ -8,6 +9,7 @@ export class AboutUsPage extends BasePage {
     private ourVisionTitle: Locator;
     private ourVisionDescrition: Locator;
     private ourVisionButton: Locator;    
+    private gallery: Locator;
 
     constructor(page: Page) {
         super(page);
@@ -17,6 +19,7 @@ export class AboutUsPage extends BasePage {
         this.ourVisionTitle = page.locator("div.vision-section h2");
         this.ourVisionDescrition = page.locator("div.vision-section p");
         this.ourVisionButton = page.locator("div.vision-section button");
+        this.gallery = page.locator("div.vision-gallery");
     }
 
     async getAboutUsTitle(): Promise<string> {
@@ -41,5 +44,9 @@ export class AboutUsPage extends BasePage {
 
     async clickOurVisionButton(): Promise<void> {
         await this.ourVisionButton.click();
+    }
+
+    galleryComponent(): AboutUsGalleryComponent {
+        return new AboutUsGalleryComponent(this.gallery);
     }
 }
