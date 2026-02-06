@@ -63,4 +63,8 @@ export class HomePage extends BasePage {
     SubscribeComponent() {
         return new NewsSubscribeComponent(this.newsSubscribeSection);
     }
+
+    async waitForPage() {
+        await this.waitForVisible(this.mainContentHeading);
+    }
 } 
