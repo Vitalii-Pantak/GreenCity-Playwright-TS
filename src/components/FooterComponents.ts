@@ -13,12 +13,12 @@ export class FooterComponent extends BaseComponent {
 
     constructor(root: Locator) {
         super(root);
-        this.logo = root.locator(".logo");
-        this.twitter = root.getByAltText("Twitter link");
-        this.linkedin = root.getByAltText("LinkedIn link");
-        this.facebook = root.getByAltText("Facebook link");
-        this.instagram = root.getByAltText("Instagram link");
-        this.youtube = root.getByAltText("YouTube link");
+        this.logo = root.getByRole('link', {name: 'GreenCity home'});
+        this.twitter = root.getByRole('link', {name: 'Twitter link'});
+        this.linkedin = root.getByRole('link', {name: 'LinkedIn link'});
+        this.facebook = root.getByRole('link', {name: 'Facebook link'});
+        this.instagram = root.getByRole('link', {name: 'Instagram link'});
+        this.youtube = root.getByRole('link', {name: 'YouTube link'});
         this.copyright = root.locator("div#copyright-label")
     }
 

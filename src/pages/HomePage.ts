@@ -14,15 +14,17 @@ export class HomePage extends BasePage {
     private eventsTitle: Locator;
     private readAllNewsLink: Locator;
     private newsSubscribeSection: Locator;
+    private mainContent: Locator;
     
     constructor(page: Page) {
         super(page);
-        this.mainContentButton = page.locator("//*[@id='main-content']/button");
-        this.mainContentHeading = page.locator("//*[@id='main-content']/h1");
-        this.mainContentText = page.locator("//*[@id='main-content']/p");
+        this.mainContent = page.locator('header')
+        this.mainContentButton = this.mainContent.getByRole("button", {name: 'Start forming a habit'})
+        this.mainContentHeading = this.mainContent.getByRole("heading", {"level": 1});
+        this.mainContentText = this.mainContent.locator("p");
+        this.eventsTitle = page.getByRole("heading", {name: "Eco News", level: 2});
+        this.readAllNewsLink = page.getByRole("link", {name: "link to eco-news page"});
         this.statsSection = page.locator("#stats");
-        this.eventsTitle = page.locator("#events h2");
-        this.readAllNewsLink = page.locator("#events a");
         this.newsSubscribeSection = page.locator("section#subscription");
     }
 

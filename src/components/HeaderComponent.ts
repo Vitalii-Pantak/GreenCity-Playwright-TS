@@ -21,12 +21,12 @@ export class HeaderComponent extends BaseComponent {
     constructor(root: Locator) {
         super(root);
         this.page = root.page();
-        this.logo = root.locator(".header_logo");
+        this.logo = root.getByAltText('Image green city logo');
         this.bookmark = root.getByLabel("site bookmark");
         this.notifications = root.getByLabel("site notification");
         this.search = root.getByRole("search");
-        this.signIN = root.locator("a.header_sign-in-link");
-        this.signUP = root.locator("div.header_sign-up-btn");
+        this.signIN = root.getByRole("link", {name: "Sign in"})
+        this.signUP = root.getByRole("link", {name: "Sign up"})
         this.authModal = root.locator("app-auth-modal");
         this.langDropDown = root.getByLabel("language switcher");
     }

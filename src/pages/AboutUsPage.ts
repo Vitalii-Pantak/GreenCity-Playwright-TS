@@ -10,15 +10,19 @@ export class AboutUsPage extends BasePage {
     private ourVisionDescrition: Locator;
     private ourVisionButton: Locator;    
     private gallery: Locator;
+    private aboutUsSection: Locator;
+    private visionSection: Locator;
 
     constructor(page: Page) {
         super(page);
-        this.aboutUstitle = page.locator("div.about-section h2");
-        this.aboutUsDescription = page.locator("div.about-section p");
-        this.aboutUsButton = page.locator("div.about-section button");
-        this.ourVisionTitle = page.locator("div.vision-section h2");
-        this.ourVisionDescrition = page.locator("div.vision-section p");
-        this.ourVisionButton = page.locator("div.vision-section button");
+        this.aboutUsSection = page.locator("div.about-section");
+        this.visionSection = page.locator("div.vision-section")
+        this.aboutUstitle = this.aboutUsSection.getByRole("heading", {level: 2, name: "About Us"});
+        this.aboutUsDescription = this.aboutUsSection.locator("p");
+        this.aboutUsButton = this.aboutUsSection.getByRole("button", {name: "Form Habit"});
+        this.ourVisionTitle = this.visionSection.getByRole("heading", {level: 2, name: "Our vision"})
+        this.ourVisionDescrition = this.visionSection.locator("p");
+        this.ourVisionButton = this.visionSection.getByRole("button", {name: "Form Habit"});
         this.gallery = page.locator("div.vision-gallery");
     }
 
