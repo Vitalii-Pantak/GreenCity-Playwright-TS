@@ -24,7 +24,7 @@ export class TagItem extends BaseComponent {
         return false;
     }
 
-    async selectTag() {
+    async selectTag(): Promise<void> {
         await this.root.click();
     }
 }

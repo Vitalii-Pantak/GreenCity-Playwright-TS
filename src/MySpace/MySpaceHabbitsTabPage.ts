@@ -13,16 +13,16 @@ export class MySpaceHabbitsTabPage extends BaseComponent {
         this.acquiredHabbitsCount = root.locator("div.acquired span");
     }
 
-    async getTabHabbitsCount() {
+    async getTabHabbitsCount(): Promise<string> {
         await this.habbitsInProgress.waitFor({state: "visible"});
         return (await this.habbitsInProgress.innerText()).trim();
     }
 
-    async addNewHabbit() {
+    async addNewHabbit(): Promise<void> {
         await this.addNewHabbitBtn.click();
     }
 
-    async getAquiredHabbitsCount() {
+    async getAquiredHabbitsCount(): Promise<string> {
         return (await this.acquiredHabbitsCount.innerText()).trim();
     }
 }

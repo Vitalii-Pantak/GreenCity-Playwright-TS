@@ -85,7 +85,7 @@ export class MySpacePage extends BasePage {
         return new MySpaceEventsTabPage(this.myEventsTab);
     }
 
-    private async waitForPage() {
+    private async waitForPage(): Promise<void> {
         const panel = this.page.locator("div.add-friends");
         await this.waitForVisible(panel);
     }

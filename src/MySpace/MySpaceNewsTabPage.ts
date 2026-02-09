@@ -33,7 +33,7 @@ export class MySpaceNewsTabPage extends BaseComponent {
         return counter;
     }
 
-    private async waitForPage() {
+    private async waitForPage(): Promise<void> {
         const element = this.root.locator("div.news");
         await element.waitFor({state: "visible", timeout: 5000});
     }

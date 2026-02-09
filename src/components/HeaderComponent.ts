@@ -1,4 +1,4 @@
-import { Page, Locator} from "@playwright/test";
+import { Page, Locator } from "@playwright/test";
 import { BaseComponent } from "./BaseComponent";
 import { SignInModal } from "./Auth/SignInModal";
 import { SignUpModal } from "./Auth/SignUpModal";
@@ -35,34 +35,34 @@ export class HeaderComponent extends BaseComponent {
         await this.root.getByRole("link", {name: linkName}).click();
     }
 
-    async openEcoNews() {
+    async openEcoNews(): Promise<EcoNewsPage> {
         await this.clickMenuLink(Menu.ECO_NEWS);
         return new EcoNewsPage(this.page);
     }
 
-    async openEvents() {
+    async openEvents(): Promise<void> {
         await this.clickMenuLink(Menu.EVENTS);
     }
 
-    async openPlaces() {
+    async openPlaces(): Promise<void> {
         await this.clickMenuLink(Menu.PLACES);
     }
 
-    async openAboutUs() {
+    async openAboutUs(): Promise<AboutUsPage> {
         await this.clickMenuLink(Menu.ABOUT_US);
         return new AboutUsPage(this.page);
     }
 
-    async openMySpace() {
+    async openMySpace(): Promise<MySpacePage> {
         await this.clickMenuLink(Menu.MY_SPACE);
         return new MySpacePage(this.page);
     }
 
-    async openUBSCourier() {
+    async openUBSCourier(): Promise<void> {
         await this.clickMenuLink(Menu.UBS_COURIER);
     }
 
-    async openHomePage() {
+    async openHomePage(): Promise<void> {
         await this.logo.click();
     }
 

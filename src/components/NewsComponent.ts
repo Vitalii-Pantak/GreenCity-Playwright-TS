@@ -43,7 +43,7 @@ export class NewsComponent extends BaseComponent {
         return parseInt(await this.userData.nth(3).innerText());
     }
 
-    async openNews() {
+    async openNews(): Promise<void> {
         return await this.root.click();
     }
 }

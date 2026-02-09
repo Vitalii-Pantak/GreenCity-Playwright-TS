@@ -1,6 +1,9 @@
-import { Locator } from "@playwright/test";
+import { Locator, Page } from "@playwright/test";
 import { BaseComponent } from "./BaseComponent";
 import { Menu } from "../enums/enums";
+import { EcoNewsPage } from "@/pages/EcoNewsPage";
+import { AboutUsPage } from "@/pages/AboutUsPage";
+import { MySpacePage } from "@/MySpace/MySpacePage";
 
 export class FooterComponent extends BaseComponent {
     private logo: Locator;
@@ -10,9 +13,11 @@ export class FooterComponent extends BaseComponent {
     private instagram: Locator;
     private youtube: Locator;
     private copyright: Locator;
+    private page: Page;
 
     constructor(root: Locator) {
         super(root);
+        this.page = root.page();
         this.logo = root.getByRole('link', {name: 'GreenCity home'});
         this.twitter = root.getByRole('link', {name: 'Twitter link'});
         this.linkedin = root.getByRole('link', {name: 'LinkedIn link'});
@@ -26,51 +31,54 @@ export class FooterComponent extends BaseComponent {
         await this.root.getByRole("link", {name: linkName}).click();
     } 
 
-    async openEcoNews() {
+    async openEcoNews(): Promise<EcoNewsPage> {
         await this.clickFooterLink(Menu.ECO_NEWS);
+        return new EcoNewsPage(this.page)
     }
 
-    async openEvents() {
+    async openEvents(): Promise<void> {
         await this.clickFooterLink(Menu.EVENTS);
     }
 
-    async openPlaces() {
+    async openPlaces(): Promise<void> {
         await this.clickFooterLink(Menu.PLACES);
     }
 
-    async openAboutUs() {
+    async openAboutUs(): Promise<AboutUsPage> {
         await this.clickFooterLink(Menu.ABOUT_US);
+        return new AboutUsPage(this.page);
     }
 
-    async openMySpace() {
+    async openMySpace(): Promise<MySpacePage> {
         await this.clickFooterLink(Menu.MY_SPACE);
+        return new MySpacePage(this.page);
     }
 
-    async openUBSCourier() {
+    async openUBSCourier(): Promise<void> {
         await this.clickFooterLink(Menu.UBS_COURIER);
     }
 
-    async openHomePage() {
+    async openHomePage(): Promise<void> {
         await this.logo.click();
     }
 
-    async followTwitter() {
+    async followTwitter(): Promise<void> {
         await this.twitter.click();
     }
 
-    async followLinkedin() {
+    async followLinkedin(): Promise<void> {
         await this.linkedin.click();
     }
 
-    async followFacebook() {
+    async followFacebook(): Promise<void> {
         await this.facebook.click();
     }
 
-    async followInstagram() {
+    async followInstagram(): Promise<void> {
         await this.instagram.click();
     }
 
-    async followYouTube() {
+    async followYouTube(): Promise<void> {
         await this.youtube.click();
     }
 
