@@ -3,7 +3,7 @@ import { BasePage } from "./BasePage";
 import { NewsComponent } from "../components/NewsComponent";
 import { TagItem } from "../components/TagItem";
 import { CreateNewsPage } from "./CreateNewsPage";
-
+import { NotificationsComponent } from "@/components/NotificationsComponent";
 
 export class EcoNewsPage extends BasePage {
     private mainTitle: Locator;
@@ -16,6 +16,8 @@ export class EcoNewsPage extends BasePage {
     private gridLocator: Locator;
     private tagsList: Locator;
     private createNewsBtn: Locator;
+    private snackBar: Locator;
+    public notifications: NotificationsComponent;
 
     constructor(page: Page) {
         super(page);
@@ -29,6 +31,8 @@ export class EcoNewsPage extends BasePage {
         this.gridLocator = page.locator("ul[aria-label='news list']");
         this.tagsList = page.locator("button.tag-button");
         this.createNewsBtn = page.locator("div#create-button");
+        this.snackBar = page.getByText('Your news has been successfully published');
+        this.notifications = new NotificationsComponent(this.snackBar);
     }    
 
     private newsItems = this.page.locator(".gallery-view-li-active");

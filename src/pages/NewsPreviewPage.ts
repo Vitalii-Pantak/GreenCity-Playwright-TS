@@ -1,7 +1,6 @@
 import { Page, Locator } from "@playwright/test";
 import { BasePage } from "./BasePage";
 
-
 export class NewsPreviewPage extends BasePage {
     private backToEditingBtn: Locator;
     private publishBtn: Locator;

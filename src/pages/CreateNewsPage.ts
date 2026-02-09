@@ -5,7 +5,6 @@ import { TagItem } from "../components/TagItem";
 import { CreateNewsModalComponent } from "../components/CreateNewsModalComponent";
 import { NewsPreviewPage } from "./NewsPreviewPage";
 
-
 export class CreateNewsPage extends BasePage {
     private title: Locator;
     private titleDescription: Locator;

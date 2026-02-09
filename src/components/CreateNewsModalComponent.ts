@@ -1,7 +1,6 @@
 import { Locator } from "@playwright/test";
 import { BaseComponent } from "./BaseComponent";
 
-
 export class CreateNewsModalComponent extends BaseComponent {
     private warningTitle: Locator;
     private warningSubTitle: Locator;   

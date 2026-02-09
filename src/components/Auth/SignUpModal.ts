@@ -14,8 +14,8 @@ export class SignUpModal extends AuthModalBasePage {
         super(page);
         this.emailField = page.getByPlaceholder("example@email.com");
         this.userNameFIeld = page.getByPlaceholder("User name");
-        this.passwordField = page.getByPlaceholder("Password");
-        this.confirmPasswordField = page.getByLabel("repeatPassword");
+        this.passwordField = page.locator("#password");
+        this.confirmPasswordField = page.locator("#repeatPassword");
         this.showHidePasssowrd = page.getByAltText("eye").first();
         this.showHideConfirmPassword = page.getByAltText("eye").last();
         this.signIN = page.getByRole("link", {name: "Sign in"})
@@ -47,5 +47,19 @@ export class SignUpModal extends AuthModalBasePage {
 
     async clickSignInLink(): Promise<void> {
         await this.signIN.click();
+    }
+
+    /**     
+     * @param email
+     * @param username
+     * @param password 
+     * @param confirmPassword 
+     */
+    async SignUp(email: string, username: string, password: string, confirmPassword: string): Promise<void> {
+        await this.enterEmail(email);
+        await this.enterUserName(username);
+        await this.enterPassword(password);
+        await this.enterConfirmPassword(confirmPassword);
+        await this.submit();
     }
 }

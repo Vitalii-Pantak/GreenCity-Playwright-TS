@@ -16,7 +16,12 @@
     "types": [
       "@playwright/test",
       "node"
-    ]
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "@tests/*": ["tests/*"]
+    }
   },
   "include": [
     "tests",

@@ -36,4 +36,14 @@ export class SignInModal extends AuthModalBasePage {
     async clickShowHidePassword(): Promise<void> {
         await this.showHidePassword.click();
     }
+
+    /**     
+     * @param email 
+     * @param password 
+     */
+    async SignIn(email: string, password: string): Promise<void> {
+        await this.enterEmail(email);
+        await this.enterPassword(password);
+        await this.submit();
+    }
 }

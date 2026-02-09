@@ -4,7 +4,7 @@ import { StatsComponent } from "../components/HomePage/StatsComponent";
 import { NewsSubscribeComponent } from "../components/HomePage/NewsSubscribeComponent";
 import { HeaderComponent } from "../components/HeaderComponent";
 import { FooterComponent } from "../components/FooterComponents";
-
+import { NotificationsComponent } from "@/components/NotificationsComponent";
 
 export class HomePage extends BasePage {
     private mainContentButton: Locator;
@@ -15,6 +15,8 @@ export class HomePage extends BasePage {
     private readAllNewsLink: Locator;
     private newsSubscribeSection: Locator;
     private mainContent: Locator;
+    private snackBar: Locator;
+    public notifications: NotificationsComponent;
     
     constructor(page: Page) {
         super(page);
@@ -26,6 +28,8 @@ export class HomePage extends BasePage {
         this.readAllNewsLink = page.getByRole("link", {name: "link to eco-news page"});
         this.statsSection = page.locator("#stats");
         this.newsSubscribeSection = page.locator("section#subscription");
+        this.snackBar = page.locator("div.mdc-snackbar__label");
+        this.notifications = new NotificationsComponent(this.snackBar);
     }
 
     get Header() {

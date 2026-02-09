@@ -1,7 +1,6 @@
 import { Locator } from "@playwright/test";
 import { BaseComponent } from "./BaseComponent";
 
-
 export class NewsItemComponent extends BaseComponent {
     private tags: Locator;
     private title: Locator;

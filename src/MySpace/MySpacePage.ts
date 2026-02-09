@@ -4,8 +4,6 @@ import { MySpaceHabbitsTabPage } from "./MySpaceHabbitsTabPage";
 import { MySpaceNewsTabPage } from "./MySpaceNewsTabPage";
 import { MySpaceEventsTabPage } from "./MySpaceEventsTabPage";
 
-
-
 export class MySpacePage extends BasePage {
     private profileName: Locator;
     private profileRate: Locator;
@@ -73,19 +71,16 @@ export class MySpacePage extends BasePage {
     }
 
     async switchToMyHabbitsTab(): Promise<MySpaceHabbitsTabPage> {
-        await this.waitForPage();
         await this.myHabbitsBtn.click();
         return new MySpaceHabbitsTabPage(this.myHabbitsTab);
     }
 
     async switchToMyNewsTab(): Promise<MySpaceNewsTabPage> {
-        await this.waitForPage();
         await this.myNewsBtn.click();
         return new MySpaceNewsTabPage(this.myNewsTab);
     }
 
     async switchToMyEventsTab(): Promise<MySpaceEventsTabPage> {
-        await this.waitForPage();
         await this.myEventsBtn.click();
         return new MySpaceEventsTabPage(this.myEventsTab);
     }
