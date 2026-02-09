@@ -10,8 +10,8 @@ export abstract class AuthModalBasePage extends BasePage {
 
     constructor(page: Page) {
         super(page);
-        this.title = page.locator("app-auth-modal h1");
-        this.subTitle = page.locator("app-auth-modal h2");
+        this.title = page.getByRole("heading", {level: 1});
+        this.subTitle = page.getByRole("heading", {level: 2});
         this.closeBtn = page.getByLabel("close form button");
         this.submitBtn = page.locator("button[type='submit']");
         this.googleSignInBtn = page.locator("button.google-sign-in");

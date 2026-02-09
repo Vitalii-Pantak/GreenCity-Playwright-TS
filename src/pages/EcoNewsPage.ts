@@ -19,11 +19,11 @@ export class EcoNewsPage extends BasePage {
 
     constructor(page: Page) {
         super(page);
-        this.mainTitle = page.locator("h1.main-header");
+        this.mainTitle = page.getByRole('heading', {name: 'Eco news'});
         this.searchIcon = page.locator("div.container-img").first();
         this.bookmark = page.locator("div.container-img").nth(1);
         this.calendar = page.locator("div.container-img").last();
-        this.searchItemsCounter = page.locator("app-remaining-count h2");
+        this.searchItemsCounter = page.getByRole('heading', {name: 'items found'});
         this.tableViewBtn = page.getByLabel("table view");
         this.listViewBtn = page.getByLabel("list view");
         this.gridLocator = page.locator("ul[aria-label='news list']");

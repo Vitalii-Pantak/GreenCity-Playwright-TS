@@ -9,7 +9,7 @@ export class MySpaceHabbitsTabPage extends BaseComponent {
     constructor(root: Locator) {
         super(root);
         this.habbitsInProgress = root.locator("div.in-progress span").first();
-        this.addNewHabbitBtn = root.locator("div.in-progress a");
+        this.addNewHabbitBtn = root.getByRole('link', {name: 'Add New Habit'});
         this.acquiredHabbitsCount = root.locator("div.acquired span");
     }
 

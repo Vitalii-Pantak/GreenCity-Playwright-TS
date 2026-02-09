@@ -18,8 +18,8 @@ export class NewsPreviewPage extends BasePage {
 
     constructor(page: Page) {
         super(page);
-        this.backToEditingBtn = page.locator("div.button-content");
-        this.publishBtn = page.locator("button[type='submit']");
+        this.backToEditingBtn = page.getByRole("button", {name: "Back to editing"});
+        this.publishBtn = page.getByRole("button", {name: "Publish"});
         this.newsTitle = page.locator("div.news-title");
         this.publishDate = page.locator("div.news-info-date");
         this.publisherName = page.locator("div.news-info-author");

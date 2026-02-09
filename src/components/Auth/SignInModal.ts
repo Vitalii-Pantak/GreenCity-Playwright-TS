@@ -10,11 +10,11 @@ export class SignInModal extends AuthModalBasePage {
 
     constructor(page: Page) {
         super(page);
-        this.forgotPassword = page.locator("a.forgot-password");
+        this.forgotPassword = page.getByRole("link", {name: "Forgot password?"});
         this.signUP = page.getByLabel("sign up modal window");
-        this.passwordField = page.locator("#password");
-        this.emailField = page.locator("#email");
-        this.showHidePassword = page.getByAltText("show-hide-password")
+        this.emailField = page.getByPlaceholder("example@email.com");
+        this.passwordField = page.getByPlaceholder("Password");
+        this.showHidePassword = page.getByAltText("show-hide-password");
     }
 
     async enterEmail(email: string): Promise<void> {

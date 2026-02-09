@@ -32,9 +32,9 @@ export class MySpacePage extends BasePage {
         this.organizedEventsCounter = page.locator("div.chain p").nth(6);
         this.editProfileBtn = page.locator("a.edit-icon");
         this.factOfTheDay = page.locator("p.card-description");
-        this.myHabbitsBtn = page.locator("[aria-posinset='1']");
-        this.myNewsBtn = page.locator("[aria-posinset='2']");
-        this.myEventsBtn = page.locator("[aria-posinset='3']");
+        this.myHabbitsBtn = page.getByRole('tab', {name: 'My habits'});
+        this.myNewsBtn = page.getByRole('tab', {name: 'My News'});
+        this.myEventsBtn = page.getByRole('tab', {name: 'My Events'});
         this.myHabbitsTab = page.locator("mat-tab-body[role=tabpanel]").first();
         this.myNewsTab = page.locator("mat-tab-body[role=tabpanel]").nth(1);
         this.myEventsTab = page.locator("mat-tab-body[role=tabpanel]").nth(2);
