@@ -21,23 +21,27 @@ export class CreateNewsPage extends BasePage {
     private publisherName: Locator;
     private warningPopUp: Locator;
     private tagsList: Locator;
+    private cropButtons: Locator;
+    private submitButtons: Locator;
 
     constructor(page: Page) {
         super(page);
-        this.title = page.locator("h2.title-header");
+        this.cropButtons = page.locator("div.cropper-buttons");
+        this.submitButtons = page.locator("div.submit-buttons");
+        this.title = page.getByRole("heading", {level: 2, name: "Create news"});
         this.titleDescription = page.locator("p.title-description");
-        this.titleField = page.locator("[formcontrolname='title']");
-        this.sourceField = page.locator("[formcontrolname='source']");
-        this.imageSubmitBtn = page.locator(".image-block button.primary-global-button");
-        this.imageCancenlBtn = page.locator(".image-block button.secondary-global-button");
+        this.titleField = page.getByPlaceholder("e.g. Coffee takeaway with 20% discount");
+        this.sourceField = page.getByPlaceholder("Link to external source");
+        this.imageSubmitBtn = this.cropButtons.getByRole("button", {name: "Submit"});
+        this.imageCancenlBtn = this.cropButtons.getByRole("button", {name: "Cancel"});
         this.contentField = page.locator(".ql-editor");
-        this.submitCancelBtn = page.locator(".submit-buttons button.tertiary-global-button");
-        this.submitPreviewBtn = page.locator(".submit-buttons button.secondary-global-button");
-        this.submitPublishBtn = page.locator(".submit-buttons button.primary-global-button");
-        this.publishDate = page.locator(".date  span").nth(1);
-        this.publisherName = page.locator(".date  span").nth(3);
+        this.submitCancelBtn = this.submitButtons.getByRole("button", {name: "Cancel"});
+        this.submitPreviewBtn = this.submitButtons.getByRole("button", {name: "Preview"});
+        this.submitPublishBtn = this.submitButtons.getByRole("button", {name: "Publish"});
+        this.publishDate = page.locator(".date span").nth(1);
+        this.publisherName = page.locator(".date span").nth(3);
         this.warningPopUp = page.locator("app-warning-pop-up");
-        this.tagsList = page.locator("button.tag-button")
+        this.tagsList = page.locator("button.tag-button");
     }
 
     async getMainTitle(): Promise<string> {

@@ -4,18 +4,22 @@ import { BaseComponent } from "./BaseComponent";
 export class AboutUsGalleryComponent extends BaseComponent {
     private galleryTitle: Locator;
     // First Vision Gallery
+    private firstSection: Locator;
     private firstCardTitle: Locator;
     private firstCardDescription: Locator;
     private firstCardButton: Locator;
     // Second Vision Gallery
+    private secondSection: Locator;
     private secondCardTitle: Locator;
     private secondCardDescription: Locator;
     private secondCardButton: Locator;
     // Third Vision Gallery
+    private thirdSection: Locator;
     private thirdCardTitle: Locator;
     private thirdCardDescription: Locator;
     private thirdCardButton: Locator;
     // Fourth Vision Gallery
+    private fourthSection: Locator;
     private fourthCardTitle: Locator;
     private fourthCardDescription: Locator;
     private fourthCardButton: Locator;
@@ -23,23 +27,27 @@ export class AboutUsGalleryComponent extends BaseComponent {
 
     constructor(root: Locator) {
         super(root);
-        this.galleryTitle = root.locator("h2");
+        this.galleryTitle = root.getByRole("heading", {level: 2});
+        this.firstSection = root.locator("app-vision-card.vision-card__1");
+        this.secondSection = root.locator("app-vision-card.vision-card__2");
+        this.thirdSection = root.locator("app-vision-card.vision-card__3")
+        this.fourthSection = root.locator("app-vision-card.vision-card__4")
         // #1
-        this.firstCardTitle = root.locator("app-vision-card.vision-card__1 h3");
-        this.firstCardDescription = root.locator("app-vision-card.vision-card__1 p");
-        this.firstCardButton = root.locator("app-vision-card.vision-card__1 a");
+        this.firstCardTitle = this.firstSection.getByRole("heading", {level: 3});
+        this.firstCardDescription = this.firstSection.locator("p");
+        this.firstCardButton = this.firstSection.getByRole("link", {name: "Find eco places"});
         // #2
-        this.secondCardTitle = root.locator("app-vision-card.vision-card__2 h3");
-        this.secondCardDescription = root.locator("app-vision-card.vision-card__2 p");
-        this.secondCardButton = root.locator("app-vision-card.vision-card__2 a");
+        this.secondCardTitle = this.secondSection.getByRole("heading", {level: 3});
+        this.secondCardDescription = this.secondSection.locator("p");
+        this.secondCardButton = this.secondSection.getByRole("link", {name: "Find people"});
         // #3
-        this.thirdCardTitle = root.locator("app-vision-card.vision-card__3 h3");
-        this.thirdCardDescription = root.locator("app-vision-card.vision-card__3 p");
-        this.thirdCardButton = root.locator("app-vision-card.vision-card__3 a");
+        this.thirdCardTitle = this.thirdSection.getByRole("heading", {level: 3});
+        this.thirdCardDescription = this.thirdSection.locator("p");
+        this.thirdCardButton = this.thirdSection.getByRole("link", {name: "Get inspired"});
         // #4 
-        this.fourthCardTitle = root.locator("app-vision-card.vision-card__4 h3");
-        this.fourthCardDescription = root.locator("app-vision-card.vision-card__4 p");
-        this.fourthCardButton = root.locator("app-vision-card.vision-card__4 a");
+        this.fourthCardTitle = this.fourthSection.getByRole("heading", {level: 3});
+        this.fourthCardDescription = this.fourthSection.locator("p");
+        this.fourthCardButton = this.fourthSection.getByRole("link", {name: "Find people"});
     }
 
     async getGalleryTitle(): Promise<string> {

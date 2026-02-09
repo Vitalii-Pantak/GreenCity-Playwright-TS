@@ -10,11 +10,11 @@ export class NewsSubscribeComponent extends BaseComponent {
 
     constructor(root: Locator) {
         super(root);
-        this.subscribeTitle = root.locator("h2");
+        this.subscribeTitle = root.getByRole("heading", {level: 2, name: "Receive interesting news"});
         this.subscribeDescription = root.locator("p").first();
-        this.errorMessage = root.locator("p").last();
-        this.emailField = root.locator("input");
-        this.subscribeButton = root.locator("button");
+        this.errorMessage = root.locator("p#validation-error");
+        this.emailField = root.getByPlaceholder("Enter your email");
+        this.subscribeButton = root.getByRole("button", {name: "Subscribe!"});
     }
 
     async getSubscribeTitle(): Promise<string> {

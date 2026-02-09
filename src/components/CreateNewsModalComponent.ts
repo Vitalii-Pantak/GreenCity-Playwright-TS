@@ -11,10 +11,10 @@ export class CreateNewsModalComponent extends BaseComponent {
 
     constructor(root: Locator) {
         super(root);
-        this.warningTitle = root.locator("div.warning-text");
+        this.warningTitle = root.locator("div.warning-title");
         this.warningSubTitle = root.locator("div.warning-subtitle");
-        this.continueBtn = root.locator("button.secondary-global-button")
-        this.cancelBtn = root.locator("button.primary-global-button");
+        this.continueBtn = root.getByRole("button", {name: "Continue editing"});
+        this.cancelBtn = root.getByRole("button", {name: "Yes, cancel"});
         this.closeModalBtn = root.locator("button.close");
     }
 
