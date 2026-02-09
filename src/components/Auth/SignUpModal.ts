@@ -1,5 +1,6 @@
 import { Page, Locator } from "@playwright/test";
 import { AuthModalBasePage } from "./AuthModalBasePage";
+import { SignInModal } from "./SignInModal";
 
 export class SignUpModal extends AuthModalBasePage {
     private emailField: Locator;
@@ -9,6 +10,10 @@ export class SignUpModal extends AuthModalBasePage {
     private showHidePasssowrd: Locator;
     private showHideConfirmPassword: Locator;
     private signIN: Locator;
+    private emailError: Locator;
+    private usernameError: Locator;
+    private passwordError: Locator;
+    private confirmPasswordError: Locator;
 
     constructor(page: Page) {
         super(page);
@@ -18,7 +23,11 @@ export class SignUpModal extends AuthModalBasePage {
         this.confirmPasswordField = page.locator("#repeatPassword");
         this.showHidePasssowrd = page.getByAltText("eye").first();
         this.showHideConfirmPassword = page.getByAltText("eye").last();
-        this.signIN = page.getByRole("link", {name: "Sign in"})
+        this.signIN = page.getByRole("link", {name: "Sign in"});
+        this.emailError = page.getByText("Please check that your e-mail address is indicated correctly");
+        this.usernameError = page.getByText("The user name must be 1-30 characters long", {exact: false});
+        this.passwordError = page.locator("form p");
+        this.confirmPasswordError = page.getByText("Passwords do not match");
     }
 
     async enterEmail(email: string): Promise<void> {
@@ -45,8 +54,9 @@ export class SignUpModal extends AuthModalBasePage {
         await this.showHideConfirmPassword.click();
     }
 
-    async clickSignInLink(): Promise<void> {
+    async clickSignInLink(): Promise<SignInModal> {
         await this.signIN.click();
+        return new SignInModal(this.page);
     }
 
     /**     
@@ -61,5 +71,23 @@ export class SignUpModal extends AuthModalBasePage {
         await this.enterPassword(password);
         await this.enterConfirmPassword(confirmPassword);
         await this.submit();
+    }
+
+    async isEmailErrorOccured(): Promise<boolean> {
+        return await this.emailError.isVisible();
+    }
+
+    async isPasswordErrorOccured(): Promise<boolean> {
+        const notValid = "password-not-valid";
+        const status = await this.passwordError.getAttribute("class");
+        return notValid === status;
+    }
+
+    async isUsernameErrorOccured(): Promise<boolean> {
+        return await this.usernameError.isVisible();
+    }
+
+    async isConfirmPasswordErrorOccured(): Promise<boolean> {
+        return await this.confirmPasswordError.isVisible();
     }
 }
