@@ -1,6 +1,6 @@
 import { Page, Locator } from "@playwright/test";
-import { AuthModalBasePage } from "./AuthModalBasePage";
-import { SignInModal } from "./SignInModal";
+import { AuthModalBasePage } from "@/components/Auth/Base";
+import { SignInModal } from "@/components";
 
 export class ForgotPasswordModal extends AuthModalBasePage {
     private backToSignInLink: Locator;

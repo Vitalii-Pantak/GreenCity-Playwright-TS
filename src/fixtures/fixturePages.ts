@@ -1,10 +1,10 @@
 import { test as base, expect as baseExpect } from "@playwright/test";
-import env from "../../config/env";
+import env from "config/env";
 import { AboutUsPage,
          CreateNewsPage,
          EcoNewsPage,
          HomePage,
-         NewsPreviewPage } from "../pages";
+         NewsPreviewPage } from "@/pages";
 
 type Pages = {
     homePage: HomePage,

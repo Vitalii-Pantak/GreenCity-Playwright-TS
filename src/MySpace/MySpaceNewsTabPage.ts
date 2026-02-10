@@ -1,6 +1,6 @@
 import { Locator, Page } from "@playwright/test";
-import { BaseComponent } from "../components/BaseComponent";
-import { CreateNewsPage } from "../pages/CreateNewsPage";
+import { BaseComponent } from "@/components/Base";
+import { CreateNewsPage } from "@/pages";
 
 export class MySpaceNewsTabPage extends BaseComponent {
     private addNewsBtn: Locator;

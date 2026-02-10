@@ -1,5 +1,5 @@
 import { Page, Locator } from "@playwright/test";
-import { BasePage } from "./BasePage";
+import { BasePage } from "@/pages/Base";
 
 export class NewsPreviewPage extends BasePage {
     private backToEditingBtn: Locator;

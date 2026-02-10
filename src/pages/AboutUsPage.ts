@@ -1,6 +1,6 @@
 import { Page, Locator } from "@playwright/test";
-import { BasePage } from "./BasePage";
-import { AboutUsGalleryComponent } from "../components/AboutUsGalleryComponent";
+import { BasePage } from "@/pages/Base";
+import { AboutUsGalleryComponent } from "@/components";
 
 export class AboutUsPage extends BasePage {
     private aboutUstitle: Locator;

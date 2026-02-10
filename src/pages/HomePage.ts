@@ -1,10 +1,10 @@
 import { Page, Locator } from "@playwright/test";
-import { BasePage } from "./BasePage";
-import { StatsComponent } from "../components/HomePage/StatsComponent";
-import { NewsSubscribeComponent } from "../components/HomePage/NewsSubscribeComponent";
-import { HeaderComponent } from "../components/HeaderComponent";
-import { FooterComponent } from "../components/FooterComponents";
-import { NotificationsComponent } from "@/components/NotificationsComponent";
+import { BasePage } from "@/pages/Base";
+import { StatsComponent,
+         NewsSubscribeComponent,
+         HeaderComponent,
+         FooterComponent,
+         NotificationsComponent } from "@/components";
 
 export class HomePage extends BasePage {
     private mainContentButton: Locator;

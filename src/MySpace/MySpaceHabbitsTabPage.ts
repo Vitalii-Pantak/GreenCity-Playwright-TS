@@ -1,5 +1,5 @@
 import { Locator } from "@playwright/test";
-import { BaseComponent } from "../components/BaseComponent";
+import { BaseComponent } from "@/components/Base";
 
 export class MySpaceHabbitsTabPage extends BaseComponent {
     private habbitsInProgress: Locator;

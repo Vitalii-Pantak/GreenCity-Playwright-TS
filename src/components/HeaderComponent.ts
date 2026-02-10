@@ -1,11 +1,9 @@
 import { Page, Locator } from "@playwright/test";
-import { BaseComponent } from "./BaseComponent";
-import { SignInModal } from "./Auth/SignInModal";
-import { SignUpModal } from "./Auth/SignUpModal";
-import { Menu } from "../enums/enums";
-import { EcoNewsPage } from "../pages/EcoNewsPage";
-import { MySpacePage } from "../MySpace/MySpacePage";
-import { AboutUsPage } from "../pages/AboutUsPage";
+import { BaseComponent } from "@/components/Base";
+import { SignUpModal, SignInModal } from "@/components";
+import { EcoNewsPage, AboutUsPage } from "@/pages";
+import { MySpacePage } from "@/MySpace";
+import { Menu } from "@/enums/enums";
 
 export class HeaderComponent extends BaseComponent {
     private logo: Locator;

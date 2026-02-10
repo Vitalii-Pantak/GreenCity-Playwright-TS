@@ -1,0 +1,1 @@
+export { AuthModalBasePage } from "./AuthModalBasePage";

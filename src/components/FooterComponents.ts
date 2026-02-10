@@ -1,9 +1,8 @@
 import { Locator, Page } from "@playwright/test";
-import { BaseComponent } from "./BaseComponent";
-import { Menu } from "../enums/enums";
-import { EcoNewsPage } from "@/pages/EcoNewsPage";
-import { AboutUsPage } from "@/pages/AboutUsPage";
-import { MySpacePage } from "@/MySpace/MySpacePage";
+import { BaseComponent } from "@/components/Base";
+import { EcoNewsPage, AboutUsPage } from "@/pages";
+import { MySpacePage } from "@/MySpace";
+import { Menu } from "@/enums/enums";
 
 export class FooterComponent extends BaseComponent {
     private logo: Locator;

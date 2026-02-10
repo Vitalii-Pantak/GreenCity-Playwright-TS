@@ -1,9 +1,9 @@
-import { Page, Locator, expect } from "@playwright/test";
-import { BasePage } from "./BasePage";
-import { NewsComponent } from "../components/NewsComponent";
-import { TagItem } from "../components/TagItem";
-import { CreateNewsPage } from "./CreateNewsPage";
-import { NotificationsComponent } from "@/components/NotificationsComponent";
+import { Page, Locator } from "@playwright/test";
+import { BasePage } from "@/pages/Base";
+import { CreateNewsPage } from "@/pages";
+import { NewsComponent,
+         TagItem,
+         NotificationsComponent } from "@/components";
 
 export class EcoNewsPage extends BasePage {
     private mainTitle: Locator;
