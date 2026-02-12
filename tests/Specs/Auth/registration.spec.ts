@@ -3,11 +3,11 @@ import { REGISTER_USER } from "@tests/Data/users.data";
 import * as messages from "@tests/Data/messages.data";
 
 
-test('Registration', async({homePage}) => {
+test('Registration', async({homePage, navigation}) => {
     await homePage.page.setViewportSize({width: 1920, height: 1080});
-    homePage.navigate('');
-    const auth = await homePage.Header.clickSignUP();
-    await auth.SignUp(1131141231113323 + REGISTER_USER.email,
+    await navigation.goTo();
+    const auth = await navigation.Header.clickSignUP();
+    await auth.SignUp(11311412315113323 + REGISTER_USER.email,
                     REGISTER_USER.username + 11,
                     REGISTER_USER.password + 1,
                     REGISTER_USER.password + 1);

@@ -2,8 +2,6 @@ import { Page, Locator } from "@playwright/test";
 import { BasePage } from "@/pages/Base";
 import { StatsComponent,
          NewsSubscribeComponent,
-         HeaderComponent,
-         FooterComponent,
          NotificationsComponent } from "@/components";
 
 export class HomePage extends BasePage {
@@ -30,16 +28,6 @@ export class HomePage extends BasePage {
         this.newsSubscribeSection = page.locator("section#subscription");
         this.snackBar = page.locator("div.mdc-snackbar__label");
         this.notifications = new NotificationsComponent(this.snackBar);
-    }
-
-    get Header() {
-        const headerLocator = this.page.locator("app-header");
-        return new HeaderComponent(headerLocator);
-    }
-
-    get Footer() {
-        const footerLocator = this.page.locator("app-footer footer");
-        return new FooterComponent(footerLocator); 
     }
 
     async clickMainButton(): Promise<void> {

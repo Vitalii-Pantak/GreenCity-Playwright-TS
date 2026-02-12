@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from "@/fixtures/fixturePages";
 import {EcoNewsPage} from "../src/pages/EcoNewsPage";
 import {HomePage} from "../src/pages/HomePage";
 import { Menu } from "../src/enums/enums";
@@ -22,7 +22,7 @@ test("has title", async ({ page }) => {
     await page.pause();
 });
 
-test("MAIN PAGE", async ({ page }) => {
+test("MAIN PAGE", async ({ page, navigation }) => {
     await page.goto("https://www.greencity.cx.ua/#/greenCity");
     const homePage = new HomePage(page);
     console.log(await homePage.getMainContentText());
@@ -31,8 +31,8 @@ test("MAIN PAGE", async ({ page }) => {
     // console.log(await homePage.getBagsCounter());
     // console.log(await homePage.getCupsCounter());
     // await homePage.clickMainButton();
-    await homePage.Header.openEcoNews();
-    await homePage.page.pause();
+    await navigation.Header.openEcoNews();
+    await navigation.page.pause();
     // await homePage.Header.menuNavigate("Events")
     await homePage.page.pause();
 
@@ -51,14 +51,14 @@ test("MAIN PAGE asdasd", async ({ page }) => {
 
 
 
-test("News PAGE ", async ({ page }) => {
+test("News PAGE ", async ({ page, navigation }) => {
     await page.goto("https://www.greencity.cx.ua/#/greenCity/news");
     const homePage = new HomePage(page)
     const newsPage = new EcoNewsPage(page);
 
     const num = await newsPage.getSearchItemsCount();
     console.log(num);
-    const signin = await homePage.Header.clickSignUP();
+    const signin = await navigation.Header.clickSignUP();
     
     
     // console.log(await signin.getTitle());
@@ -71,12 +71,12 @@ test("News PAGE ", async ({ page }) => {
 
 });
 
-test("Sign In ", async ({ page }) => {
+test("Sign In ", async ({ page, navigation }) => {
     await page.setViewportSize({width: 1920, height: 1080})
     await page.goto("https://www.greencity.cx.ua/#/greenCity");
     const homePage = new HomePage(page);
     // await page.pause();
-    const auth = await homePage.Header.clickSignIN();
+    const auth = await navigation.Header.clickSignIN();
     await auth.enterEmail("pantakvv@gmail.com");
     await auth.enterPassword("Gsdfuhoiewf123_");
     // await auth.clickSignUpLink();
@@ -86,12 +86,12 @@ test("Sign In ", async ({ page }) => {
 
 });
 
-test("Sign UP ", async ({ page }) => {
+test("Sign UP ", async ({ page, navigation }) => {
     await page.setViewportSize({width: 1920, height: 1080})
     await page.goto("https://www.greencity.cx.ua/#/greenCity");
     const homePage = new HomePage(page);
     // await page.pause();
-    const auth = await homePage.Header.clickSignUP();
+    const auth = await navigation.Header.clickSignUP();
     await auth.enterEmail("Test234324@gmail.com");
     await auth.enterUserName("Amigos");
     await auth.enterPassword("Gasda234_213!");
@@ -108,11 +108,11 @@ test("Sign UP ", async ({ page }) => {
 
 
 
-test("Sign UP asd ", async ({ page }) => {
+test("Sign UP asd ", async ({ page, navigation }) => {
     await page.setViewportSize({width: 1920, height: 1080})
     await page.goto("https://www.greencity.cx.ua/#/greenCity");
     const homePage = new HomePage(page);
-    const news = await homePage.Header.openEcoNews();
+    const news = await navigation.Header.openEcoNews();
 
     // await news.waitForPage();
 
@@ -139,16 +139,16 @@ test("Sign UP asd ", async ({ page }) => {
 
 
 
-test("create nes", async ({ page }) => {
+test("create nes", async ({ page, navigation }) => {
     await page.setViewportSize({width: 1920, height: 1080})
     await page.goto("https://www.greencity.cx.ua/#/greenCity");
     const homePage = new HomePage(page);
-    const news = await homePage.Header.openEcoNews();
-    const auth = await homePage.Header.clickSignIN();
+    const news = await navigation.Header.openEcoNews();
+    const auth = await navigation.Header.clickSignIN();
     await auth.enterEmail("pantakvv@gmail.com");
     await auth.enterPassword("Gsdfuhoiewf123_");
     await auth.submit();
-    await homePage.Header.openEcoNews();
+    await navigation.Header.openEcoNews();
     const createNews = await news.createNews();
     // await createNews.enterTitle("KEPASA AMIGO!");
         // await page.pause();

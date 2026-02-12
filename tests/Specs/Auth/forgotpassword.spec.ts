@@ -1,10 +1,10 @@
 import { test, expect } from "@/fixtures/fixturePages"
 
 
-test("Forgot Password", async({homePage}) => {
+test("Forgot Password", async({homePage, navigation}) => {
     await homePage.page.setViewportSize({width: 1920, height: 1080});    
-    homePage.navigate('');
-    const auth = await homePage.Header.clickSignIN();
+    navigation.goTo();
+    const auth = await navigation.Header.clickSignIN();
     const forgot = await auth.clickForgotPassword();
     // await forgot.enterEmail("woof");
     await forgot.triggerErrors();
@@ -13,10 +13,10 @@ test("Forgot Password", async({homePage}) => {
 });
 
 
-test("sign up errors", async({homePage}) => {
+test("sign up errors", async({homePage, navigation}) => {
     await homePage.page.setViewportSize({width: 1920, height: 1080});    
-    homePage.navigate('');
-    const auth = await homePage.Header.clickSignUP();
+    await navigation.goTo();
+    const auth = await navigation.Header.clickSignUP();
     await auth.enterEmail("asdasda@mail.com");
     await auth.enterUserName("woof")
     await auth.enterPassword("1234!asdasA")

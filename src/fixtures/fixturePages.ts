@@ -4,6 +4,7 @@ import { AboutUsPage,
          CreateNewsPage,
          EcoNewsPage,
          HomePage,
+         Navigation,
          NewsPreviewPage } from "@/pages";
 
 type Pages = {
@@ -11,7 +12,8 @@ type Pages = {
     aboutUsPage: AboutUsPage,
     createNewsPage: CreateNewsPage,
     ecoNewsPage: EcoNewsPage,
-    newsPreviewPage: NewsPreviewPage
+    newsPreviewPage: NewsPreviewPage,
+    navigation: Navigation
 }
 
 type Fixtures = {
@@ -38,6 +40,10 @@ export const test = base.extend<Pages & Fixtures>({
     newsPreviewPage: async ({page}, use) => {
         const newsPreviewPage = new NewsPreviewPage(page);
         use(newsPreviewPage);
+    },
+    navigation: async ({page}, use) => {
+        const navigation = new Navigation(page);
+        use(navigation);
     },
     baseClientUrl: async ({}, use) => {
         use(env.BASE_CLIENT_URL);

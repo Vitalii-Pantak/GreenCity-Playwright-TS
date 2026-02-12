@@ -3,12 +3,12 @@ import { BASE_USER } from "@tests/Data/users.data";
 import { Tags } from "@/enums/Tags";
 import { SUCCESS_NEWS_CREATION_MESSAGE } from "@tests/Data/messages.data";
 
-test('Create News', async({homePage, ecoNewsPage, createNewsPage}) => {
+test('Create News', async({homePage, ecoNewsPage, createNewsPage, navigation}) => {
     await homePage.page.setViewportSize({width: 1920, height: 1080});
-    homePage.navigate('');
-    const auth = await homePage.Header.clickSignIN();
+    await navigation.goTo();
+    const auth = await navigation.Header.clickSignIN();
     await auth.SignIn(BASE_USER.email, BASE_USER.password);
-    await homePage.Header.openEcoNews();
+    await navigation.Header.openEcoNews();
     await ecoNewsPage.createNews();
     await createNewsPage.enterTitle("a".repeat(30));
     await createNewsPage.enterContent("A".repeat(100));

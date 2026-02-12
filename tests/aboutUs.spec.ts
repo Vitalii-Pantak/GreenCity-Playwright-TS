@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from "@/fixtures/fixturePages";
 import {EcoNewsPage} from "../src/pages/EcoNewsPage";
 import {HomePage} from "../src/pages/HomePage";
 import { Menu } from "../src/enums/enums";
@@ -7,15 +7,15 @@ import { CreateNewsModalComponent } from "../src/components/CreateNewsModalCompo
 import { log } from "console";
 
 
-test.only("about us page", async ({ page }) => {
+test.only("about us page", async ({ page, navigation  }) => {
     await page.setViewportSize({width: 1480, height: 820})
     await page.goto("https://www.greencity.cx.ua/#/greenCity");
     const homePage = new HomePage(page);
-    const auth = await homePage.Header.clickSignIN();
+    const auth = await navigation.Header.clickSignIN();
     await auth.enterEmail("pantakvv@gmail.com");
     await auth.enterPassword("Gsdfuhoiewf123_");
     await auth.submit();
-    const aboutUs = await homePage.Header.openAboutUs();
+    const aboutUs = await navigation.Header.openAboutUs();
     const gallery = aboutUs.galleryComponent();
     // await page.waitForTimeout(2000);
     console.log(await gallery.getGalleryTitle());

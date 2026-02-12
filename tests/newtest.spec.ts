@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from "@/fixtures/fixturePages";
 import {EcoNewsPage} from "../src/pages/EcoNewsPage";
 import {HomePage} from "../src/pages/HomePage";
 import { Menu } from "../src/enums/enums";
@@ -7,11 +7,11 @@ import { CreateNewsModalComponent } from "../src/components/CreateNewsModalCompo
 import { MySpacePage } from "../src/MySpace/MySpacePage";
 import { MySpaceHabbitsTabPage } from "../src/MySpace/MySpaceHabbitsTabPage";
 
-test("has title", async ({ page }) => {
+test("has title", async ({ page, navigation }) => {
     await page.goto("https://www.greencity.cx.ua/#/greenCity");
     const homePage = new HomePage(page)
     const ecopage = new EcoNewsPage(page)
-    await homePage.Header.openEcoNews();
+    await navigation.Header.openEcoNews();
     // await ecopage.navigate();
     const news1 = ecopage.getNews(17);
     console.log(await news1.getTitle());
@@ -25,11 +25,11 @@ test("has title", async ({ page }) => {
 
 });
 
-test.only("has profile", async ({ page }) => {
+test.only("has profile", async ({ page, navigation }) => {
     await page.setViewportSize({width: 1920, height: 1080})
     await page.goto("https://www.greencity.cx.ua/#/greenCity");
     const homePage = new HomePage(page);
-    const auth = await homePage.Header.clickSignIN();
+    const auth = await navigation.Header.clickSignIN();
     await auth.enterEmail("pantakvv@gmail.com");
     await auth.enterPassword("Gsdfuhoiewf123_");
     await auth.submit();
@@ -57,15 +57,15 @@ test.only("has profile", async ({ page }) => {
 });
 
 
-test.only("has profile xx", async ({ page }) => {
+test.only("has profile xx", async ({ page, navigation }) => {
     await page.setViewportSize({width: 1920, height: 1080})
     await page.goto("https://www.greencity.cx.ua/#/greenCity");
     const homePage = new HomePage(page);
-    const auth = await homePage.Header.clickSignIN();
+    const auth = await navigation.Header.clickSignIN();
     await auth.enterEmail("pantakvv@gmail.com");
     await auth.enterPassword("Gsdfuhoiewf123_");
     await auth.submit();  
-    const space = await homePage.Header.openMySpace();
+    const space = await navigation.Header.openMySpace();
     const habbitsTab = await space.switchToMyHabbitsTab();
     // const habbitsTab = new MySpaceHabbitsTabPage(page);
     
@@ -74,23 +74,23 @@ test.only("has profile xx", async ({ page }) => {
 });
 
 
-test.only("has profile news", async ({ page }) => {
+test.only("has profile news", async ({ page, navigation }) => {
     await page.setViewportSize({width: 1920, height: 1080})
     await page.goto("https://www.greencity.cx.ua/#/greenCity");
     const homePage = new HomePage(page);
-    const auth = await homePage.Header.clickSignIN();
+    const auth = await navigation.Header.clickSignIN();
     await auth.enterEmail("pantakvv@gmail.com");
     await auth.enterPassword("Gsdfuhoiewf123_");
     await auth.submit();  
-    const space = await homePage.Header.openMySpace();
+    const space = await navigation.Header.openMySpace();
     const myNews = await space.switchToMyNewsTab();
     // const habbitsTab = new MySpaceHabbitsTabPage(page);
     // await page.waitForTimeout(1500);
     console.log(await myNews.getNewsCount());
     // await myNews.clickFavourities()
     // await page.pause();
-    await homePage.Header.openAboutUs();
-    await homePage.Header.openMySpace();
+    await navigation.Header.openAboutUs();
+    await navigation.Header.openMySpace();
     await space.switchToMyNewsTab();
         console.log(await myNews.getNewsCount());
     await myNews.clickFavourities()
