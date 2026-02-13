@@ -99,8 +99,6 @@ export class CreateNewsPage extends BasePage {
         await this.waitForVisible(this.publisherName);
     }
 
-
-    // !!!!!!!! TODO FIX DUBLICATE, same in EcoNewsPage
     private async getAllTags(): Promise<TagItem[]> {
         await this.waitForPage();
         const list: TagItem[] = [];
@@ -111,7 +109,6 @@ export class CreateNewsPage extends BasePage {
         return list;
     }
 
-    // !!!!!!!! TODO FIX DUBLICATE, same in EcoNewsPage
     async selectTags(arr: string[]): Promise<void> {
         for (const item of arr) {
             for (const tag of await this.getAllTags()) {
