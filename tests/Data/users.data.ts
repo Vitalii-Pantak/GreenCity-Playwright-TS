@@ -7,6 +7,7 @@ export const BASE_USER = {
 export const MY_USER = {
     email: "pantakvv@gmail.com",
     password: "Gsdfuhoiewf123_"
+    // newpass: "A2sdfnkjlsd_134!"
 }
 
 export const REGISTER_USER = {

@@ -37,11 +37,10 @@ export class EcoNewsClient {
     }
 
     /**
-     * 
      * @param token - authtoken
      * @param data - Interface * title :string, text: string, tags: string[],  Optional * shortInfo: string, source: string
      * @param imagePath - string * optional
-     * @returns 
+     * @returns APIResponse
      */
     async updateNews(id: number, token: string, data: UpdateEcoNewsDto, imagePath?: string): Promise<APIResponse> {
         const response = await this.request.put(this.path + "/" + id, {
@@ -59,11 +58,10 @@ export class EcoNewsClient {
     }
 
     /**
-     * 
      * @param token - authtoken
      * @param data - Interface * title :string, text: string, tags: string[],  Optional * shortInfo: string, source: string
      * @param imagePath - string * optional
-     * @returns 
+     * @returns APIResponse
      */
     async addNews(token: string, data: EcoNewsDto, imagePath?: string): Promise<APIResponse> {
         const response = await this.request.post(this.path, {
@@ -100,6 +98,14 @@ export class EcoNewsClient {
         return await this.request.get(`${this.path}/relevance-enabled`);
     }
 
+    /**
+     * @param tags 
+     * @param title 
+     * @param author 
+     * @param pageIndex 
+     * @param size 
+     * @returns APIResponse
+     */
     async findByRelevant(tags?: string[], title?: string, author?: string, pageIndex?: number, size?: number): Promise<APIResponse> {
         const params: Record<string, any> = {};
         // const params = Object.entries({ tags, title, author, pageIndex, size }).filter(([_, type]) => type !== undefined)
@@ -111,5 +117,29 @@ export class EcoNewsClient {
         if (size !== undefined) params.size = size;        
 
         return await this.request.get(this.path, {params});
+    }
+
+    async likeRemoveLike(id: number, token: string): Promise<APIResponse> {
+        return await this.request.post(this.path + "/" + id + "/likes", 
+            {headers: { Authorization: token }});
+    }
+
+    async dislikeRemoveDislike(id: number, token: string): Promise<APIResponse> {
+        return await this.request.post(this.path + "/" + id + "/dislikes",
+            {headers: { Authorization: token }});
+    }
+
+    async addToFavorites(id: number, token: string): Promise<APIResponse> {
+        return await this.request.post(this.path + "/" + id + "/favorites",
+            {headers: { Authorization: token }});
+    }
+
+    async removeFromFavorites(id: number, token: string): Promise<APIResponse> {
+        return await this.request.delete(this.path + "/" + id + "/favorites",
+            {headers: { Authorization: token }});
+    }
+
+    async getRecommendedNews(id: number): Promise<APIResponse> {
+        return await this.request.get(this.path + "/" + id);
     }
 } 
