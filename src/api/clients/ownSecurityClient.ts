@@ -1,26 +1,24 @@
 import { APIRequestContext, APIResponse } from "@playwright/test";
-import { ref } from "node:process";
+import env from "config/env";
 
 
 export class OwnSecurityClient {
     private request: APIRequestContext;
-    private path: string = "https://greencity-user.greencity.cx.ua/ownSecurity";
+    private path: string = env.API_BASE_USER_URL;
+    private authToken!: string;
 
     constructor(request: APIRequestContext) {
-        this.request = request
+        this.request = request;
     }
 
-    async signIn(email: string, password: string, projectName: string) {
+    async signIn(email: string, password: string, projectName: string): Promise<APIResponse> {
         const response =  await this.request.post(this.path + "/signIn", {data: {email, password, projectName}});
         const responseJSON = await response.json();
-        const status = await responseJSON.status();
-        const authToken = responseJSON.accessToken
-        const refreshToken = responseJSON.refreshToken
-        return {status, authToken, refreshToken}
+        this.authToken = "Bearer " + responseJSON.accessToken
+        return response;
     }
     
-    async getToken(email: string, password: string, projectName: string): Promise<string> {
-        const token = (await this.signIn(email, password, projectName)).authToken
-        return token;
+    async getToken(): Promise<string> {
+        return this.authToken;
     }
 } 

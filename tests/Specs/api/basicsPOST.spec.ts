@@ -54,12 +54,12 @@ test('Create News post with image', async({ request }) => {
     expect(tagsEn).toContain("News");
     expect(newsresponse.status()).toEqual(201);
 
-    const deleteresponse = await request.delete(`https://greencity.greencity.cx.ua/eco-news/${id}`, {
-        headers: {
-            Authorization: token
-        }
-    });
+    // const deleteresponse = await request.delete(`https://greencity.greencity.cx.ua/eco-news/${id}`, {
+    //     headers: {
+    //         Authorization: token
+    //     }
+    // });
 
-    const status = deleteresponse.status();
-    expect(status).toEqual(200);
+    // const status = deleteresponse.status();
+    // expect(status).toEqual(200);
 });

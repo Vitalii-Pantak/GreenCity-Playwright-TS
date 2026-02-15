@@ -1,9 +1,11 @@
-import { APIRequestContext, APIResponse } from "@playwright/test";
+import { APIRequestContext, APIResponse, expect } from "@playwright/test";
 import fs from "fs";
+import env from "config/env";
+import { EcoNewsDto, UpdateEcoNewsDto } from "../models/ecoNewsModel";
 
 export class EcoNewsClient {
     private request: APIRequestContext;
-    private path: string = "https://greencity.greencity.cx.ua/eco-news";
+    private path: string =  env.API_BASE_URL + "/eco-news";
 
     constructor(request: APIRequestContext) {
         this.request = request;
@@ -13,30 +15,101 @@ export class EcoNewsClient {
         return await this.request.get(this.path + "/" + id);
     }
 
-    async getResponse(id: number): Promise<JSON> {
+    async getJsonResponse(id: number): Promise<JSON> {
         return (await this.getById(id)).json();
     }
 
-    // async updateNews(id: number): Promise<APIResponse> {
-    // }
+    async getNewsTags(): Promise<APIResponse> {
+        const response = await this.request.get(this.path + "/" + "tags");
+        return response;
+    }
 
-    async addNews(token: string) {
-        const response = await this.request.post("https://greencity.greencity.cx.ua/eco-news", {
-            headers: {
-                Authorization: token
-            },
+    /**     
+     * @param token 
+     * @param id 
+     * @returns APIResponse
+     */
+    async deleteNewsById(token: string, id: number): Promise<APIResponse> {
+        return await this.request.delete(
+            this.path + "/" + id, {
+            headers: { Authorization: token }
+        });
+    }
+
+    /**
+     * 
+     * @param token - authtoken
+     * @param data - Interface * title :string, text: string, tags: string[],  Optional * shortInfo: string, source: string
+     * @param imagePath - string * optional
+     * @returns 
+     */
+    async updateNews(id: number, token: string, data: UpdateEcoNewsDto, imagePath?: string): Promise<APIResponse> {
+        const response = await this.request.put(this.path + "/" + id, {
+            headers: { Authorization: token },
             multipart: {
                 image: {
-                    name: "test.jpg",
+                    name: imagePath ? imagePath.split('\\').pop() || "testImg.jpg" : "testImg.jpg",
                     mimeType: "image/jpeg",
-                    buffer: fs.readFileSync("C:\\Users\\Unstop\\Desktop\\403.jpg")
+                    buffer: fs.readFileSync(imagePath || "C:\\Users\\Unstop\\Desktop\\403.jpg")
                 },
-                addEcoNewsDtoRequest: JSON.stringify({
-                    title: "WOOF",
-                    text: "WWWWWWWWWWWOOOOOOOOOOOOOOOOOOOOOF",
-                    tags: ["News"],          
-                })     
+                updateEcoNewsDto: JSON.stringify(data) 
             },
         }); 
+        return response;
+    }
+
+    /**
+     * 
+     * @param token - authtoken
+     * @param data - Interface * title :string, text: string, tags: string[],  Optional * shortInfo: string, source: string
+     * @param imagePath - string * optional
+     * @returns 
+     */
+    async addNews(token: string, data: EcoNewsDto, imagePath?: string): Promise<APIResponse> {
+        const response = await this.request.post(this.path, {
+            headers: { Authorization: token },
+            multipart: {
+                image: {
+                    name: imagePath ? imagePath.split('\\').pop() || "testImg.jpg" : "testImg.jpg",
+                    mimeType: "image/jpeg",
+                    buffer: fs.readFileSync(imagePath || "C:\\Users\\Unstop\\Desktop\\403.jpg")
+                },
+                addEcoNewsDtoRequest: JSON.stringify(data) 
+            },
+        }); 
+        return response;
+    }
+
+    async getNewsSummary(id: number): Promise<APIResponse> {
+        return await this.request.get(this.path + "/" + id);
+    }
+
+    async getPublishedNewsCount(): Promise<APIResponse> {
+        return await this.request.get(this.path + "/count");
+    }
+
+    async getLikesCount(id: number): Promise<APIResponse> {
+        return await this.request.get(`${this.path}/${id}/likes/count`);
+    }   
+
+    async getDislikeCount(id: number): Promise<APIResponse> {
+        return await this.request.get(`${this.path}/${id}/dislikes/count`);
+    }   
+
+    async isRelevanceEnabled(): Promise<APIResponse> {
+        return await this.request.get(`${this.path}/relevance-enabled`);
+    }
+
+    async findByRelevant(tags?: string[], title?: string, author?: string, pageIndex?: number, size?: number): Promise<APIResponse> {
+        const params: Record<string, any> = {};
+        // const params = Object.entries({ tags, title, author, pageIndex, size }).filter(([_, type]) => type !== undefined)
+
+        if (tags) params.tags = tags.join(',');
+        if (title) params.title = title;
+        if (author) params.author = author;
+        if (pageIndex !== undefined) params.pageIndex = pageIndex;
+        if (size !== undefined) params.size = size;        
+
+        return await this.request.get(this.path, {params});
     }
 } 
