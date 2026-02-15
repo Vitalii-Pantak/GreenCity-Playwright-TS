@@ -1,6 +1,7 @@
 export const BASE_USER = {
     email: "testtestovich611@gmail.com",
-    password: "!Testtestovich611!"
+    password: "!Testtestovich611!",
+    projectName: "GREENCITY"
 }
 
 export const MY_USER = {
