@@ -1,3 +1,4 @@
+import { CommentsClient } from "@/api/clients/commentsClient";
 import { EcoNewsClient } from "@/api/clients/ecoNewsClient";
 import { OwnSecurityClient } from "@/api/clients/ownSecurityClient";
 import { Tags } from "@/enums/Tags";
@@ -47,12 +48,34 @@ test("Add news , update news, delete news", async ({ request }) => {
     // const findby = await newsClient.findByRelevant(["News", "Ads"],);
     // const findbyJSON = await findby.json();
     // console.log(findbyJSON)
-    await newsClient.likeRemoveLike(833, token)
-    console.log(token)
-    const upd = await userClient.updateAccessToken("GREENCITY");
-    const updJSON = await upd.json();
-    console.log(updJSON)
-    const res = await userClient.changePassword("Gsdfuhoiewf123_", token)
+    // await newsClient.likeRemoveLike(833, token)
+    // console.log(token)
+    // const upd = await userClient.updateAccessToken("GREENCITY");
+    // const updJSON = await upd.json();
+    // console.log(updJSON)
+    // const res = await userClient.changePassword("Gsdfuhoiewf123_", token)
     
-    console.log(res)
+    // console.log(res)
+});
+
+
+
+test("Comments", async({ request }) => {
+    const userClient = new OwnSecurityClient(request);
+    const commentsClient = new CommentsClient(request);
+    await userClient.signIn(BASE_USER.email, BASE_USER.password, BASE_USER.projectName);
+    const token = userClient.getAccessToken();
+    // console.log(token)
+    // const comment = await commentsClient.getComment(2071, token);
+    // const commentJSON = await comment.json()
+    // console.log(commentJSON)
+
+    // await commentsClient.updateComment(2071, token, "12312313")
+    // const response = await commentsClient.addComment(2062, token, "123");
+    // const responseJSON = await response.json()
+    // const id = responseJSON.id
+    // console.log(id)
+    // await commentsClient.deleteComment(2075, token)
+    // await commentsClient.likeUnlikeComment(2079, token)
+    await commentsClient.dislikeComment(2079, token)
 });
