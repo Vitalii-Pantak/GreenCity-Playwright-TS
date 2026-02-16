@@ -64,13 +64,17 @@ export class SignUpModal extends AuthModalBasePage {
      * @param username
      * @param password 
      * @param confirmPassword 
+     * @param submit set true to enable auto submit, default is false 
+     * 
      */
-    async SignUp(email: string, username: string, password: string, confirmPassword: string): Promise<void> {
+    async SignUp(email: string, username: string, password: string, confirmPassword: string, submit: boolean = false): Promise<void> {
         await this.enterEmail(email);
         await this.enterUserName(username);
         await this.enterPassword(password);
         await this.enterConfirmPassword(confirmPassword);
-        await this.submit();
+        if (submit) {
+            await this.submit();
+        }
     }
 
     async isEmailErrorOccured(): Promise<boolean> {
@@ -89,5 +93,15 @@ export class SignUpModal extends AuthModalBasePage {
 
     async isConfirmPasswordErrorOccured(): Promise<boolean> {
         return await this.confirmPasswordError.isVisible();
+    }
+
+    async isFormValid(): Promise<boolean> {
+        const formErrors: boolean[] = [];
+        formErrors.push(await this.isEmailErrorOccured(),
+                        await this.isPasswordErrorOccured(),
+                        await this.isUsernameErrorOccured(),
+                        await this.isConfirmPasswordErrorOccured());
+        const status = formErrors.every(flag => flag === false);   
+        return status;
     }
 }

@@ -40,6 +40,7 @@ export abstract class AuthModalBasePage extends BasePage {
     }
 
     async isSubmitEnabled(): Promise<boolean> {
+        await this.triggerErrors();
         return await this.submitBtn.isEnabled();
     }
 

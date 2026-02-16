@@ -22,6 +22,8 @@
     "@playwright/test": "^1.57.0",
     "@types/dotenv": "^6.1.1",
     "@types/node": "^25.0.3",
+    "allure-commandline": "^2.36.0",
+    "allure-playwright": "^3.4.5",
     "eslint": "^9.39.2",
     "eslint-plugin-playwright": "^2.4.0",
     "typescript": "^5.9.3",

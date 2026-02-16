@@ -11,7 +11,14 @@ export const MY_USER = {
 }
 
 export const REGISTER_USER = {
-    email: "asldhlaksjd@woof.com",
-    username: "goodboiiii",
-    password: "asldjgkasd!2_asdA",
+    email: "asldhldaakvsjd@woof.com",
+    username: "goodbdaoiiivi",
+    password: "asldjgkaaavsd!2_asdA",
+}
+
+export const NOT_VALID_USER = {
+    email: "&?  !123+",
+    username: " asd ! -",
+    password: "asdasd _ hello",
+    projectName: "random"
 }

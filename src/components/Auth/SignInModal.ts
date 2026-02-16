@@ -48,10 +48,12 @@ export class SignInModal extends AuthModalBasePage {
      * @param email 
      * @param password 
      */
-    async SignIn(email: string, password: string): Promise<void> {
+    async SignIn(email: string, password: string, submit: boolean = true): Promise<void> {
         await this.enterEmail(email);
         await this.enterPassword(password);
-        await this.submit();
+        if (submit) {
+            await this.submit();
+        }
     }
 
     async isEmailErrorOccured(): Promise<boolean> {
@@ -60,5 +62,13 @@ export class SignInModal extends AuthModalBasePage {
 
     async isPasswordErrorOccured(): Promise<boolean> {
         return await this.passwordError.isVisible();
+    }
+
+    async isFormValid(): Promise<boolean> {
+        const formErrors: boolean[] = [];
+        formErrors.push(await this.isEmailErrorOccured(),
+                        await this.isPasswordErrorOccured());
+        const status = formErrors.every(flag => flag === false);   
+        return status;
     }
 }

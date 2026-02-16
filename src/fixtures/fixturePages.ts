@@ -1,5 +1,6 @@
 import { test as base, expect as baseExpect } from "@playwright/test";
 import env from "config/env";
+import { MySpacePage } from "@/MySpace";
 import { AboutUsPage,
          CreateNewsPage,
          EcoNewsPage,
@@ -13,7 +14,8 @@ type Pages = {
     createNewsPage: CreateNewsPage,
     ecoNewsPage: EcoNewsPage,
     newsPreviewPage: NewsPreviewPage,
-    navigation: Navigation
+    navigation: Navigation,
+    mySpacePage: MySpacePage,
 }
 
 type Fixtures = {
@@ -44,6 +46,10 @@ export const test = base.extend<Pages & Fixtures>({
     navigation: async ({page}, use) => {
         const navigation = new Navigation(page);
         use(navigation);
+    },
+    mySpacePage: async ({page}, use) => {
+        const mySpacePage = new MySpacePage(page);
+        use(mySpacePage);
     },
     baseClientUrl: async ({}, use) => {
         use(env.BASE_CLIENT_URL);
