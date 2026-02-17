@@ -2,6 +2,10 @@ import { Page, Locator } from "@playwright/test";
 import { BasePage } from "@/pages/Base";
 import { NewsPreviewPage } from "@/pages";
 import { TagItem, CreateNewsModalComponent } from "@/components";
+import { BASE_IMAGE_1 } from "@tests/Data/images.data";
+import { CreateNewsData } from "@/models/models";
+import { NewsData } from "@/models/types";
+import { getCurrentDate } from "@/utils/utils";
 
 export class CreateNewsPage extends BasePage {
     private title: Locator;
@@ -20,6 +24,7 @@ export class CreateNewsPage extends BasePage {
     private tagsList: Locator;
     private cropButtons: Locator;
     private submitButtons: Locator;
+    private browseImageButton: Locator;
 
     constructor(page: Page) {
         super(page);
@@ -39,6 +44,7 @@ export class CreateNewsPage extends BasePage {
         this.publisherName = page.locator(".date span").nth(3);
         this.warningPopUp = page.locator("app-warning-pop-up");
         this.tagsList = page.locator("button.tag-button");
+        this.browseImageButton = page.getByText('browse');
     }
 
     async getMainTitle(): Promise<string> {
@@ -72,9 +78,12 @@ export class CreateNewsPage extends BasePage {
     async clickImageCancel(): Promise<void> {
         await this.imageCancenlBtn.click();
     }
-
+    
     async clickImageSubmit(): Promise<void> {
-        await this.imageSubmitBtn.click();
+        while (!(await this.imageSubmitBtn.isDisabled())) {
+            await this.imageSubmitBtn.click();
+            await this.page.waitForTimeout(1000);
+        }
     }
 
     async clickCancel(): Promise<CreateNewsModalComponent> {
@@ -109,6 +118,16 @@ export class CreateNewsPage extends BasePage {
         return list;
     }
 
+    async getTagsList(): Promise<string[]> {
+        const result: string[] = [];
+        for (const tag of await this.getAllTags()) {
+            if (await tag.isSelected()) {
+                result.push(await tag.getTagName());
+            }
+        }
+        return result;
+    }
+
     async selectTags(arr: string[]): Promise<void> {
         for (const item of arr) {
             for (const tag of await this.getAllTags()) {
@@ -117,6 +136,59 @@ export class CreateNewsPage extends BasePage {
                 }
             }
         }
+    }
+
+    async selectImage(path?: string): Promise<void> {
+        const defaultImage = BASE_IMAGE_1;
+        const imageUploadPath = path ? path : defaultImage;
+        if (!imageUploadPath) return;
+        try {
+            await this.browseImageButton.setInputFiles(imageUploadPath);
+        } catch (error) {            
+            throw new Error("Error loading file: " + error);
+        } 
+        // await this.clickImageSubmit();
+    }
+
+    /**    
+     * @param title - string 
+     * @param content - string
+     * @param tags - string []
+     * @param sourceLink - ? source link
+     * @param imageLink - ? image path 
+     */
+    async createNews(data: CreateNewsData): Promise<void> {
+        await this.enterTitle(data.title);
+        await this.enterContent(data.content);
+        await this.selectTags(data.tags);
+        if (data.sourceLink !== undefined) await this.enterSource(data.sourceLink);
+        if (data.imageLink !== undefined) await this.selectImage(data.imageLink);
+    }
+
+    async getTitleFieldText(): Promise<string> {
+        return (await this.titleField.inputValue()).trim();
+    }
+
+    async getSourceFieldText(): Promise<string> {
+        return (await this.sourceField.inputValue()).trim();
+    }
+
+    async getContentFieldText(): Promise<string> {
+        return (await this.contentField.innerText()).trim();
+    }
+
+    async getFullData(): Promise<NewsData> {
+        const title = await this.getTitleFieldText();
+        const content = await this.getContentFieldText();
+        const tags = await this.getTagsList();
+        const source = await this.getSourceFieldText();
+        const author = await this.getPublisherName();
+        const publishDate = await this.getPublishDate();
+        return { title, content, tags, source, author, publishDate }; 
+    }
+
+    getCurrentDate(): string {
+        return getCurrentDate()
     }
 }
 

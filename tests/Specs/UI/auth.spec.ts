@@ -35,7 +35,7 @@ test("User Registration", {tag: ["@positive", "@smoke"]}, async({ navigation, ho
         await auth.SignUp(REGISTER_USER.email,
                          REGISTER_USER.username,
                          REGISTER_USER.password, 
-                         REGISTER_USER.password, false);                         
+                         REGISTER_USER.password);                         
     });
 
     await step("Verify form data is valid and submit button is enabled", async() => {
@@ -73,7 +73,7 @@ test("Sign In negative scenario", {tag: ["@negative", "@smoke"]}, async({ naviga
 
 });
 
-test("User Registration negative scenario", {tag: ["@negative", "@smoke"]}, async({ navigation, homePage }) => {
+test("User Registration negative scenario", {tag: ["@negative", "@smoke"]}, async({ navigation }) => {
     severity("normal");
     epic("Authentication");
     feature("Registration");
@@ -83,8 +83,7 @@ test("User Registration negative scenario", {tag: ["@negative", "@smoke"]}, asyn
         await auth.SignUp(NOT_VALID_USER.email,
                          NOT_VALID_USER.username,
                          NOT_VALID_USER.password, 
-                         NOT_VALID_USER.password,
-                         false);                         
+                         NOT_VALID_USER.password);                         
     });
 
     await step("Verify form data is valid and submit button is enabled", async() => {

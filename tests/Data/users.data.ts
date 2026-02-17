@@ -1,7 +1,8 @@
 export const BASE_USER = {
     email: "testtestovich611@gmail.com",
     password: "!Testtestovich611!",
-    projectName: "GREENCITY"
+    projectName: "GREENCITY",
+    username: "NameForTest611"
 }
 
 export const MY_USER = {
@@ -11,9 +12,9 @@ export const MY_USER = {
 }
 
 export const REGISTER_USER = {
-    email: "asldhldaakvsjd@woof.com",
-    username: "goodbdaoiiivi",
-    password: "asldjgkaaavsd!2_asdA",
+    email: "aslavdahldaakvsjd@woof.com",
+    username: "govaoadbdaoiiivi",
+    password: "asldjaavsd!2_asdA",
 }
 
 export const NOT_VALID_USER = {

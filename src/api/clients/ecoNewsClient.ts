@@ -2,6 +2,8 @@ import { APIRequestContext, APIResponse, expect } from "@playwright/test";
 import fs from "fs";
 import env from "config/env";
 import { EcoNewsDto, UpdateEcoNewsDto } from "../models/ecoNewsModel";
+import { FindNewsParams } from "../models/interfaces";
+import { paramBuilder } from "@/utils/utils";
 
 export class EcoNewsClient {
     private request: APIRequestContext;
@@ -141,5 +143,11 @@ export class EcoNewsClient {
 
     async getRecommendedNews(id: number): Promise<APIResponse> {
         return await this.request.get(this.path + "/" + id);
+    }
+
+    async findByPage(token: string, data: FindNewsParams) {
+        return await this.request.get(this.path,
+            {headers: {Authorization: token},
+            params: paramBuilder(data) });
     }
 } 
