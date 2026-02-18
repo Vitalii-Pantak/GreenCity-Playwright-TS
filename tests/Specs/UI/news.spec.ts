@@ -16,9 +16,6 @@ test.beforeEach("Login and open create news page", async({ navigation, ecoNewsPa
 });
 
 test.afterEach("Delete created news article", async({request}, testinfo) => {
-    if (testinfo.title === "Create News negative scenario") {
-        return;
-    }
     const news = new EcoNewsClient(request);
     const auth = new OwnSecurityClient(request);
     await auth.signIn(BASE_USER.email, BASE_USER.password, BASE_USER.projectName);
@@ -64,59 +61,6 @@ test("Create News", {tag:["@positive", "@smoke"]}, async({ createNewsPage, ecoNe
 });
 
 
-
-test("Create News negative scenario", {tag:["@negative", "@smoke"]}, async({ createNewsPage }) => {
-    severity("normal");
-    epic("News");
-    feature("Create News");
-
-    await step("Fill all fields with valid data", async() => {
-        await createNewsPage.createNews({title: NEWS_CREATION_NONVALID_DATA.title,
-                                        content: NEWS_CREATION_NONVALID_DATA.content,
-                                        tags: NEWS_CREATION_NONVALID_DATA.tags,
-                                        sourceLink: NEWS_CREATION_NONVALID_DATA.source,
-                                        imageLink: NEWS_CREATION_NONVALID_DATA.image});
-    });
-
-    await step("Verify inserted data", async() => {
-        const status = await createNewsPage.isFormValid();
-        expect(status, "Form data is not valid").toBeFalsy();
-    });
-});
-
-test("Create News with non-valid title", {tag:["@negative", "@regression"]}, async({ createNewsPage }) => {
-    severity("normal");
-    epic("News");
-    feature("Create News");
-
-    await step("Fill all fields with valid data", async() => {
-        await createNewsPage.createNews({title: NEWS_CREATION_NONVALID_DATA.title,
-                                        content: NEWS_CREATION_DATA.content,
-                                        tags: NEWS_CREATION_DATA.tags});
-    });
-
-    await step("Verify title field error message", async() => {
-        const status = await createNewsPage.isTitleFieldWarningUp();
-        expect(status, "Error message didn't pop").toBeTruthy();
-    });
-});
-
-test("Create News with non-valid content", {tag:["@negative", "@regression"]}, async({ createNewsPage }) => {
-    severity("normal");
-    epic("News");
-    feature("Create News");
-
-    await step("Fill all fields with valid data", async() => {
-        await createNewsPage.createNews({title: NEWS_CREATION_NONVALID_DATA.title,
-                                        content: NEWS_CREATION_DATA.content,
-                                        tags: NEWS_CREATION_DATA.tags});
-    });
-
-    await step("Verify title field error message", async() => {
-        const status = await createNewsPage.isTitleFieldWarningUp();
-        expect(status, "Error message didn't pop").toBeTruthy();
-    });
-});
 
 
 

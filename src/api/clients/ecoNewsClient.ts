@@ -4,6 +4,7 @@ import env from "config/env";
 import { EcoNewsDto, UpdateEcoNewsDto } from "../models/ecoNewsModel";
 import { FindNewsParams } from "../models/interfaces";
 import { paramBuilder } from "@/utils/utils";
+import { BASE_IMAGE_1 } from "@tests/Data/images.data";
 
 export class EcoNewsClient {
     private request: APIRequestContext;
@@ -51,7 +52,7 @@ export class EcoNewsClient {
                 image: {
                     name: imagePath ? imagePath.split('\\').pop() || "testImg.jpg" : "testImg.jpg",
                     mimeType: "image/jpeg",
-                    buffer: fs.readFileSync(imagePath || "C:\\Users\\Unstop\\Desktop\\403.jpg")
+                    buffer: fs.readFileSync(imagePath || BASE_IMAGE_1)
                 },
                 updateEcoNewsDto: JSON.stringify(data) 
             },
@@ -72,7 +73,7 @@ export class EcoNewsClient {
                 image: {
                     name: imagePath ? imagePath.split('\\').pop() || "testImg.jpg" : "testImg.jpg",
                     mimeType: "image/jpeg",
-                    buffer: fs.readFileSync(imagePath || "C:\\Users\\Unstop\\Desktop\\403.jpg")
+                    buffer: fs.readFileSync(imagePath || BASE_IMAGE_1)
                 },
                 addEcoNewsDtoRequest: JSON.stringify(data) 
             },
@@ -110,7 +111,6 @@ export class EcoNewsClient {
      */
     async findByRelevant(tags?: string[], title?: string, author?: string, pageIndex?: number, size?: number): Promise<APIResponse> {
         const params: Record<string, any> = {};
-        // const params = Object.entries({ tags, title, author, pageIndex, size }).filter(([_, type]) => type !== undefined)
 
         if (tags) params.tags = tags.join(',');
         if (title) params.title = title;
@@ -121,24 +121,27 @@ export class EcoNewsClient {
         return await this.request.get(this.path, {params});
     }
 
+    private async requestHelper(id: number, token: string, method: "post" | "delete", endpoint: string) {
+        const url = `${this.path}/${id}/${endpoint}`;
+        return await this.request[method](url, {headers: {Authorization: token}});
+    }
+
     async likeRemoveLike(id: number, token: string): Promise<APIResponse> {
-        return await this.request.post(this.path + "/" + id + "/likes", 
-            {headers: { Authorization: token }});
+        return await this.requestHelper(id, token, "post", "likes");
+        // return await this.request.post(this.path + "/" + id + "/likes", 
+        //     {headers: { Authorization: token }});
     }
 
     async dislikeRemoveDislike(id: number, token: string): Promise<APIResponse> {
-        return await this.request.post(this.path + "/" + id + "/dislikes",
-            {headers: { Authorization: token }});
+        return await this.requestHelper(id, token, "post", "dislikes");
     }
 
     async addToFavorites(id: number, token: string): Promise<APIResponse> {
-        return await this.request.post(this.path + "/" + id + "/favorites",
-            {headers: { Authorization: token }});
+        return await this.requestHelper(id, token, "post", "favorites");
     }
 
     async removeFromFavorites(id: number, token: string): Promise<APIResponse> {
-        return await this.request.delete(this.path + "/" + id + "/favorites",
-            {headers: { Authorization: token }});
+        return await this.requestHelper(id, token, "post", "favorites");
     }
 
     async getRecommendedNews(id: number): Promise<APIResponse> {

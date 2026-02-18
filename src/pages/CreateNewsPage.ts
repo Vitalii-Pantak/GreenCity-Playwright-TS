@@ -155,20 +155,13 @@ export class CreateNewsPage extends BasePage {
         } catch (error) {            
             throw new Error("Error loading file: " + error);
         } 
-        // await this.clickImageSubmit();
+        // await this.clickImageSubmit(); -> forces bug
     }
 
-    /**    
-     * @param title - string 
-     * @param content - string
-     * @param tags - string []
-     * @param sourceLink - ? source link
-     * @param imageLink - ? image path 
-     */
     async createNews(data: CreateNewsData): Promise<void> {
-        await this.enterTitle(data.title);
-        await this.enterContent(data.content);
-        await this.selectTags(data.tags);
+        if (data.title !== undefined) await this.enterTitle(data.title);
+        if (data.content !== undefined) await this.enterContent(data.content);
+        if (data.tags !== undefined) await this.selectTags(data.tags);
         if (data.sourceLink !== undefined) await this.enterSource(data.sourceLink);
         if (data.imageLink !== undefined) await this.selectImage(data.imageLink);
     }

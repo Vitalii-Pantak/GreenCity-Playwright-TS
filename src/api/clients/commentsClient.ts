@@ -1,4 +1,5 @@
 import { APIRequestContext, APIResponse } from "@playwright/test";
+import { BASE_IMAGE_4 } from "@tests/Data/images.data";
 import env from "config/env";
 import fs from "fs"
 
@@ -43,7 +44,7 @@ export class CommentsClient {
                 images: {
                     name: 'test.jpeg',
                     mimeType: 'image/jpeg',
-                    buffer: fs.readFileSync('C:/Users/Unstop/Desktop/test.jpeg')
+                    buffer: fs.readFileSync(BASE_IMAGE_4)
                 }
         }}); 
     }
