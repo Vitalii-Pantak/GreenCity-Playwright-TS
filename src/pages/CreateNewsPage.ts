@@ -5,7 +5,7 @@ import { TagItem, CreateNewsModalComponent } from "@/components";
 import { BASE_IMAGE_1 } from "@tests/Data/images.data";
 import { CreateNewsData } from "@/models/models";
 import { NewsData } from "@/models/types";
-import { getCurrentDate } from "@/utils/utils";
+import { getCurrentDate, isWarningAttributeUp } from "@/utils/utils";
 
 export class CreateNewsPage extends BasePage {
     private title: Locator;
@@ -25,6 +25,10 @@ export class CreateNewsPage extends BasePage {
     private cropButtons: Locator;
     private submitButtons: Locator;
     private browseImageButton: Locator;
+    private titleFieldWarning: Locator;
+    private sourceFieldWarning: Locator;
+    private contentFieldWarning: Locator;
+    private imageFieldWarning: Locator;
 
     constructor(page: Page) {
         super(page);
@@ -45,6 +49,10 @@ export class CreateNewsPage extends BasePage {
         this.warningPopUp = page.locator("app-warning-pop-up");
         this.tagsList = page.locator("button.tag-button");
         this.browseImageButton = page.getByText('browse');
+        this.titleFieldWarning = page.locator("span.field-info").first();
+        this.sourceFieldWarning = page.locator("span.field-info").last();
+        this.contentFieldWarning = page.locator("p.field-info");
+        this.imageFieldWarning = page.locator("app-drag-and-drop p.warning");
     }
 
     async getMainTitle(): Promise<string> {
@@ -189,6 +197,33 @@ export class CreateNewsPage extends BasePage {
 
     getCurrentDate(): string {
         return getCurrentDate()
+    }
+
+    async isTitleFieldWarningUp(): Promise<boolean> {
+        return await isWarningAttributeUp(this.titleFieldWarning);
+    }
+
+    async isImageFIeldWarningUp(): Promise<boolean> {
+        return await isWarningAttributeUp(this.imageFieldWarning);
+    }
+
+    async isSourceFieldWarningUp(): Promise<boolean> {
+        return await isWarningAttributeUp(this.sourceFieldWarning);
+    }
+
+    async isContentFieldWarningUp(): Promise<boolean> {
+        return await isWarningAttributeUp(this.contentFieldWarning);
+    }
+
+    async isFormValid() {
+        const statusList: boolean[] = [];
+        statusList.push(await this.isTitleFieldWarningUp(),
+                        await this.isSourceFieldWarningUp(),
+                        await this.isContentFieldWarningUp(),
+                        await this.isImageFIeldWarningUp(),
+                        !await this.isPublishButtonEnabled());  
+        const isValid = statusList.every(status => status === false);
+        return isValid;
     }
 }
 

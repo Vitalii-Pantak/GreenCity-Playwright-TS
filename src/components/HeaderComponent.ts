@@ -1,8 +1,7 @@
 import { Page, Locator } from "@playwright/test";
 import { BaseComponent } from "@/components/Base";
 import { SignUpModal, SignInModal } from "@/components";
-import { EcoNewsPage, AboutUsPage } from "@/pages";
-import { MySpacePage } from "@/MySpace";
+import { EcoNewsPage, AboutUsPage, MySpacePage } from "@/pages";
 import { Menu } from "@/enums/enums";
 
 export class HeaderComponent extends BaseComponent {

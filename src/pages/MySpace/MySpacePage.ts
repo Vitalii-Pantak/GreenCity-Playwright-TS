@@ -2,7 +2,7 @@ import { Page, Locator } from "@playwright/test";
 import { BasePage } from "@/pages/Base";
 import { MySpaceHabbitsTabPage,
          MySpaceEventsTabPage,
-         MySpaceNewsTabPage } from "@/MySpace";
+         MySpaceNewsTabPage } from "@/pages/MySpace";
 
 export class MySpacePage extends BasePage {
     private profileName: Locator;

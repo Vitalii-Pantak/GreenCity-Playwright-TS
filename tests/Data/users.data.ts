@@ -12,8 +12,8 @@ export const MY_USER = {
 }
 
 export const REGISTER_USER = {
-    email: "aslavdahldaakvsjd@woof.com",
-    username: "govaoadbdaoiiivi",
+    email: "aslatvdahldaakvsjd@woof.com",
+    username: "govaoadbdatoiiivi",
     password: "asldjaavsd!2_asdA",
 }
 

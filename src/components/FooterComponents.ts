@@ -1,7 +1,6 @@
 import { Locator, Page } from "@playwright/test";
 import { BaseComponent } from "@/components/Base";
-import { EcoNewsPage, AboutUsPage } from "@/pages";
-import { MySpacePage } from "@/MySpace";
+import { EcoNewsPage, AboutUsPage, MySpacePage } from "@/pages";
 import { Menu } from "@/enums/enums";
 
 export class FooterComponent extends BaseComponent {
