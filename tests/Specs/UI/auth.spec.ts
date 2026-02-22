@@ -2,6 +2,7 @@ import { test, expect } from "@/fixtures/fixturePages";
 import { SUCCESS_REGISTRATION_MESSAGE } from "@tests/Data/messages.data";
 import { BASE_USER, NOT_VALID_USER, REGISTER_USER } from "@tests/Data/users.data";
 import { feature, tag, step, severity, epic, tags } from "allure-js-commons";
+import env from "config/env";
 
 test.beforeEach("Navigate To Greencity", async({navigation}) => {
     await navigation.goTo();
@@ -14,7 +15,7 @@ test("Sign In", {tag: ["@positive", "@smoke"]}, async({ navigation, mySpacePage 
 
     await step("Fill in the data", async() => {
         const auth = await navigation.Header.clickSignIN();
-        await auth.SignIn(BASE_USER.email, BASE_USER.password);
+        await auth.SignIn(env.USER_EMAIL, env.USER_PASSWORD);
         const isFormValid = await auth.isFormValid();
         expect(isFormValid, "Form errors should not be popped").toBeTruthy();
     });
