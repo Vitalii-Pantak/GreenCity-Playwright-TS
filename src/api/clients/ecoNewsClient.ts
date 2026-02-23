@@ -1,10 +1,10 @@
-import { APIRequestContext, APIResponse, expect } from "@playwright/test";
-import fs from "fs";
-import env from "config/env";
+import { APIRequestContext, APIResponse } from "@playwright/test";
 import { EcoNewsDto, UpdateEcoNewsDto } from "../models/ecoNewsModel";
 import { FindNewsParams } from "../models/interfaces";
 import { paramBuilder } from "@/utils/utils";
-import { BASE_IMAGE_1 } from "@tests/Data/images.data";
+import { BASE_IMAGE_1 } from "@tests/Data/images/images.data";
+import fs from "fs";
+import env from "config/env";
 
 export class EcoNewsClient {
     private request: APIRequestContext;

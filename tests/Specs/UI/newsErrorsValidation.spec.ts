@@ -1,7 +1,6 @@
 import { test, expect } from "@/fixtures/fixtureEcoNewsErrors";
-import { NEWS_CREATION_NONVALID_DATA } from "@tests/Data/news.data";
-import { BASE_USER } from "@tests/Data/users.data";
-import { feature, tag, step, severity, epic, tags } from "allure-js-commons";
+import { NON_VALID_NEWS_DATA } from "@tests/Data/news.data";
+import { feature, step, severity, epic } from "allure-js-commons";
 
 
 test.describe("Check correct errors validation in news creation feature", async() => {
@@ -13,7 +12,7 @@ test.describe("Check correct errors validation in news creation feature", async(
 
     test("Create News with non-valid title", {tag:["@negative", "@regression"]}, async({ createNewsPage }) => {    
         await step("Enter non-valid title", async() => {
-            await createNewsPage.createNews({title: NEWS_CREATION_NONVALID_DATA.title});
+            await createNewsPage.createNews({title: NON_VALID_NEWS_DATA.title});
         });
     
         await step("Verify title field error message", async() => {
@@ -24,7 +23,7 @@ test.describe("Check correct errors validation in news creation feature", async(
     
     test("Create News with non-valid content", {tag:["@negative", "@regression"]}, async({ createNewsPage }) => {    
         await step("Enter non-valid content", async() => {
-            await createNewsPage.createNews({content: NEWS_CREATION_NONVALID_DATA.content});
+            await createNewsPage.createNews({content: NON_VALID_NEWS_DATA.content});
         });
     
         await step("Verify content field error message", async() => {
@@ -35,7 +34,7 @@ test.describe("Check correct errors validation in news creation feature", async(
     
     test("Create News with non-valid image type", {tag:["@negative", "@regression"]}, async({ createNewsPage }) => {    
         await step("Select non-valid image type", async() => {
-            await createNewsPage.createNews({imageLink: NEWS_CREATION_NONVALID_DATA.image});
+            await createNewsPage.createNews({imageLink: NON_VALID_NEWS_DATA.image});
         });
     
         await step("Verify image field error message", async() => {
@@ -46,7 +45,7 @@ test.describe("Check correct errors validation in news creation feature", async(
     
     test("Create News with non-valid source link", {tag:["@negative", "@regression"]}, async({ createNewsPage }) => {    
         await step("Enter non-valid link in the source field", async() => {
-            await createNewsPage.createNews({sourceLink: NEWS_CREATION_NONVALID_DATA.source});
+            await createNewsPage.createNews({sourceLink: NON_VALID_NEWS_DATA.source});
         });
     
         await step("Verify image field error message", async() => {
@@ -57,11 +56,11 @@ test.describe("Check correct errors validation in news creation feature", async(
 
     test("Create News negative scenario ", {tag:["@negative", "@smoke"]}, async({ createNewsPage }) => {
         await step("Fill all fields with non-valid data", async() => {
-            await createNewsPage.createNews({title: NEWS_CREATION_NONVALID_DATA.title,
-                                            content: NEWS_CREATION_NONVALID_DATA.content,
-                                            tags: NEWS_CREATION_NONVALID_DATA.tags,
-                                            sourceLink: NEWS_CREATION_NONVALID_DATA.source,
-                                            imageLink: NEWS_CREATION_NONVALID_DATA.image});
+            await createNewsPage.createNews({title: NON_VALID_NEWS_DATA.title,
+                                            content: NON_VALID_NEWS_DATA.content,
+                                            tags: NON_VALID_NEWS_DATA.tags,
+                                            sourceLink: NON_VALID_NEWS_DATA.source,
+                                            imageLink: NON_VALID_NEWS_DATA.image});
         });
 
         await step("Verify inserted data", async() => {

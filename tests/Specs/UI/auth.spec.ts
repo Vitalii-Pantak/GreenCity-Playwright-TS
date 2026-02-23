@@ -1,7 +1,7 @@
 import { test, expect } from "@/fixtures/fixturePages";
 import { SUCCESS_REGISTRATION_MESSAGE } from "@tests/Data/messages.data";
-import { BASE_USER, NOT_VALID_USER, REGISTER_USER } from "@tests/Data/users.data";
-import { feature, tag, step, severity, epic, tags } from "allure-js-commons";
+import { NON_VALID_USER, REGISTER_USER } from "@tests/Data/users.data";
+import { feature, step, severity, epic } from "allure-js-commons";
 import env from "config/env";
 
 test.beforeEach("Navigate To Greencity", async({navigation}) => {
@@ -34,9 +34,9 @@ test("User Registration", {tag: ["@positive", "@smoke"]}, async({ navigation, ho
     const auth = await navigation.Header.clickSignUP();
     await step("Fill all fields with valid data", async() => {
         await auth.SignUp(REGISTER_USER.email,
-                         REGISTER_USER.username,
-                         REGISTER_USER.password, 
-                         REGISTER_USER.password);                         
+                          REGISTER_USER.username,
+                          REGISTER_USER.password, 
+                          REGISTER_USER.password);                         
     });
 
     await step("Verify form data is valid and submit button is enabled", async() => {
@@ -60,8 +60,8 @@ test("Sign In negative scenario", {tag: ["@negative", "@smoke"]}, async({ naviga
 
     const auth = await navigation.Header.clickSignIN();
     await step("Enter not-valid data", async() => {
-        await auth.SignIn(NOT_VALID_USER.email,
-                          NOT_VALID_USER.password,
+        await auth.SignIn(NON_VALID_USER.email,
+                          NON_VALID_USER.password,
                           false);
     });
 
@@ -81,10 +81,10 @@ test("User Registration negative scenario", {tag: ["@negative", "@smoke"]}, asyn
     
     const auth = await navigation.Header.clickSignUP();
     await step("Fill all fields with valid data", async() => {
-        await auth.SignUp(NOT_VALID_USER.email,
-                         NOT_VALID_USER.username,
-                         NOT_VALID_USER.password, 
-                         NOT_VALID_USER.password);                         
+        await auth.SignUp(NON_VALID_USER.email,
+                          NON_VALID_USER.username,
+                          NON_VALID_USER.password, 
+                          NON_VALID_USER.password);                         
     });
 
     await step("Verify form data is valid and submit button is enabled", async() => {

@@ -1,25 +1,21 @@
-export const BASE_USER = {
-    email: "testtestovich611@gmail.com",
-    password: "!Testtestovich611!",
-    projectName: "GREENCITY",
-    username: "NameForTest611"
-}
-
 export const MY_USER = {
     email: "pantakvv@gmail.com",
-    password: "Gsdfuhoiewf123_"
-    // newpass: "A2sdfnkjlsd_134!"
+    password: "A2sdfnkjlsd_134!"
 }
 
+let random_nums;
+random_nums = Math.floor(100000 + Math.random() * 900000)
+
 export const REGISTER_USER = {
-    email: "aslatvdahldaakvsjd@woof.com",
-    username: "govaoadbdatoiiivi",
+    email: random_nums + "ldaakvsjd@woof.com",
+    username: "bdatoiiivi" + random_nums,
     password: "asldjaavsd!2_asdA",
 }
 
-export const NOT_VALID_USER = {
+export const NON_VALID_USER = {
     email: "&?  !123+",
     username: " asd ! -",
     password: "asdasd _ hello",
     projectName: "random"
 }
+

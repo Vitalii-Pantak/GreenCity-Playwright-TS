@@ -2,7 +2,7 @@ import { Page, Locator } from "@playwright/test";
 import { BasePage } from "@/pages/Base";
 import { NewsPreviewPage } from "@/pages";
 import { TagItem, CreateNewsModalComponent } from "@/components";
-import { BASE_IMAGE_1 } from "@tests/Data/images.data";
+import { BASE_IMAGE_1 } from "@tests/Data/images/images.data";
 import { CreateNewsData } from "@/models/models";
 import { NewsData } from "@/models/types";
 import { getCurrentDate, isWarningAttributeUp } from "@/utils/utils";

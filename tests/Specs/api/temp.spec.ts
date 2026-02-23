@@ -2,8 +2,8 @@ import { CommentsClient } from "@/api/clients/commentsClient";
 import { EcoNewsClient } from "@/api/clients/ecoNewsClient";
 import { OwnSecurityClient } from "@/api/clients/ownSecurityClient";
 import { test, expect } from "@playwright/test";
-import { BASE_USER } from "@tests/Data/users.data";
 import fs from 'fs';
+import env from "config/env";
 
 test("Get news by id", async({ request }) => {
     const response = await request.get("https://greencity.greencity.cx.ua/eco-news/1554");
@@ -101,7 +101,7 @@ test('Create News post with image', async({ request }) => {
 test("Comments", async({ request }) => {
     const userClient = new OwnSecurityClient(request);
     const commentsClient = new CommentsClient(request);
-    await userClient.signIn(BASE_USER.email, BASE_USER.password, BASE_USER.projectName);
+    await userClient.signIn(env.USER_EMAIL, env.USER_PASSWORD, env.PROJECT_NAME);
     const token = userClient.getAccessToken();
     // console.log(token)
     // const comment = await commentsClient.getComment(2071, token);
@@ -128,7 +128,7 @@ test("News api test", async ({ request }) => {
 
 test("Securit api test", async({ request }) => {
     const client = new OwnSecurityClient(request);
-    await client.signIn(BASE_USER.email, BASE_USER.password, BASE_USER.projectName);
+    await client.signIn(env.USER_EMAIL, env.USER_PASSWORD, env.PROJECT_NAME);
     const token = client.getAccessToken();
     console.log(token);
 });

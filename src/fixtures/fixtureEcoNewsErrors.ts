@@ -1,8 +1,8 @@
 import { test as base, expect as baseExpect } from "@playwright/test";
-import { BASE_USER } from "@tests/Data/users.data";
 import { CreateNewsPage,
          Navigation,
          EcoNewsPage } from "@/pages";
+import env from "config/env";
 
 type TestOptions = {
     createNewsPage: CreateNewsPage,
@@ -15,7 +15,7 @@ export const test = base.extend<TestOptions>( {
         const ecoNewsPage = new EcoNewsPage(page);
         await navigation.goTo();
         const auth = await navigation.Header.clickSignIN();
-        await auth.SignIn(BASE_USER.email, BASE_USER.password);
+        await auth.SignIn(env.USER_EMAIL, env.USER_PASSWORD);
         await navigation.Header.openEcoNews();
         await ecoNewsPage.createNews();
         await use('');
