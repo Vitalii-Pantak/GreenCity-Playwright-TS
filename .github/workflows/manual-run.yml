@@ -1,0 +1,18 @@
+name: Manual Test Run
+
+on:
+  workflow_dispatch:
+    inputs:
+      test_type:
+        description: Select Test Category
+        required: true
+        type: choice
+        options:
+          - smoke
+          - regression
+
+jobs:
+  call_base:
+    uses: ./.github/workflows/playwright-base.yml
+    with:
+      test_type: ${{ github.event.inputs.test_type }}

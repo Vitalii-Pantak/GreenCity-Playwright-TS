@@ -22,7 +22,7 @@ export default defineConfig({
     baseURL: env.BASE_CLIENT_URL,
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
-    headless: env.HEADLESS,
+    headless: process.env.CI ? true : env.HEADLESS,
   },
 
   projects: [

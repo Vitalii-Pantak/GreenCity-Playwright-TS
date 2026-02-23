@@ -1,0 +1,12 @@
+name: Push Main Branch
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  call_base:
+    uses: ./.github/workflows/playwright-base.yml
+    with:
+      test_type: regression
+
