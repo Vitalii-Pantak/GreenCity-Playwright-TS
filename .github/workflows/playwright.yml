@@ -15,6 +15,17 @@ jobs:
   run-regression-tests:
     if: github.event.inputs.checkboxtitle == 'regression'
     runs-on: ubuntu-latest
+    env:
+      USER_EMAIL: ${{ secrets.USER_EMAIL }}
+      USER_PASSWORD: ${{ secrets.USER_PASSWORD }}
+      USER_NAME: ${{ secrets.USER_NAME }}
+      USER_ID: ${{ secrets.USER_ID }}
+      USER_LOCATION: ${{ secrets.USER_LOCATION }}
+      HEADLESS: ${{ secrets.HEADLESS }}
+      PROJECT_NAME: ${{ secrets.PROJECT_NAME }}
+      BASE_CLIENT_URL: ${{ secrets.BASE_CLIENT_URL }}
+      API_BASE_URL: ${{ secrets.API_BASE_URL }}
+      API_BASE_USER_URL: ${{ secrets.API_BASE_USER_URL }}
 
     steps:
       - name: Setup
