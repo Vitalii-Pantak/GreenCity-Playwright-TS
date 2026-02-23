@@ -26,7 +26,7 @@ export class HomePage extends BasePage {
         this.readAllNewsLink = page.getByRole("link", {name: "link to eco-news page"});
         this.statsSection = page.locator("#stats");
         this.newsSubscribeSection = page.locator("section#subscription");
-        this.snackBar = page.locator("div.mdc-snackbar__label");
+        this.snackBar = page.getByText("Congratulations! You have successfully", {exact: false})
         this.notifications = new NotificationsComponent(this.snackBar);
     }
 

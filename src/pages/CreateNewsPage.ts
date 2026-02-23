@@ -150,7 +150,7 @@ export class CreateNewsPage extends BasePage {
         const defaultImage = BASE_IMAGE_1;
         const imageUploadPath = path ? path : defaultImage;
         if (!imageUploadPath) return;
-        try {
+        try {            
             await this.browseImageButton.setInputFiles(imageUploadPath);
         } catch (error) {            
             throw new Error("Error loading file: " + error);
@@ -192,12 +192,15 @@ export class CreateNewsPage extends BasePage {
         return getCurrentDate()
     }
 
-    async isTitleFieldWarningUp(): Promise<boolean> {
+    async isTitleFieldWarningUp(): Promise<boolean> {        
         return await isWarningAttributeUp(this.titleFieldWarning);
     }
 
     async isImageFIeldWarningUp(): Promise<boolean> {
-        return await isWarningAttributeUp(this.imageFieldWarning);
+        if (!await this.imageSubmitBtn.isVisible()) {
+            return await isWarningAttributeUp(this.imageFieldWarning);
+        }
+        return false
     }
 
     async isSourceFieldWarningUp(): Promise<boolean> {
@@ -217,6 +220,17 @@ export class CreateNewsPage extends BasePage {
                         !await this.isPublishButtonEnabled());  
         const isValid = statusList.every(status => status === false);
         return isValid;
+    }
+
+    async isFormValid2() {
+        const statusList: boolean[] = [];
+        statusList.push(await this.isTitleFieldWarningUp(),
+                        await this.isSourceFieldWarningUp(),
+                        await this.isContentFieldWarningUp(),
+                        await this.isImageFIeldWarningUp(),
+                        !await this.isPublishButtonEnabled());  
+        const isValid = statusList.every(status => status === false);
+        return statusList;
     }
 }
 

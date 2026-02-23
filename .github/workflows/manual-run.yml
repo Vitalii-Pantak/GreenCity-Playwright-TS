@@ -1,5 +1,7 @@
 name: Manual Test Run
 
+run-name: Run ${{ github.event.inputs.test_type }} tests
+
 on:
   workflow_dispatch:
     inputs:
@@ -10,6 +12,8 @@ on:
         options:
           - smoke
           - regression
+          - all
+        default: "smoke"
 
 jobs:
   call_base:

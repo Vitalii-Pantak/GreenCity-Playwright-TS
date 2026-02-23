@@ -8,5 +8,5 @@ jobs:
   call_base:
     uses: ./.github/workflows/playwright-base.yml
     with:
-      test_type: regression
+      test_type: test
 
