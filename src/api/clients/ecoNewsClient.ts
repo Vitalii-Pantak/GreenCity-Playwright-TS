@@ -5,7 +5,6 @@ import { paramBuilder } from "@/utils/utils";
 import { BASE_IMAGE_1 } from "@tests/Data/images/images.data";
 import fs from "fs";
 import env from "config/env";
-import { json } from "stream/consumers";
 
 export class EcoNewsClient {
     private request: APIRequestContext;
