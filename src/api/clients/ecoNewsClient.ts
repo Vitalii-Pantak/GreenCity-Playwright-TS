@@ -5,6 +5,7 @@ import { paramBuilder } from "@/utils/utils";
 import { BASE_IMAGE_1 } from "@tests/Data/images/images.data";
 import fs from "fs";
 import env from "config/env";
+import { json } from "stream/consumers";
 
 export class EcoNewsClient {
     private request: APIRequestContext;
@@ -26,12 +27,7 @@ export class EcoNewsClient {
         const response = await this.request.get(this.path + "/" + "tags");
         return response;
     }
-
-    /**     
-     * @param token 
-     * @param id 
-     * @returns APIResponse
-     */
+  
     async deleteNewsById(token: string, id: number): Promise<APIResponse> {
         return await this.request.delete(
             this.path + "/" + id, {
@@ -39,12 +35,6 @@ export class EcoNewsClient {
         });
     }
 
-    /**
-     * @param token - authtoken
-     * @param data - Interface * title :string, text: string, tags: string[],  Optional * shortInfo: string, source: string
-     * @param imagePath - string * optional
-     * @returns APIResponse
-     */
     async updateNews(id: number, token: string, data: UpdateEcoNewsDto, imagePath?: string): Promise<APIResponse> {
         const response = await this.request.put(this.path + "/" + id, {
             headers: { Authorization: token },
@@ -60,12 +50,6 @@ export class EcoNewsClient {
         return response;
     }
 
-    /**
-     * @param token - authtoken
-     * @param data - Interface * title :string, text: string, tags: string[],  Optional * shortInfo: string, source: string
-     * @param imagePath - string * optional
-     * @returns APIResponse
-     */
     async addNews(token: string, data: EcoNewsDto, imagePath?: string): Promise<APIResponse> {
         const response = await this.request.post(this.path, {
             headers: { Authorization: token },
@@ -101,14 +85,6 @@ export class EcoNewsClient {
         return await this.request.get(`${this.path}/relevance-enabled`);
     }
 
-    /**
-     * @param tags 
-     * @param title 
-     * @param author 
-     * @param pageIndex 
-     * @param size 
-     * @returns APIResponse
-     */
     async findByRelevant(tags?: string[], title?: string, author?: string, pageIndex?: number, size?: number): Promise<APIResponse> {
         const params: Record<string, any> = {};
 

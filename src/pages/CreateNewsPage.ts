@@ -221,16 +221,5 @@ export class CreateNewsPage extends BasePage {
         const isValid = statusList.every(status => status === false);
         return isValid;
     }
-
-    async isFormValid2() {
-        const statusList: boolean[] = [];
-        statusList.push(await this.isTitleFieldWarningUp(),
-                        await this.isSourceFieldWarningUp(),
-                        await this.isContentFieldWarningUp(),
-                        await this.isImageFIeldWarningUp(),
-                        !await this.isPublishButtonEnabled());  
-        const isValid = statusList.every(status => status === false);
-        return statusList;
-    }
 }
 

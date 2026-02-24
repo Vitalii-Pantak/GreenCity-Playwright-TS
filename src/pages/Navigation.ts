@@ -22,4 +22,9 @@ export class Navigation {
     async goTo(path: string = "/"): Promise<void> {
         await this.page.goto(env.BASE_CLIENT_URL + path);
     }
+
+    async login(): Promise<void> {
+        const auth = await this.Header.clickSignIN()
+        await auth.SignIn(env.USER_EMAIL, env.USER_PASSWORD)
+    }
 }
