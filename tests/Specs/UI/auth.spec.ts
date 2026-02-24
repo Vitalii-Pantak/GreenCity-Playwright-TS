@@ -8,7 +8,7 @@ test.beforeEach("Navigate To Greencity", async({navigation}) => {
     await navigation.goTo();
 });
 
-test("Sign In", {tag: ["@positive", "@smoke"]}, async({ navigation, mySpacePage }) => {
+test("Sign In", {tag: ["@positive", "@smoke", "@regression"]}, async({ navigation, mySpacePage }) => {
     severity("critical");
     epic("Authentication");
     feature("Sign In");
@@ -26,7 +26,7 @@ test("Sign In", {tag: ["@positive", "@smoke"]}, async({ navigation, mySpacePage 
     });
 });
 
-test("User Registration", {tag: ["@positive", "@smoke"]}, async({ navigation, homePage }) => {
+test("User Registration", {tag: ["@positive", "@smoke", "@regression"]}, async({ navigation, homePage }) => {
     severity("critical");
     epic("Authentication");
     feature("Registration");
@@ -53,7 +53,7 @@ test("User Registration", {tag: ["@positive", "@smoke"]}, async({ navigation, ho
     });
 });
 
-test("Sign In negative scenario", {tag: ["@negative", "@smoke"]}, async({ navigation }) => {
+test("Sign In negative scenario", {tag: ["@negative", "@regression"]}, async({ navigation }) => {
     severity("normal");
     epic("Authentication");
     feature("Sign In");
@@ -74,7 +74,7 @@ test("Sign In negative scenario", {tag: ["@negative", "@smoke"]}, async({ naviga
 
 });
 
-test("User Registration negative scenario", {tag: ["@negative", "@smoke"]}, async({ navigation }) => {
+test("User Registration negative scenario", {tag: ["@negative", "@regression"]}, async({ navigation }) => {
     severity("normal");
     epic("Authentication");
     feature("Registration");

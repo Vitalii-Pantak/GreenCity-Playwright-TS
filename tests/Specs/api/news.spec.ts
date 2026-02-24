@@ -12,7 +12,9 @@ test.beforeEach("Sign in", async({ ownSecurityClient }) => {
                                    env.PROJECT_NAME);
 });
 
-test("Add news , update news, delete news", async ({ ownSecurityClient, ecoNewsClient }) => {
+test("Add news , update news, delete news", {tag: ["@positive", "@smoke", "@regression"]},
+                                             async ({ ownSecurityClient, ecoNewsClient }) => {
+
     const token = ownSecurityClient.getAccessToken();
 
     const news = await step("Create news", async() => {
