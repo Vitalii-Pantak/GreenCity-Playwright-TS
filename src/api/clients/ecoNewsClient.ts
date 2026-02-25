@@ -2,20 +2,18 @@ import { APIRequestContext, APIResponse } from "@playwright/test";
 import { EcoNewsDto, UpdateEcoNewsDto } from "../models/ecoNewsModel";
 import { FindNewsParams } from "../models/interfaces";
 import { paramBuilder } from "@/utils/utils";
-import { BASE_IMAGE_1 } from "@tests/Data/images/images.data";
+import { BASE_IMAGE_1, BASE_IMAGE_2 } from "@tests/Data/images/images.data";
+import { BaseApiClient } from "./baseApiClient";
 import fs from "fs";
-import env from "config/env";
 
-export class EcoNewsClient {
-    private request: APIRequestContext;
-    private path: string =  env.API_BASE_URL + "/eco-news";
+export class EcoNewsClient extends BaseApiClient {
 
     constructor(request: APIRequestContext) {
-        this.request = request;
+        super(request, "content");
     }
     
     async getById(id: number): Promise<APIResponse> {
-        return await this.request.get(this.path + "/" + id);
+        return await this.get({url: "/" + id});
     }
 
     async getJsonResponse(id: number): Promise<JSON> {
@@ -23,65 +21,62 @@ export class EcoNewsClient {
     }
 
     async getNewsTags(): Promise<APIResponse> {
-        const response = await this.request.get(this.path + "/" + "tags");
+        const response = await this.get({url: "/" + "tags"});
         return response;
     }
   
     async deleteNewsById(token: string, id: number): Promise<APIResponse> {
-        return await this.request.delete(
-            this.path + "/" + id, {
+        return await this.delete({url :"/" + id, options: {
             headers: { Authorization: token }
-        });
+        }});
     }
 
     async updateNews(id: number, token: string, data: UpdateEcoNewsDto, imagePath?: string): Promise<APIResponse> {
-        const response = await this.request.put(this.path + "/" + id, {
-            headers: { Authorization: token },
+        const response = await this.put({url: "/" + id, options: {headers: { Authorization: token },
             multipart: {
                 image: {
-                    name: imagePath ? imagePath.split('\\').pop() || "testImg.jpg" : "testImg.jpg",
+                    name: this.imagePathHandler(imagePath),
                     mimeType: "image/jpeg",
-                    buffer: fs.readFileSync(imagePath || BASE_IMAGE_1)
+                    buffer: fs.readFileSync(imagePath || BASE_IMAGE_2)
                 },
                 updateEcoNewsDto: JSON.stringify(data) 
             },
-        }); 
+        }}); 
         return response;
     }
 
     async addNews(token: string, data: EcoNewsDto, imagePath?: string): Promise<APIResponse> {
-        const response = await this.request.post(this.path, {
-            headers: { Authorization: token },
+        const response = await this.post({url: "", options: {headers: { Authorization: token },
             multipart: {
                 image: {
-                    name: imagePath ? imagePath.split('\\').pop() || "testImg.jpg" : "testImg.jpg",
+                    name: this.imagePathHandler(imagePath),
                     mimeType: "image/jpeg",
                     buffer: fs.readFileSync(imagePath || BASE_IMAGE_1)
                 },
                 addEcoNewsDtoRequest: JSON.stringify(data) 
             },
-        }); 
+        }}); 
         return response;
     }
 
     async getNewsSummary(id: number): Promise<APIResponse> {
-        return await this.request.get(this.path + "/" + id);
+        return await this.get({url: "/" + id});
     }
 
     async getPublishedNewsCount(): Promise<APIResponse> {
-        return await this.request.get(this.path + "/count");
+        return await this.get({url: "/count"});
     }
 
     async getLikesCount(id: number): Promise<APIResponse> {
-        return await this.request.get(`${this.path}/${id}/likes/count`);
+        return await this.get({url: `/${id}/likes/count`});
     }   
 
     async getDislikeCount(id: number): Promise<APIResponse> {
-        return await this.request.get(`${this.path}/${id}/dislikes/count`);
+        return await this.get({url: `/${id}/dislikes/count`});
     }   
 
     async isRelevanceEnabled(): Promise<APIResponse> {
-        return await this.request.get(`${this.path}/relevance-enabled`);
+        return await this.get({url: "/relevance-enabled"});
     }
 
     async findByRelevant(tags?: string[], title?: string, author?: string, pageIndex?: number, size?: number): Promise<APIResponse> {
@@ -93,7 +88,7 @@ export class EcoNewsClient {
         if (pageIndex !== undefined) params.pageIndex = pageIndex;
         if (size !== undefined) params.size = size;        
 
-        return await this.request.get(this.path, {params});
+        return await this.get({options: params});
     }
 
     private async requestHelper(id: number, token: string, method: "post" | "delete", endpoint: string) {
@@ -103,8 +98,6 @@ export class EcoNewsClient {
 
     async likeRemoveLike(id: number, token: string): Promise<APIResponse> {
         return await this.requestHelper(id, token, "post", "likes");
-        // return await this.request.post(this.path + "/" + id + "/likes", 
-        //     {headers: { Authorization: token }});
     }
 
     async dislikeRemoveDislike(id: number, token: string): Promise<APIResponse> {
@@ -116,16 +109,19 @@ export class EcoNewsClient {
     }
 
     async removeFromFavorites(id: number, token: string): Promise<APIResponse> {
-        return await this.requestHelper(id, token, "post", "favorites");
+        return await this.requestHelper(id, token, "delete", "favorites");
     }
 
     async getRecommendedNews(id: number): Promise<APIResponse> {
-        return await this.request.get(this.path + "/" + id);
+        return await this.get({url: "/" + id});
     }
 
     async findByPage(token: string, data: FindNewsParams) {
-        return await this.request.get(this.path,
-            {headers: {Authorization: token},
-            params: paramBuilder(data) });
+        return await this.get({url: "", options: {headers: {Authorization: token},
+            params: paramBuilder(data) }});
+    }
+
+    private imagePathHandler(path?: string) {
+        return path ? path.split('\\').pop() || "testImg.jpg" : "testImg.jpg"
     }
 } 

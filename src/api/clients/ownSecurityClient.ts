@@ -1,19 +1,17 @@
 import { APIRequestContext, APIResponse } from "@playwright/test";
+import { BaseApiClient } from "./baseApiClient";
 import env from "config/env";
 
-
-export class OwnSecurityClient {
-    private request: APIRequestContext;
-    private path: string = env.API_BASE_USER_URL;
+export class OwnSecurityClient extends BaseApiClient {
     private authToken!: string;
     private refreshToken!: string;
 
     constructor(request: APIRequestContext) {
-        this.request = request;
+        super(request)
     }
 
-    async signIn(email: string, password: string, projectName: string): Promise<APIResponse> {
-        const response =  await this.request.post(this.path + "/signIn", {data: {email, password, projectName}});
+    async signIn(email: string, password: string, projectName: string = env.PROJECT_NAME): Promise<APIResponse> {
+        const response =  await this.post({url: "/signIn", options: {data: {email, password, projectName}}});
         const responseJSON = await response.json();
         this.authToken = "Bearer " + responseJSON.accessToken;
         this.refreshToken = responseJSON.refreshToken;
@@ -29,19 +27,19 @@ export class OwnSecurityClient {
     }
 
     async getPasswordStatus(): Promise<APIResponse> {
-        return await this.request.get(this.path + "/password-status");
+        return await this.get({url:"/password-status"});
     }
 
     async updateAccessToken(projectName: string): Promise<APIResponse> {
-        return await this.request.get(this.path + "/updateAccessToken",  {
+        return await this.get({url:"/updateAccessToken", options:{
             params: {projectName: projectName ,
-                    refreshToken: this.refreshToken}});
+                    refreshToken: this.refreshToken}}});
     }
 
     async changePassword(password: string, authToken: string): Promise<APIResponse> {
-        return await this.request.put(this.path + "/changePassword", 
-            {data: {password: password,
+        return await this.put({url: "/changePassword", options: {
+            data: {password: password,
                       confirmPassword: password},
-            headers: {Authorization: authToken}});
+            headers: {Authorization: authToken}}});
     }
 } 

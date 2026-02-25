@@ -1,7 +1,3 @@
-export interface EcoNews {
-
-}
-
 export interface EcoNewsDto {
     title: string;
     text: string;
