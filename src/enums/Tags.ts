@@ -4,4 +4,4 @@ export enum Tags {
     EDUCATION = "Education",
     INITIATIVES = "Initiatives",
     ADS = "Ads"
-}
+};

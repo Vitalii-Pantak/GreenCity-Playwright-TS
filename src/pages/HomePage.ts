@@ -18,15 +18,15 @@ export class HomePage extends BasePage {
     
     constructor(page: Page) {
         super(page);
-        this.mainContent = page.locator('header')
-        this.mainContentButton = this.mainContent.getByRole("button", {name: 'Start forming a habit'})
+        this.mainContent = page.locator('header');
+        this.mainContentButton = this.mainContent.getByRole("button", {name: 'Start forming a habit'});
         this.mainContentHeading = this.mainContent.getByRole("heading", {"level": 1});
         this.mainContentText = this.mainContent.locator("p");
         this.eventsTitle = page.getByRole("heading", {name: "Eco News", level: 2});
         this.readAllNewsLink = page.getByRole("link", {name: "link to eco-news page"});
         this.statsSection = page.locator("#stats");
         this.newsSubscribeSection = page.locator("section#subscription");
-        this.snackBar = page.getByText("Congratulations! You have successfully", {exact: false})
+        this.snackBar = page.getByText("Congratulations! You have successfully", {exact: false});
         this.notifications = new NotificationsComponent(this.snackBar);
     }
 
@@ -60,5 +60,9 @@ export class HomePage extends BasePage {
 
     async waitForPage(): Promise<void> {
         await this.waitForVisible(this.mainContentHeading);
+    }
+
+    protected get pageRoot(): Locator {
+        return this.mainContent;
     }
 } 

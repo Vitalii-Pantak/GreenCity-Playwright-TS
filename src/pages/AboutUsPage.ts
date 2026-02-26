@@ -16,11 +16,11 @@ export class AboutUsPage extends BasePage {
     constructor(page: Page) {
         super(page);
         this.aboutUsSection = page.locator("div.about-section");
-        this.visionSection = page.locator("div.vision-section")
+        this.visionSection = page.locator("div.vision-section");
         this.aboutUstitle = this.aboutUsSection.getByRole("heading", {level: 2, name: "About Us"});
         this.aboutUsDescription = this.aboutUsSection.locator("p");
         this.aboutUsButton = this.aboutUsSection.getByRole("button", {name: "Form Habit"});
-        this.ourVisionTitle = this.visionSection.getByRole("heading", {level: 2, name: "Our vision"})
+        this.ourVisionTitle = this.visionSection.getByRole("heading", {level: 2, name: "Our vision"});
         this.ourVisionDescrition = this.visionSection.locator("p");
         this.ourVisionButton = this.visionSection.getByRole("button", {name: "Form Habit"});
         this.gallery = page.locator("div.vision-gallery");
@@ -31,7 +31,7 @@ export class AboutUsPage extends BasePage {
     }
 
     async getAboutUsDescription(): Promise<string> {
-        return (await this.aboutUsDescription.innerText()).trim()
+        return (await this.aboutUsDescription.innerText()).trim();
     }
 
     async clickAboutUsButton(): Promise<void> {
@@ -52,5 +52,9 @@ export class AboutUsPage extends BasePage {
 
     galleryComponent(): AboutUsGalleryComponent {
         return new AboutUsGalleryComponent(this.gallery);
+    }
+
+    protected get pageRoot(): Locator {
+        return this.gallery;
     }
 }

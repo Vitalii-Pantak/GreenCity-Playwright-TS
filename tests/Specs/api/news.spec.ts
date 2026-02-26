@@ -1,3 +1,4 @@
+import { STATUS } from "@/enums/enums";
 import { test, expect } from "@/fixtures/fixtureAPI";
 import { BASE_NEWS_DATA, UPDATE_NEWS_DATA } from "@tests/Data/news.data";
 import { feature, step, severity, epic } from "allure-js-commons";
@@ -31,8 +32,8 @@ test("Add news , update news, delete news", {tag: ["@positive", "@smoke", "@regr
         expect(newsJSON.content).toEqual(BASE_NEWS_DATA.content);
         expect(newsJSON.source).toEqual(BASE_NEWS_DATA.source);
         expect(newsJSON.tagsEn.sort()).toEqual(BASE_NEWS_DATA.tags);
-        expect(news.status(), "Created news should return 201").toEqual(201);
-        return newsJSON.id
+        expect(news.status(), "Created news should return 201").toEqual(STATUS.CREATED_201);
+        return newsJSON.id;
     });
     
     const update = await step("Update News", async() => {
@@ -50,13 +51,13 @@ test("Add news , update news, delete news", {tag: ["@positive", "@smoke", "@regr
         expect(updateJSON.content).toEqual(UPDATE_NEWS_DATA.content);
         expect(updateJSON.source).toEqual(UPDATE_NEWS_DATA.source);
         expect(updateJSON.tagsEn).toEqual(UPDATE_NEWS_DATA.tags);
-        expect(update.status(), "Updated news should return 200").toEqual(200);
+        expect(update.status(), "Updated news should return 200").toEqual(STATUS.SUCCESSFUL_200);
     });
 
     await step("Delete news article", async() => {
         await ecoNewsClient.deleteNewsById(token, newsID);
         const deletedNews = await ecoNewsClient.getById(newsID);
-        expect(deletedNews.status(), "Deleted news should return 404").toEqual(404);
+        expect(deletedNews.status(), "Deleted news should return 404").toEqual(STATUS.NOT_FOUND_404);
     });
 });
 

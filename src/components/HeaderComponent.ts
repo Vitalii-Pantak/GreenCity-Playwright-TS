@@ -6,13 +6,12 @@ import { Menu } from "@/enums/enums";
 
 export class HeaderComponent extends BaseComponent {
     private logo: Locator;
-    private bookmark: Locator;
-    private notifications: Locator;
-    private search: Locator;
     private signIN: Locator;
     private signUP: Locator;
-    private authModal: Locator;
     private page: Page;
+    private search: Locator;
+    private bookmark: Locator;
+    private notifications: Locator;
     private langDropDown: Locator;
 
     constructor(root: Locator) {
@@ -22,9 +21,8 @@ export class HeaderComponent extends BaseComponent {
         this.bookmark = root.getByLabel("site bookmark");
         this.notifications = root.getByLabel("site notification");
         this.search = root.getByRole("search");
-        this.signIN = root.getByRole("link", {name: "Sign in"})
-        this.signUP = root.getByRole("link", {name: "Sign up"})
-        this.authModal = root.locator("app-auth-modal");
+        this.signIN = root.getByRole("link", {name: "Sign in"});
+        this.signUP = root.getByRole("link", {name: "Sign up"});
         this.langDropDown = root.getByLabel("language switcher");
     }
 

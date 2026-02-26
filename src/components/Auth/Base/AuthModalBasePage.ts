@@ -18,7 +18,7 @@ export abstract class AuthModalBasePage extends BasePage {
     }
 
     async getTitle(): Promise<string> {
-        this.waitForVisible(this.title)
+        this.waitForVisible(this.title);
         return (await this.title.innerText()).trim();
     }
 

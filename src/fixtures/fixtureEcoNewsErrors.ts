@@ -6,7 +6,7 @@ import { CreateNewsPage,
 type TestOptions = {
     createNewsPage: CreateNewsPage,
     setup: string,
-}
+};
 
 export const test = base.extend<TestOptions>( {
     setup: async({page}, use) => {

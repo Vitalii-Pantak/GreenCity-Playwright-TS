@@ -10,7 +10,7 @@ export interface FindNewsParams {
     [key: string]: string | number | boolean | string[] | undefined;
 }
 
-export interface Methods {
+export interface RequestParams {
     url?: string,
     options?: any
 }

@@ -19,6 +19,7 @@ export class MySpacePage extends BasePage {
     private myHabbitsTab: Locator;
     private myNewsTab: Locator;
     private myEventsTab: Locator;
+    private myFriends: Locator;
 
     constructor(page: Page) {
         super(page);       
@@ -36,6 +37,7 @@ export class MySpacePage extends BasePage {
         this.myHabbitsTab = page.locator("mat-tab-body[role=tabpanel]").first();
         this.myNewsTab = page.locator("mat-tab-body[role=tabpanel]").nth(1);
         this.myEventsTab = page.locator("mat-tab-body[role=tabpanel]").nth(2);
+        this.myFriends = page.locator("div.add-friends");
     }
 
     async getProfileName(): Promise<string> {
@@ -85,9 +87,8 @@ export class MySpacePage extends BasePage {
         return new MySpaceEventsTabPage(this.myEventsTab);
     }
 
-    private async waitForPage(): Promise<void> {
-        const panel = this.page.locator("div.add-friends");
-        await this.waitForVisible(panel);
+    protected get pageRoot(): Locator {
+        return this.myFriends;
     }
 }
 

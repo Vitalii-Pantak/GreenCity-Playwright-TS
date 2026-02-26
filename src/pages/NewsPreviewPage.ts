@@ -80,4 +80,8 @@ export class NewsPreviewPage extends BasePage {
         }
         return lst
     }
+
+    protected get pageRoot(): Locator {
+        return this.pageTitle;
+    }
 }

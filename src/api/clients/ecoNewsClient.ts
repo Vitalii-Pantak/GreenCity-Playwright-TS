@@ -122,6 +122,6 @@ export class EcoNewsClient extends BaseApiClient {
     }
 
     private imagePathHandler(path?: string) {
-        return path ? path.split('\\').pop() || "testImg.jpg" : "testImg.jpg"
+        return path ? path.split('\\').pop() || "testImg.jpg" : "testImg.jpg";
     }
 } 

@@ -17,7 +17,7 @@ type Pages = {
     newsPreviewPage: NewsPreviewPage,
     navigation: Navigation,
     mySpacePage: MySpacePage,
-}
+};
 
 type Fixtures = {
     baseClientUrl: string;

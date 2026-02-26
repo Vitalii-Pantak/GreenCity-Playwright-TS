@@ -17,6 +17,7 @@ export class EcoNewsPage extends BasePage {
     private tagsList: Locator;
     private createNewsBtn: Locator;
     private snackBar: Locator;
+    private newsItems: Locator;
     public notifications: NotificationsComponent;
 
     constructor(page: Page) {
@@ -33,9 +34,8 @@ export class EcoNewsPage extends BasePage {
         this.createNewsBtn = page.locator("div#create-button");
         this.snackBar = page.getByText('Your news has been successfully published');
         this.notifications = new NotificationsComponent(this.snackBar);
+        this.newsItems = this.page.locator(".gallery-view-li-active");
     }    
-
-    private newsItems = this.page.locator(".gallery-view-li-active");
 
     async getTitle(): Promise<string> {
         return (await this.mainTitle.innerText()).trim();
@@ -115,5 +115,9 @@ export class EcoNewsPage extends BasePage {
     async createNews(): Promise<CreateNewsPage> {
         await this.createNewsBtn.click();
         return new CreateNewsPage(this.page);
+    }
+
+    protected get pageRoot(): Locator {
+        return this.newsItems;
     }
 }

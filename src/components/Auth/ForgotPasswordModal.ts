@@ -26,4 +26,8 @@ export class ForgotPasswordModal extends AuthModalBasePage {
     async isEmailErrorOccured(): Promise<boolean> {
         return await this.emailErrorText.isVisible();
     }
+
+    protected get pageRoot(): Locator {
+        return this.emailField;
+    }
 }

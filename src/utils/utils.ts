@@ -15,13 +15,13 @@ export function paramBuilder(data: QueryInput): Record<string, QueryPrimitive> {
         }
     }
     return result;
-}
+};
 
 export function getCurrentDate(): string {
     const date = new Date()
     const formattedDate = date.toLocaleDateString('en-US', {month: 'short',   day: 'numeric',  year: 'numeric'});
     return formattedDate;
-}
+};
 
 
 export async function isWarningAttributeUp(locator: Locator): Promise<boolean> {
@@ -32,4 +32,4 @@ export async function isWarningAttributeUp(locator: Locator): Promise<boolean> {
         return arr.includes(value);
     }
     return false;
-}
+};

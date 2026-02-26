@@ -7,7 +7,7 @@ export const BASE_NEWS_DATA = {
     source: "https://www.helloworld.com.ua",
     image: BASE_IMAGE_1,
     tags: [Tags.ADS, Tags.EDUCATION, Tags.NEWS].sort()
-}
+};
 
 export const NON_VALID_NEWS_DATA = {
     title: "Hello World!".repeat(30),
@@ -15,7 +15,7 @@ export const NON_VALID_NEWS_DATA = {
     source: "Hello",
     image: BASE_IMAGE_4,
     tags: [Tags.INITIATIVES, Tags.EVENTS, Tags.NEWS].sort()
-}
+};
 
 export const UPDATE_NEWS_DATA = {
     title: "New title",
@@ -23,4 +23,4 @@ export const UPDATE_NEWS_DATA = {
     source: "https://www.hiiiiiiii.com.ua",
     image: BASE_IMAGE_3,
     tags: [Tags.NEWS]
-}
+};

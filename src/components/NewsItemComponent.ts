@@ -28,7 +28,7 @@ export class NewsItemComponent extends BaseComponent {
     }
 
     async getTags(): Promise<string[]> {
-        const tagsLocator = await this.tags.all()
+        const tagsLocator = await this.tags.all();
         const tags: string[] = [];
         for (const tag of tagsLocator) {
             tags.push(await tag.innerText())

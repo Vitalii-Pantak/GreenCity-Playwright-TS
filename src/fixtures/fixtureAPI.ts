@@ -7,7 +7,7 @@ type TestOptions = {
     ecoNewsClient: EcoNewsClient,
     ownSecurityClient: OwnSecurityClient,
     commentsClient: CommentsClient
-}
+};
 
 export const test = base.extend<TestOptions>( {    
     ecoNewsClient: async ({request}, use) => {

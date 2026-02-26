@@ -7,7 +7,7 @@ export class OwnSecurityClient extends BaseApiClient {
     private refreshToken!: string;
 
     constructor(request: APIRequestContext) {
-        super(request)
+        super(request);
     }
 
     async signIn(email: string, password: string, projectName: string = env.PROJECT_NAME): Promise<APIResponse> {
@@ -33,13 +33,15 @@ export class OwnSecurityClient extends BaseApiClient {
     async updateAccessToken(projectName: string): Promise<APIResponse> {
         return await this.get({url:"/updateAccessToken", options:{
             params: {projectName: projectName ,
-                    refreshToken: this.refreshToken}}});
+                    refreshToken: this.refreshToken}}
+        });
     }
 
     async changePassword(password: string, authToken: string): Promise<APIResponse> {
         return await this.put({url: "/changePassword", options: {
             data: {password: password,
                       confirmPassword: password},
-            headers: {Authorization: authToken}}});
+            headers: {Authorization: authToken}}
+        });
     }
 } 

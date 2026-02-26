@@ -12,6 +12,6 @@ export abstract class BaseComponent {
     }
 
     async waitForHidden(locator: Locator, timeout = 5000): Promise<void> {
-        await expect(locator).toBeHidden({timeout})
+        await expect(locator).toBeHidden({timeout});
     }
 }

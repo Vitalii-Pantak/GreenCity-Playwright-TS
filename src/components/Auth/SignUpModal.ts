@@ -104,4 +104,8 @@ export class SignUpModal extends AuthModalBasePage {
         const status = formErrors.every(flag => flag === false);   
         return status;
     }
+
+    protected get pageRoot(): Locator {
+        return this.emailField;
+    }
 }

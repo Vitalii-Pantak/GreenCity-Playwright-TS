@@ -189,7 +189,7 @@ export class CreateNewsPage extends BasePage {
     }
 
     getCurrentDate(): string {
-        return getCurrentDate()
+        return getCurrentDate();
     }
 
     async isTitleFieldWarningUp(): Promise<boolean> {        
@@ -200,7 +200,7 @@ export class CreateNewsPage extends BasePage {
         if (!await this.imageSubmitBtn.isVisible()) {
             return await isWarningAttributeUp(this.imageFieldWarning);
         }
-        return false
+        return false;
     }
 
     async isSourceFieldWarningUp(): Promise<boolean> {
@@ -220,6 +220,10 @@ export class CreateNewsPage extends BasePage {
                         !await this.isPublishButtonEnabled());  
         const isValid = statusList.every(status => status === false);
         return isValid;
+    }
+
+    protected get pageRoot(): Locator {
+        return this.title;
     }
 }
 

@@ -1,12 +1,12 @@
 import { APIRequestContext, APIResponse } from "@playwright/test";
 import { BASE_IMAGE_1 } from "@tests/Data/images/images.data";
 import { BaseApiClient } from "./baseApiClient";
-import fs from "fs"
+import fs from "fs";
 
 export class CommentsClient extends BaseApiClient {
 
     constructor(request: APIRequestContext) {
-        super(request)
+        super(request);
     }
 
     async getCommentsCount(newsId: number): Promise<APIResponse> {

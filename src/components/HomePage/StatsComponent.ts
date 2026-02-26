@@ -17,8 +17,8 @@ export class StatsComponent extends BaseComponent {
     constructor(root: Locator) {
         super(root);
         this.sectionTitle = root.getByRole("heading", {level: 2});
-        this.bagsSection = root.locator("div.stat-row").first()
-        this.cupsSection = root.locator("div.stat-row").last()
+        this.bagsSection = root.locator("div.stat-row").first();
+        this.cupsSection = root.locator("div.stat-row").last();
         this.bagsCounter = this.bagsSection.getByRole("heading", {level: 3}).locator("span");
         this.bagsDescription = this.bagsSection.locator("p");
         this.ecoBagButton = this.bagsSection.getByRole("button", {name: "Start forming a habit!"});
@@ -58,11 +58,11 @@ export class StatsComponent extends BaseComponent {
     }
 
     async getBagsDescription(): Promise<string> {
-        return (await this.bagsDescription.innerText()).trim()
+        return (await this.bagsDescription.innerText()).trim();
     }
 
     async getCupsDescription(): Promise<string> {
-        return (await this.cupsDescription.innerText()).trim()
+        return (await this.cupsDescription.innerText()).trim();
     }
 }
 

@@ -1,3 +1,4 @@
+import { STATUS } from "@/enums/enums";
 import { test, expect } from "@/fixtures/fixtureAPI";
 import { NON_VALID_USER } from "@tests/Data/users.data";
 import { feature, step, severity, epic } from "allure-js-commons";
@@ -24,7 +25,7 @@ test.describe("Checking Sign in feature", async() => {
             expect(String(userId)).toEqual(env.USER_ID);
             expect(name).toEqual(env.USER_NAME);
             expect(accessToken).toEqual(token.replace("Bearer", '').trim());
-            expect(response.status(), "Sign In status should be 200").toEqual(200);
+            expect(response.status(), "Sign In status should be 200").toEqual(STATUS.SUCCESSFUL_200);
         });
     });
     
@@ -37,7 +38,7 @@ test.describe("Checking Sign in feature", async() => {
         });
     
         await step("Verify status and successful authorization", async() => {  
-            expect(response.status(), "Bad request should return 400").toEqual(400);
+            expect(response.status(), "Bad request should return 400").toEqual(STATUS.BAD_REQUEST_400);
         });
     });
     
@@ -50,7 +51,7 @@ test.describe("Checking Sign in feature", async() => {
         });
     
         await step("Verify status and successful authorization", async() => {  
-            expect(response.status(), "Bad request should return 400").toEqual(400);
+            expect(response.status(), "Bad request should return 400").toEqual(STATUS.BAD_REQUEST_400);
         });
     });
     
@@ -63,7 +64,7 @@ test.describe("Checking Sign in feature", async() => {
         });
     
         await step("Verify status and successful authorization", async() => {  
-            expect(response.status(), "Bad request should return 400").toEqual(400);
+            expect(response.status(), "Bad request should return 400").toEqual(STATUS.BAD_REQUEST_400);
         });
     });
 });

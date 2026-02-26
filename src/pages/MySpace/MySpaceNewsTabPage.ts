@@ -29,7 +29,7 @@ export class MySpaceNewsTabPage extends BaseComponent {
 
     async getNewsCount(): Promise<number> {
         await this.waitForPage();
-        const counter = parseInt((await this.newsCount.innerText()).trim())
+        const counter = parseInt((await this.newsCount.innerText()).trim());
         return counter;
     }
 

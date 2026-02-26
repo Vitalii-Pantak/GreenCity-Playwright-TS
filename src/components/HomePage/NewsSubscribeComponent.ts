@@ -43,6 +43,6 @@ export class NewsSubscribeComponent extends BaseComponent {
         if (await this.isErrorVisible()) {
             return (await this.errorMessage.innerText()).trim();
         }
-        return "Error message is not popped"
+        return "Error message is not popped";
     }
 }

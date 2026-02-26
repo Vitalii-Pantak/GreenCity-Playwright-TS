@@ -13,7 +13,7 @@ type TestOptions = {
 export const test = base.extend<TestOptions>( {
     setup: async({page, request}, use) => {
         await test.step("Setup: navigate login and open create news", async() => {
-            console.log("Preparing setup")
+            console.log("Preparing setup");
             const navigation = new Navigation(page);
             const ecoNewsPage = new EcoNewsPage(page);
 
@@ -26,7 +26,7 @@ export const test = base.extend<TestOptions>( {
         await use('');
         
         await test.step("Teardown: delete created news article", async() => {
-            console.log("Starting teardown")
+            console.log("Starting teardown");
             const news = new EcoNewsClient(request);
             const auth = new OwnSecurityClient(request);
             await auth.signIn(env.USER_EMAIL, env.USER_PASSWORD, env.PROJECT_NAME);
@@ -38,7 +38,7 @@ export const test = base.extend<TestOptions>( {
                 const id = JSON.page[0].id;
                 await news.deleteNewsById(token, id);   
             } catch (error) {
-                console.log("Cleanup failed", error)
+                console.log("Cleanup failed", error);
             }
         });
     },

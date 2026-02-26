@@ -30,8 +30,8 @@ export class AboutUsGalleryComponent extends BaseComponent {
         this.galleryTitle = root.getByRole("heading", {level: 2});
         this.firstSection = root.locator("app-vision-card.vision-card__1");
         this.secondSection = root.locator("app-vision-card.vision-card__2");
-        this.thirdSection = root.locator("app-vision-card.vision-card__3")
-        this.fourthSection = root.locator("app-vision-card.vision-card__4")
+        this.thirdSection = root.locator("app-vision-card.vision-card__3");
+        this.fourthSection = root.locator("app-vision-card.vision-card__4");
         // #1
         this.firstCardTitle = this.firstSection.getByRole("heading", {level: 3});
         this.firstCardDescription = this.firstSection.locator("p");

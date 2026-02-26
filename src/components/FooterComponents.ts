@@ -81,6 +81,6 @@ export class FooterComponent extends BaseComponent {
     }
 
     async getCopyrightText(): Promise<string> {
-        return (await this.copyright.innerText()).trim()
+        return (await this.copyright.innerText()).trim();
     }
 }
