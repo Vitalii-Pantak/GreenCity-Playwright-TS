@@ -1,0 +1,1 @@
+export type ApiMethod = "get" | "post" | "put" | "patch" | "delete";

@@ -1,6 +1,8 @@
 import { APIRequestContext, APIResponse } from "@playwright/test";
-import env from "config/env";
 import { RequestHandler } from "./handler";
+import { STATUS } from "@/enums/enums";
+import { PasswordStatusDto, SignInDto, UpdateAccessTokenDto } from "../models/dto/user.dto";
+import env from "config/env";
 
 export class UserClient {
     private handler: RequestHandler
@@ -12,16 +14,16 @@ export class UserClient {
         this.handler = new RequestHandler(request, this.url);
     }
 
-    async signIn(email: string, password: string, projectName: string = env.PROJECT_NAME): Promise<SignInResponse> {
+    async signIn(email: string, password: string, projectName: string = env.PROJECT_NAME): Promise<SignInDto> {
         const response = await this.handler.method("post")
                                            .path("/signIn")
                                            .body({email, password, projectName})
-                                           .getResponse(200)
-                                           
+                                           .getResponse(STATUS.SUCCESSFUL_200);
+
         const responseJSON = await response.json();
         this.authToken = "Bearer " + responseJSON.accessToken;
         this.refreshToken = responseJSON.refreshToken;
-        return responseJSON
+        return responseJSON;
     }
 
     getAccessToken(): string {
@@ -32,20 +34,20 @@ export class UserClient {
         return this.refreshToken;
     }
 
-    async getPasswordStatus(): Promise<PasswordStatusResponse> {
+    async getPasswordStatus(): Promise<PasswordStatusDto> {
         const response = await this.handler.method("get")
                                            .path("/password-status")
                                            .headers({Authorization: this.authToken})
-                                           .getResponse(200)
-        return await response.json()
+                                           .getResponse(STATUS.SUCCESSFUL_200)
+        return await response.json();
     }
     
-    async updateAccessToken(projectName: string = env.PROJECT_NAME): Promise<UpdateAccessTokenResponse> {
+    async updateAccessToken(projectName: string = env.PROJECT_NAME): Promise<UpdateAccessTokenDto> {
         const response =  await this.handler.method("get")
                                             .path("/updateAccessToken")
                                             .params({projectName: projectName, refreshToken: this.refreshToken})
-                                            .getResponse(200)
-        return await response.json()
+                                            .getResponse(STATUS.SUCCESSFUL_200)
+        return await response.json();
     } 
 
 
@@ -54,24 +56,7 @@ export class UserClient {
                                  .path("/changePassword")
                                  .headers({Authorization: authToken})
                                  .body({password: password, confirmPassword: password})
-                                 .getResponse(200)
+                                 .getResponse(STATUS.SUCCESSFUL_200);
     }
 }
 
-interface SignInResponse {
-    userId: number,
-    accessToken: string,
-    refreshToken: string,
-    name: string,
-    ownRegistrations: boolean
-    woof: string
-}
-
-interface UpdateAccessTokenResponse {
-    accessToken: string,
-    refreshToken: string
-}
-
-interface PasswordStatusResponse {
-    hasPassword: boolean
-}

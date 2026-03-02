@@ -14,3 +14,11 @@ export interface RequestParams {
     url?: string,
     options?: any
 }
+
+export interface FindByRelevantParams {
+    tags?: string[],
+    title?: string,
+    author?: string,
+    pageIndex?: number,
+    size?: number
+}

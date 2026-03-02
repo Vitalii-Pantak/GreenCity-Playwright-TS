@@ -1,12 +1,9 @@
 import { APIRequestContext, APIResponse, expect } from "@playwright/test";
-import env from "config/env";
-
-type ApiMethod = "get" | "post" | "put" | "patch" | "delete";
+import { ApiMethod } from "../models/types";
 
 export class RequestHandler {
     private request: APIRequestContext
     private baseUrl: string;
-    // private defaultUrl: string = env.API_BASE_URL + "/eco-news";
     private apiPath: string = "";
     private queryParams: object = {};
     private apiHeaders: Record<string, string> = {};
@@ -17,7 +14,6 @@ export class RequestHandler {
 
     constructor(request: APIRequestContext, apiBaseUrl: string) {
         this.request = request;
-        // this.baseUrl = apiBaseUrl ?? this.defaultUrl;
         this.baseUrl = apiBaseUrl;
     }
 
@@ -58,19 +54,21 @@ export class RequestHandler {
         return this; 
     }
 
-    private getUrl(): string {
-        // const url = new URL(`${this.baseUrl ?? this.defaultUrl}${this.apiPath}`);
+    public getUrl(): string {
         const url = new URL(`${this.baseUrl}${this.apiPath}`);
 
         for (const [key, value] of Object.entries(this.queryParams)) {
-            url.searchParams.append(key, value);
+            if (Array.isArray(value)) {
+                value.forEach(v => url.searchParams.append(key, v));
+            } else {
+                url.searchParams.append(key, value);
+            }
         }
         return url.toString();
     }
 
-    async getResponse(statusCode: number): Promise<any> {
+    async getResponse(statusCode: number): Promise<APIResponse> {
         const url = this.getUrl();
-        // const method = this.apiMethod;
         const options: any = {
             headers: this.apiHeaders
         }
@@ -81,14 +79,11 @@ export class RequestHandler {
             options.multipart = this.apiMultipart;
         }
 
-        const response = await this.request[this.apiMethod!](url, options)
+        const response = await this.request[this.apiMethod!](url, options);        
         expect(statusCode, `Status code should be ${statusCode}`).toEqual(response.status());
 
         this.cleanUpFields();        
-        // if (method !== "delete") {
-        //     return response;
-        // }
-        // return await response.json()
+
         return response;
     }
 
@@ -100,6 +95,5 @@ export class RequestHandler {
         this.apiPath = "";
         this.queryParams = {};
         this.bodyType = null;
-        // this.baseUrl = undefined;
     }    
 }
