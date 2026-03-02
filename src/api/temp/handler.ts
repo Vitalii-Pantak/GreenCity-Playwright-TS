@@ -1,6 +1,8 @@
 import { APIRequestContext, APIResponse, expect } from "@playwright/test";
 import env from "config/env";
 
+type ApiMethod = "get" | "post" | "put" | "patch" | "delete";
+
 export class RequestHandler {
     private request: APIRequestContext
     private baseUrl: string | undefined;
@@ -10,68 +12,61 @@ export class RequestHandler {
     private apiHeaders: Record<string, string> = {};
     private apiBody: object = {};
     private apiMultipart: any;
-    private bodyType: "json" | "multipart" | null = null;
-    // private method: "get" | "post" | "put" | "patch" | "delete";
+    private bodyType!: "json" | "multipart" | null;
+    private apiMethod!: ApiMethod | null;
 
     constructor(request: APIRequestContext, apiBaseUrl?: string) {
         this.request = request;
         this.baseUrl = apiBaseUrl ?? this.defaultUrl;
     }
 
-    url(url: string) {
+    method(method: ApiMethod): RequestHandler {
+        this.apiMethod = method;
+        return this;
+    }
+
+    url(url: string): RequestHandler {
         this.baseUrl = url;
         return this;
     }
 
-    path(path: string) {
+    path(path: string): RequestHandler {
         this.apiPath = path;
         return this;
     }
 
-    params(params: object) {
+    params(params: object): RequestHandler {
         this.queryParams = params;
         return this;
     }
 
-    headers(headers: Record<string, string>) {
+    headers(headers: Record<string, string>): RequestHandler {
         this.apiHeaders = headers;
         return this;
     }
 
-    body(body: object) {
+    body(body: object): RequestHandler {
         this.apiBody = body;
         this.bodyType = "json";
         return this;
     }
 
-    multipart(multipart: any) {
+    multipart(multipart: any): RequestHandler {
         this.apiMultipart = multipart;
         this.bodyType = "multipart";
         return this;
     }
 
-    private getUrl() {
+    private getUrl(): string {
         const url = new URL(`${this.baseUrl ?? this.defaultUrl}${this.apiPath}`);
         for (const [key, value] of Object.entries(this.queryParams)) {
             url.searchParams.append(key, value);
         }
-        console.log(url.toString());
         return url.toString();
     }
 
-    async getRequest(statusCode: number) {
-        const url = this.getUrl();
-        const response = await this.request.get(url, {
-            headers: this.apiHeaders
-        });
-        expect(statusCode, `Status code should be ${statusCode}`).toEqual(response.status());
-        const responseJSON = await response.json();
-
-        return responseJSON;
-    }
-
-    async postRequest(statusCode: number) {
-        const url = this.getUrl();
+    async getResponse(statusCode: number): Promise<APIResponse> {
+        const url = this.getUrl()
         const options: any = {
             headers: this.apiHeaders
         }
@@ -82,42 +77,22 @@ export class RequestHandler {
             options.multipart = this.apiMultipart;
         }
 
-        const response = await this.request.post(url, options);
+        const response = await this.request[this.apiMethod!](url, options)
         expect(statusCode, `Status code should be ${statusCode}`).toEqual(response.status());
-        const responseJSON = await response.json();
 
-        return responseJSON;
+        this.cleanUpFields();
+
+        return response;
     }
 
-    async putRequest(statusCode: number) {
-        const url = this.getUrl();
-        const response = await this.request.post(url, {
-            headers: this.apiHeaders,
-            data: this.apiBody
-        });
-        expect(statusCode, `Status code should be ${statusCode}`).toEqual(response.status());
-        const responseJSON = await response.json();
-
-        return responseJSON;
-    }
-
-    async patchRequest(statusCode: number) {
-        const url = this.getUrl();
-        const response = await this.request.patch(url, {
-            headers: this.apiHeaders,
-            data: this.apiBody
-        });
-        expect(statusCode, `Status code should be ${statusCode}`).toEqual(response.status());
-        const responseJSON = await response.json();
-
-        return responseJSON;
-    }
-
-    async deleteRequest(statusCode: number) {
-        const url = this.getUrl();
-        const response = await this.request.delete(url, {
-            headers: this.apiHeaders
-        });
-        expect(statusCode, `Status code should be ${statusCode}`).toEqual(response.status());        
-    }
+    private cleanUpFields(): void {
+        this.apiBody = {};
+        this.apiHeaders = {};
+        this.apiMethod = null;
+        this.apiMultipart = {};
+        this.apiPath = "";
+        this.queryParams = {};
+        this.bodyType = null;
+        this.baseUrl = undefined;
+    }    
 }
