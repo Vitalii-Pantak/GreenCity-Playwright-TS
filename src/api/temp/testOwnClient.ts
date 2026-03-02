@@ -6,15 +6,15 @@ export class UserClient {
     private handler: RequestHandler
     private authToken!: string;
     private refreshToken!: string;
+    private url: string = env.API_BASE_USER_URL;
 
-    constructor(requestHandler: RequestHandler) {
-        this.handler = requestHandler;
+    constructor(request: APIRequestContext) {
+        this.handler = new RequestHandler(request, this.url);
     }
 
     async signIn(email: string, password: string, projectName: string = env.PROJECT_NAME): Promise<SignInResponse> {
-        const response = await this.handler.url("https://greencity-user.greencity.cx.ua")                                           
-                                           .method("post")
-                                           .path("/ownSecurity/signIn")
+        const response = await this.handler.method("post")
+                                           .path("/signIn")
                                            .body({email, password, projectName})
                                            .getResponse(200)
                                            
@@ -33,28 +33,25 @@ export class UserClient {
     }
 
     async getPasswordStatus(): Promise<PasswordStatusResponse> {
-        const response = await this.handler.url("https://greencity-user.greencity.cx.ua")
-                           .method("get")
-                           .path("/ownSecurity/password-status")
-                           .headers({Authorization: this.authToken})
-                           .getResponse(200)
+        const response = await this.handler.method("get")
+                                           .path("/password-status")
+                                           .headers({Authorization: this.authToken})
+                                           .getResponse(200)
         return await response.json()
     }
     
     async updateAccessToken(projectName: string = env.PROJECT_NAME): Promise<UpdateAccessTokenResponse> {
-        const response =  await this.handler.url("https://greencity-user.greencity.cx.ua")
-                                 .method("get")
-                                 .path("/ownSecurity/updateAccessToken")
-                                 .params({projectName: projectName, refreshToken: this.refreshToken})
-                                 .getResponse(200)
+        const response =  await this.handler.method("get")
+                                            .path("/updateAccessToken")
+                                            .params({projectName: projectName, refreshToken: this.refreshToken})
+                                            .getResponse(200)
         return await response.json()
     } 
 
 
-    async changePassword(password: string, authToken: string): Promise<any> {
-        return await this.handler.url("https://greencity-user.greencity.cx.ua")
-                                 .method("put")
-                                 .path("/ownSecurity/changePassword")
+    async changePassword(password: string, authToken: string): Promise<APIResponse> {
+        return await this.handler.method("put")
+                                 .path("/changePassword")
                                  .headers({Authorization: authToken})
                                  .body({password: password, confirmPassword: password})
                                  .getResponse(200)
