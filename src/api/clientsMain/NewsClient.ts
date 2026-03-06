@@ -1,18 +1,16 @@
 import { APIRequestContext, APIResponse } from "@playwright/test";
-import { RequestHandler } from "./handler";
 import { EcoNewsDto, UpdateEcoNewsDto } from "../models/ecoNewsModel";
 import { BASE_IMAGE_1, BASE_IMAGE_2 } from "@tests/Data/images/images.data";
 import { FindByRelevantParams, FindNewsParams } from "../models/interfaces";
 import { STATUS } from "@/enums/enums";
+import { BaseApi } from "./BaseApi";
 import env from "config/env";
 import fs from "fs";
 
-export class NewsClient {
-    private handler: RequestHandler;
-    private url: string = env.API_BASE_URL + "/eco-news";
+export class NewsClient extends BaseApi {
 
     constructor(request: APIRequestContext) {
-        this.handler = new RequestHandler(request, this.url);
+        super(request, env.API_BASE_URL + "/eco-news");
     }
 
     async getById(id: number): Promise<any> {
@@ -29,10 +27,9 @@ export class NewsClient {
         return await response.json();
     }
 
-    async deleteNewsById(token: string, id: number): Promise<any> {
+    async deleteNewsById( id: number): Promise<any> {
         const response = await this.handler.method("delete")
-                                           .path(`/${id}`)
-                                           .headers({Authorization: token})
+                                           .path(`/${id}`)     
                                            .getResponse(STATUS.SUCCESSFUL_200);
         return response;
     }
@@ -72,11 +69,8 @@ export class NewsClient {
         return await response.json();
     }
 
-
-
-    async addNews(token: string, data: EcoNewsDto, imagePath?: string): Promise<any> {
-        const response = await this.handler.method("post")
-                                           .headers({Authorization: token})
+    async addNews(data: EcoNewsDto, imagePath?: string): Promise<any> {
+        const response = await this.handler.method("post")                                           
                                            .multipart({image: {
                                                             name: this.imagePathHandler(imagePath),
                                                             mimeType: "image/jpeg",
@@ -87,10 +81,9 @@ export class NewsClient {
         return await response.json();
     }
 
-    async updateNews(id: number, token: string, data: UpdateEcoNewsDto, imagePath?: string): Promise<any> {
+    async updateNews(id: number, data: UpdateEcoNewsDto, imagePath?: string): Promise<any> {
         const response = await this.handler.method("put")
-                                           .path(`/${id}`)
-                                           .headers({Authorization: token})
+                                           .path(`/${id}`)                                           
                                            .multipart({image: {
                                                             name: this.imagePathHandler(imagePath),
                                                             mimeType: "image/jpeg",
@@ -101,40 +94,35 @@ export class NewsClient {
         return await response.json();
     }
 
-    async findByRelevant(query: FindByRelevantParams, token: string): Promise<any> {
+    async findByRelevant(query: FindByRelevantParams): Promise<any> {
         const response =  await this.handler.method("get")
                                             .path("/relevant")
-                                            .params(query)
-                                            .headers({Authorization: token})
+                                            .params(query)                                            
                                             .getResponse(STATUS.SUCCESSFUL_200);
         return await response.json();
     }
 
-    async likeRemoveLike(id: number, token: string): Promise<any> {
+    async likeRemoveLike(id: number): Promise<APIResponse> {
         return await this.handler.method("post")
-                                 .path(`/${id}/likes`)
-                                 .headers({Authorization: token})
+                                 .path(`/${id}/likes`)                                 
                                  .getResponse(STATUS.SUCCESSFUL_200);
     }
 
-    async dislikeRemoveDislike(id: number, token: string): Promise<any> {
+    async dislikeRemoveDislike(id: number): Promise<APIResponse> {
         return await this.handler.method("post")
-                                 .path(`/${id}/dislikes`)
-                                 .headers({Authorization: token})
+                                 .path(`/${id}/dislikes`)                                 
                                  .getResponse(STATUS.SUCCESSFUL_200);
     }
 
-    async addToFavorites(id: number, token: string): Promise<any> {
+    async addToFavorites(id: number): Promise<APIResponse> {
         return await this.handler.method("post")
-                                 .path(`/${id}/favorites`)
-                                 .headers({Authorization: token})
+                                 .path(`/${id}/favorites`)                                 
                                  .getResponse(STATUS.SUCCESSFUL_200);
     }
 
-    async removeFromFavorites(id: number, token: string): Promise<any> {
+    async removeFromFavorites(id: number): Promise<APIResponse> {
         return await this.handler.method("delete")
-                                 .path(`/${id}/favorites`)
-                                 .headers({Authorization: token})
+                                 .path(`/${id}/favorites`)                                 
                                  .getResponse(STATUS.SUCCESSFUL_200);
     }
 
@@ -145,9 +133,8 @@ export class NewsClient {
         return await response.json();
     }
 
-    async findByPage(token: string, data: FindNewsParams): Promise<any> {
-        const response = await this.handler.method("get")
-                                           .headers({Authorization: token})
+    async findByPage(data: FindNewsParams): Promise<any> {
+        const response = await this.handler.method("get")                                           
                                            .params(data)
                                            .getResponse(STATUS.SUCCESSFUL_200);
         return await response.json();

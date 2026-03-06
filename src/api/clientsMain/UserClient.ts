@@ -1,17 +1,15 @@
 import { APIRequestContext, APIResponse } from "@playwright/test";
-import { RequestHandler } from "./handler";
 import { STATUS } from "@/enums/enums";
 import { PasswordStatusDto, SignInDto, UpdateAccessTokenDto } from "../models/dto/user.dto";
+import { BaseApi } from "./BaseApi";
 import env from "config/env";
 
-export class UserClient {
-    private handler: RequestHandler
+export class UserClient extends BaseApi {
     private authToken!: string;
     private refreshToken!: string;
-    private url: string = env.API_BASE_USER_URL;
 
     constructor(request: APIRequestContext) {
-        this.handler = new RequestHandler(request, this.url);
+        super(request, env.API_BASE_USER_URL);
     }
 
     async signIn(email: string, password: string, projectName: string = env.PROJECT_NAME): Promise<SignInDto> {
@@ -36,8 +34,7 @@ export class UserClient {
 
     async getPasswordStatus(): Promise<PasswordStatusDto> {
         const response = await this.handler.method("get")
-                                           .path("/password-status")
-                                           .headers({Authorization: this.authToken})
+                                           .path("/password-status")                                           
                                            .getResponse(STATUS.SUCCESSFUL_200)
         return await response.json();
     }
@@ -50,13 +47,10 @@ export class UserClient {
         return await response.json();
     } 
 
-
-    async changePassword(password: string, authToken: string): Promise<APIResponse> {
+    async changePassword(password: string): Promise<APIResponse> {
         return await this.handler.method("put")
-                                 .path("/changePassword")
-                                 .headers({Authorization: authToken})
+                                 .path("/changePassword")                               
                                  .body({password: password, confirmPassword: password})
                                  .getResponse(STATUS.SUCCESSFUL_200);
     }
 }
-
