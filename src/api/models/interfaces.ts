@@ -1,7 +1,7 @@
 export interface FindNewsParams {
     title?: string,
     tags?: string[],
-    authorID?: number,
+    "author-id"?: number,
     favorite?: boolean,
     page?: number,
     size?: number,

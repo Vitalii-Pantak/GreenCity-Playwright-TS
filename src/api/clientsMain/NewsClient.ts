@@ -1,11 +1,12 @@
 import { APIRequestContext, APIResponse } from "@playwright/test";
-import { EcoNewsDto, UpdateEcoNewsDto } from "../models/ecoNewsModel";
+import { CreateEcoNewsDto, UpdateEcoNewsDto } from "../models/ecoNewsModel";
 import { BASE_IMAGE_1, BASE_IMAGE_2 } from "@tests/Data/images/images.data";
 import { FindByRelevantParams, FindNewsParams } from "../models/interfaces";
 import { STATUS } from "@/enums/enums";
 import { BaseApi } from "./BaseApi";
 import env from "config/env";
 import fs from "fs";
+import { EcoNewsDto, TagDto, NewsSummaryDto, BaseEcoNewsDto, NewsPagesDto } from "../models/dto/news.dto";
 
 export class NewsClient extends BaseApi {
 
@@ -13,63 +14,70 @@ export class NewsClient extends BaseApi {
         super(request, env.API_BASE_URL + "/eco-news");
     }
 
-    async getById(id: number): Promise<any> {
+    async getById(id: number): Promise<BaseEcoNewsDto> {
         const response =  await this.handler.method("get")
                                             .path(`/${id}`)
                                             .getResponse(STATUS.SUCCESSFUL_200);
         return await response.json();
     }
 
-    async getNewsTags(): Promise<any> {
+    async getNewsTags(): Promise<TagDto[]> {
         const response = await this.handler.method("get")
                                            .path("/tags")
                                            .getResponse(STATUS.SUCCESSFUL_200);
         return await response.json();
     }
 
-    async deleteNewsById( id: number): Promise<any> {
+    async deleteNewsById( id: number): Promise<APIResponse> {
         const response = await this.handler.method("delete")
                                            .path(`/${id}`)     
                                            .getResponse(STATUS.SUCCESSFUL_200);
         return response;
     }
 
-    async getNewsSummary(id: number): Promise<any> {
+    async getNewsSummary(id: number): Promise<NewsSummaryDto> {
         const response = await this.handler.method("get")
-                                           .path(`/${id}`)
+                                           .path(`/${id}/summary`)
                                            .getResponse(STATUS.SUCCESSFUL_200);
         return await response.json();
     }
 
-    async getPublishedNewsCount(): Promise<any> {
+    async getPublishedNewsCount(authorId?: number): Promise<number> {
+        const params: Record<string, number> = {};
+
+        if (authorId !== undefined) {
+            params["author-id"] = authorId;
+        }
+
         const response = await this.handler.method("get")
                                            .path("/count")
+                                           .params(params)
                                            .getResponse(STATUS.SUCCESSFUL_200);
         return await response.json();
     }
 
-    async getLikesCount(id: number): Promise<any> {
+    async getLikesCount(id: number): Promise<number> {
         const response = await this.handler.method("get")
                                            .path(`/${id}/likes/count`)
                                            .getResponse(STATUS.SUCCESSFUL_200);
         return await response.json();
     }   
 
-    async getDislikeCount(id: number): Promise<any> {
+    async getDislikeCount(id: number): Promise<number> {
         const response = await this.handler.method("get")
                                            .path(`/${id}/dislikes/count`)
                                            .getResponse(STATUS.SUCCESSFUL_200);
         return await response.json();
     }   
 
-    async isRelevanceEnabled(): Promise<any> {
+    async isRelevanceEnabled(): Promise<boolean> {
         const response = await this.handler.method("get")
                                            .path("/relevance-enabled")
                                            .getResponse(STATUS.SUCCESSFUL_200);
         return await response.json();
     }
 
-    async addNews(data: EcoNewsDto, imagePath?: string): Promise<any> {
+    async addNews(data: CreateEcoNewsDto, imagePath?: string): Promise<EcoNewsDto> {
         const response = await this.handler.method("post")                                           
                                            .multipart({image: {
                                                             name: this.imagePathHandler(imagePath),
@@ -81,7 +89,7 @@ export class NewsClient extends BaseApi {
         return await response.json();
     }
 
-    async updateNews(id: number, data: UpdateEcoNewsDto, imagePath?: string): Promise<any> {
+    async updateNews(id: number, data: UpdateEcoNewsDto, imagePath?: string): Promise<EcoNewsDto> {
         const response = await this.handler.method("put")
                                            .path(`/${id}`)                                           
                                            .multipart({image: {
@@ -94,7 +102,7 @@ export class NewsClient extends BaseApi {
         return await response.json();
     }
 
-    async findByRelevant(query: FindByRelevantParams): Promise<any> {
+    async findByRelevant(query: FindByRelevantParams): Promise<NewsPagesDto> {
         const response =  await this.handler.method("get")
                                             .path("/relevant")
                                             .params(query)                                            
@@ -126,14 +134,14 @@ export class NewsClient extends BaseApi {
                                  .getResponse(STATUS.SUCCESSFUL_200);
     }
 
-    async getRecommendedNews(id: number): Promise<any> {
+    async getRecommendedNews(id: number): Promise<BaseEcoNewsDto[]> {
         const response = await this.handler.method("get")
-                                           .path(`/${id}`)
+                                           .path(`/${id}/recommended`)
                                            .getResponse(STATUS.SUCCESSFUL_200);
         return await response.json();
     }
 
-    async findByPage(data: FindNewsParams): Promise<any> {
+    async findByPage(data: FindNewsParams): Promise<NewsPagesDto> {
         const response = await this.handler.method("get")                                           
                                            .params(data)
                                            .getResponse(STATUS.SUCCESSFUL_200);

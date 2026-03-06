@@ -1,11 +1,10 @@
-export interface EcoNewsDto {
+export interface CreateEcoNewsDto {
     title: string;
     text: string;
     shortInfo?: string;
     source?: string;
     tags: string[];
 }
-
 
 export interface UpdateEcoNewsDto  {
     id: number;
