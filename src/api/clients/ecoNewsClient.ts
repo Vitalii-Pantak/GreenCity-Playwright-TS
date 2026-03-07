@@ -1,5 +1,5 @@
 import { APIRequestContext, APIResponse } from "@playwright/test";
-import { CreateEcoNewsDto, UpdateEcoNewsDto } from "../models/ecoNewsModel";
+import { CreateEcoNewsModel, UpdateEcoNewsModel } from "../models/ecoNewsModel";
 import { FindNewsParams } from "../models/interfaces";
 import { paramBuilder } from "@/utils/utils";
 import { BASE_IMAGE_1, BASE_IMAGE_2 } from "@tests/Data/images/images.data";
@@ -31,7 +31,7 @@ export class EcoNewsClient extends BaseApiClient {
         }});
     }
 
-    async updateNews(id: number, token: string, data: UpdateEcoNewsDto, imagePath?: string): Promise<APIResponse> {
+    async updateNews(id: number, token: string, data: UpdateEcoNewsModel, imagePath?: string): Promise<APIResponse> {
         const response = await this.put({url: "/" + id, options: {headers: { Authorization: token },
             multipart: {
                 image: {
@@ -45,7 +45,7 @@ export class EcoNewsClient extends BaseApiClient {
         return response;
     }
 
-    async addNews(token: string, data: CreateEcoNewsDto, imagePath?: string): Promise<APIResponse> {
+    async addNews(token: string, data: CreateEcoNewsModel, imagePath?: string): Promise<APIResponse> {
         const response = await this.post({url: "", options: {headers: { Authorization: token },
             multipart: {
                 image: {

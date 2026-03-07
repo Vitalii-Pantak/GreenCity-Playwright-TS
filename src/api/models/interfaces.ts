@@ -6,6 +6,7 @@ export interface FindNewsParams {
     page?: number,
     size?: number,
     sort?: string[]
+    expectedStatus?: number
 
     [key: string]: string | number | boolean | string[] | undefined;
 }
@@ -21,4 +22,5 @@ export interface FindByRelevantParams {
     author?: string,
     pageIndex?: number,
     size?: number
+    expectedStatus?: number
 }

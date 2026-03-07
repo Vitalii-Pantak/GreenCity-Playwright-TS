@@ -4,7 +4,6 @@ export interface SignInDto {
     refreshToken: string,
     name: string,
     ownRegistrations: boolean
-    woof: string
 }
 
 export interface UpdateAccessTokenDto {

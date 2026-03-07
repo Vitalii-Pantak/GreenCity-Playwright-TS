@@ -1,12 +1,14 @@
-export interface CreateEcoNewsDto {
+export interface CreateEcoNewsModel {
     title: string;
     text: string;
     shortInfo?: string;
     source?: string;
     tags: string[];
+    imagePath?: string,
+    expectedStatus?: number,
 }
 
-export interface UpdateEcoNewsDto  {
+export interface UpdateEcoNewsModel  {
     id: number;
     content: string;
     title?: string;
@@ -14,4 +16,11 @@ export interface UpdateEcoNewsDto  {
     shortInfo?: string;
     source?: string;
     tags: string[];
+    imagePath?: string,
+    expectedStatus?: number,
+}
+
+export interface IdAndStatus {
+    id: number,
+    expectedStatus?: number,
 }

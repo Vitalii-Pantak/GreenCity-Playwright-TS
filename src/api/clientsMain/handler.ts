@@ -67,7 +67,7 @@ export class RequestHandler {
         return url.toString();
     }
 
-    async getResponse(statusCode: number): Promise<APIResponse> {
+    async getResponse(statusCode?: number): Promise<APIResponse> {
         const url = this.getUrl();
         const options: any = {
             headers: this.apiHeaders
@@ -79,8 +79,11 @@ export class RequestHandler {
             options.multipart = this.apiMultipart;
         }
 
-        const response = await this.request[this.apiMethod!](url, options);        
-        // expect(statusCode, `Status code should be ${statusCode}`).toEqual(response.status());
+        const response = await this.request[this.apiMethod!](url, options);          
+
+        if (statusCode !== undefined) {  
+            expect(response.status(), `Status code should be ${statusCode}`).toEqual(statusCode);
+        }
 
         this.cleanUpFields();        
 

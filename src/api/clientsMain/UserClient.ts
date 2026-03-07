@@ -1,5 +1,4 @@
 import { APIRequestContext, APIResponse } from "@playwright/test";
-import { STATUS } from "@/enums/enums";
 import { PasswordStatusDto, SignInDto, UpdateAccessTokenDto } from "../models/dto/user.dto";
 import { BaseApi } from "./BaseApi";
 import env from "config/env";
@@ -12,11 +11,16 @@ export class UserClient extends BaseApi {
         super(request, env.API_BASE_USER_URL);
     }
 
-    async signIn(email: string, password: string, projectName: string = env.PROJECT_NAME): Promise<SignInDto> {
+    async signIn({email, password, expectedStatus, projectName = env.PROJECT_NAME}: {
+        email: string,
+        password: string,
+        projectName?: string,
+        expectedStatus?: number
+    }): Promise<SignInDto> { 
         const response = await this.handler.method("post")
                                            .path("/signIn")
                                            .body({email, password, projectName})
-                                           .getResponse(STATUS.SUCCESSFUL_200);
+                                           .getResponse(expectedStatus);
 
         const responseJSON = await response.json();
         this.authToken = "Bearer " + responseJSON.accessToken;
@@ -32,25 +36,31 @@ export class UserClient extends BaseApi {
         return this.refreshToken;
     }
 
-    async getPasswordStatus(): Promise<PasswordStatusDto> {
+    async getPasswordStatus(expectedStatus?: number): Promise<PasswordStatusDto> {
         const response = await this.handler.method("get")
                                            .path("/password-status")                                           
-                                           .getResponse(STATUS.SUCCESSFUL_200)
+                                           .getResponse(expectedStatus);
         return await response.json();
     }
     
-    async updateAccessToken(projectName: string = env.PROJECT_NAME): Promise<UpdateAccessTokenDto> {
+    async updateAccessToken({expectedStatus, projectName = env.PROJECT_NAME}: {
+        expectedStatus?: number,
+        projectName?: string
+    } = {}): Promise<UpdateAccessTokenDto> {
         const response =  await this.handler.method("get")
                                             .path("/updateAccessToken")
-                                            .params({projectName: projectName, refreshToken: this.refreshToken})
-                                            .getResponse(STATUS.SUCCESSFUL_200)
+                                            .params({refreshToken: this.refreshToken, projectName: projectName})
+                                            .getResponse(expectedStatus);
         return await response.json();
     } 
 
-    async changePassword(password: string): Promise<APIResponse> {
+    async changePassword({password, expectedStatus}: {
+        password: string,
+        expectedStatus?: number
+    }): Promise<APIResponse> {
         return await this.handler.method("put")
                                  .path("/changePassword")                               
                                  .body({password: password, confirmPassword: password})
-                                 .getResponse(STATUS.SUCCESSFUL_200);
+                                 .getResponse(expectedStatus);
     }
 }
