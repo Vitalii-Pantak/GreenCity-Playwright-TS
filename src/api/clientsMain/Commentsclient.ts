@@ -1,6 +1,5 @@
 import { APIRequestContext, APIResponse } from "@playwright/test";
 import { BASE_IMAGE_1 } from "@tests/Data/images/images.data";
-import { STATUS } from "@/enums/enums";
 import { BaseApi } from "./BaseApi";
 import { AddCommentDto, CommentDto, CommentsListDto } from "../models/dto/comments.dto";
 import { IdAndStatus } from "../models/ecoNewsModel";

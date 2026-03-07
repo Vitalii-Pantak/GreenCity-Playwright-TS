@@ -12,7 +12,6 @@ export interface UpdateEcoNewsModel  {
     id: number;
     content: string;
     title?: string;
-    text?: string;
     shortInfo?: string;
     source?: string;
     tags: string[];

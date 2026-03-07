@@ -9,17 +9,17 @@ const tagsx = [Tags.ADS, Tags.EDUCATION]
 
 
 test.skip("Sign In with wrong project name", {tag: ["@negative", "@regression"]}, async ({ userClient, authRequest, newsClient, commentsClient }) => {    
-    // const res = await newsClient.addNews({title: "woof",
-    //      text: "wooooooooooooooooooooooof",
-    //       tags: tagsx,
+    const res = await newsClient.addNews({title: "woof",
+         text: "wooooooooooooooooooooooof",
+          tags: tagsx,
            
-    //        expectedStatus: STATUS.CREATED_201
-    //        })
-    // console.log(res)
-    // const r = await commentsClient.getCommentsCount({id: 4044})
-    // console.log(r)
-    const add = await commentsClient.addComment({newsId: 4044, text: "qweqweqweqwe"})
-    console.log(add)
+           expectedStatus: STATUS.CREATED_201
+           })
+    const newsId = res.id
+    console.log(newsId)
+    const upd = await newsClient.updateNews({id: newsId, content: "olaaaaaaaaaaaaaaaaaaaaaaa", tags: tagsx, title: "WOOF", expectedStatus: 200})
+    console.log(upd)
     
+
 });
 

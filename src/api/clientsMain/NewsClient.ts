@@ -42,7 +42,9 @@ export class NewsClient extends BaseApi {
         return await response.json();
     }
 
-    async getPublishedNewsCount({id: authorId, expectedStatus}: IdAndStatus): Promise<number> {
+    async getPublishedNewsCount({authorId, expectedStatus}: {
+            authorId?: number,
+            expectedStatus?: number} = {}): Promise<number> {
         const params: Record<string, number> = {};
 
         if (authorId !== undefined) {
@@ -77,6 +79,18 @@ export class NewsClient extends BaseApi {
         return await response.json();
     }
 
+    /**
+     * Creates a new eco news item.     
+     * 
+     * @param title - news title
+     * @param text - news content
+     * @param shortInfo - optional short description
+     * @param source - optional news source
+     * @param tags - tags related to the news
+     * @param imagePath - image path or URL
+     * @param expectedStatus - optional expected HTTP status for the test
+     * @returns EcoNewsDto
+     */
     async addNews({imagePath, expectedStatus, ...dto}: CreateEcoNewsModel): Promise<EcoNewsDto> {
         const response = await this.handler.method("post")                                           
                                            .multipart({image: {
@@ -89,9 +103,22 @@ export class NewsClient extends BaseApi {
         return await response.json();
     }
 
-    async updateNews({imagePath, expectedStatus, id, ...dto}: UpdateEcoNewsModel): Promise<EcoNewsDto> {
+     /**
+     * Update the eco news item.     
+     * 
+     * @param id - news id
+     * @param content - news content field
+     * @param tags - tags related to the news
+     * @param title - optional news title  
+     * @param shortInfo - optional short description
+     * @param source - optional news source
+     * @param imagePath - optional image path or URL
+     * @param expectedStatus - optional expected HTTP status for the test
+     * @returns EcoNewsDto
+     */
+    async updateNews({imagePath, expectedStatus, ...dto}: UpdateEcoNewsModel): Promise<EcoNewsDto> {
         const response = await this.handler.method("put")
-                                           .path(`/${id}`)                                           
+                                           .path(`/${dto.id}`)                                           
                                            .multipart({image: {
                                                             name: this.imagePathHandler(imagePath),
                                                             mimeType: "image/jpeg",
@@ -102,7 +129,18 @@ export class NewsClient extends BaseApi {
         return await response.json();
     }
 
-    async findByRelevant({expectedStatus, ...query}: FindByRelevantParams): Promise<NewsPagesDto> {
+    /**
+     * Parameters for searching relevant news.
+     *
+     * @param tags - optional list of tags used for filtering
+     * @param title - optional title filter
+     * @param author - optional author name filter
+     * @param pageIndex - optional page index for pagination
+     * @param size - optional number of items per page
+     * @param expectedStatus - optional expected HTTP status for the test
+     * @returns NewsPagesDto
+     */
+    async findByRelevant({expectedStatus, ...query}: FindByRelevantParams = {}): Promise<NewsPagesDto> {
         const response =  await this.handler.method("get")
                                             .path("/relevant")
                                             .params(query)                                            
@@ -141,7 +179,20 @@ export class NewsClient extends BaseApi {
         return await response.json();
     }
 
-    async findByPage({expectedStatus, ...query}: FindNewsParams): Promise<NewsPagesDto> {
+    /**
+     * Parameters for searching news.
+     * 
+     * @param title - optional news title to search for 
+     * @param tags - optional array of tags to filter by
+     * @param author-id - optional author ID to filter by
+     * @param favorite - optional Search for favorite news
+     * @param page - optional Page index to retrieve [0..N]. Must be an integer greater than or equal to 0. If omitted, defaults to 0
+     * @param size - optional page size, default is 10
+     * @param sort - optional number of records per page [1..100]. If omitted, defaults to 20
+     * @param expectedStatus - optional expected HTTP status for the test
+     * @returns NewsPagesDto
+     */
+    async findByPage({expectedStatus, ...query}: FindNewsParams = {}): Promise<NewsPagesDto> {
 
         const response = await this.handler.method("get")                                           
                                            .params(query)
