@@ -5,7 +5,7 @@ import { feature, step, severity, epic } from "allure-js-commons";
 import env from "config/env";
 
 test.describe("Checking Sign in feature", async() => {
-    test.beforeEach("Set test metadata", async({}) => {
+    test.beforeEach("Set test metadata", async() => {
         severity("critical");
         epic("Authentication");
         feature("Sign In");

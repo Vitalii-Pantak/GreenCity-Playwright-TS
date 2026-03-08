@@ -63,7 +63,7 @@ export class CommentsClient extends BaseApi {
                                  .getResponse(expectedStatus);
     }
 
-    async addComment({newsId, text, parrentId, expectedStatus}: AddComment): Promise<AddCommentDto> {
+    async addComment({newsId, text, parrentId, imagePath, expectedStatus}: AddComment): Promise<AddCommentDto> {
         const response = await this.handler.method("post")
                                            .path(`/${newsId}/comments`)                                           
                                            .multipart({request:
@@ -74,7 +74,7 @@ export class CommentsClient extends BaseApi {
                                                         images: {
                                                             name: 'test.jpeg',
                                                             mimeType: 'image/jpeg',
-                                                            buffer: fs.readFileSync(BASE_IMAGE_1)}})
+                                                            buffer: fs.readFileSync(imagePath || BASE_IMAGE_1)}})
                                            .getResponse(expectedStatus);
         return await response.json();
     }
