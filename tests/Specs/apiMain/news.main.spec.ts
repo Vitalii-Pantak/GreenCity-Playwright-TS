@@ -20,7 +20,7 @@ test("Add news, update news, delete news", {tag: ["@positive", "@smoke", "@regre
                                          expectedStatus: STATUS.CREATED_201});
     });
 
-    await step("Verify successfully created news and status code", async() => {        
+    await step("Verify successfully created news", async() => {        
         expect(news.title).toEqual(BASE_NEWS_DATA.title);
         expect(news.content).toEqual(BASE_NEWS_DATA.content);
         expect(news.source).toEqual(BASE_NEWS_DATA.source);
