@@ -14,7 +14,8 @@ export const NON_VALID_NEWS_DATA = {
     content: "Hello",
     source: "Hello",
     image: BASE_IMAGE_4,
-    tags: [Tags.INITIATIVES, Tags.EVENTS, Tags.NEWS].sort()
+    tags: [Tags.INITIATIVES, Tags.EVENTS, Tags.NEWS].sort(),
+    tagsNonValid: ["Hello"]
 };
 
 export const UPDATE_NEWS_DATA = {

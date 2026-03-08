@@ -18,7 +18,6 @@ export const test = base.extend<TestOptions>( {
     await userClient.signIn({email: env.USER_EMAIL,
                              password: env.USER_PASSWORD});
     const accessToken = userClient.getAccessToken();
-    const refreshToken = userClient.getRefreshToken()
 
     const authContext = await req.newContext({
         extraHTTPHeaders: { Authorization: accessToken }});
@@ -40,18 +39,6 @@ export const test = base.extend<TestOptions>( {
         const commentsClient = new CommentsClient(authRequest);
         await use(commentsClient);
     },
-});
-
-export const test2 = base.extend<{
-  accessToken: string;
-}>({
-  accessToken: async ({ request }, use) => {
-    const userClient = new UserClient(request);
-    await userClient.signIn({ email: env.USER_EMAIL, password: env.USER_PASSWORD });
-
-    const token = userClient.getAccessToken();
-    await use(token); // строка
-  }
 });
 
 export const expect = baseExpect;

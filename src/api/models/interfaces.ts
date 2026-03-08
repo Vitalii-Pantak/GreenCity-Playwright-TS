@@ -7,8 +7,6 @@ export interface FindNewsParams {
     size?: number,
     sort?: string[]
     expectedStatus?: number
-
-    [key: string]: string | number | boolean | string[] | undefined;
 }
 
 export interface RequestParams {
