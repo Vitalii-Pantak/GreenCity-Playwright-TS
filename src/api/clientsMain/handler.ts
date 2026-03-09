@@ -1,5 +1,6 @@
 import { APIRequestContext, APIResponse, expect } from "@playwright/test";
 import { ApiMethod } from "../models/types";
+import env from "config/env";
 
 export class RequestHandler {
     private request: APIRequestContext
@@ -67,7 +68,7 @@ export class RequestHandler {
         return url.toString();
     }
 
-    async getResponse(statusCode?: number): Promise<APIResponse> {
+    async getResponse(expectedStatus?: number): Promise<APIResponse> {
         const url = this.getUrl();
         const options: any = {
             headers: this.apiHeaders
@@ -79,10 +80,22 @@ export class RequestHandler {
             options.multipart = this.apiMultipart;
         }
 
-        const response = await this.request[this.apiMethod!](url, options);          
+        const response = await this.request[this.apiMethod!](url, options);     
+        const actualStatus = response.status();     
 
-        if (statusCode !== undefined) {  
-            expect(response.status(), `Status code should be ${statusCode}`).toEqual(statusCode);
+        if (expectedStatus !== undefined) {  
+            if (env.DEBUG) {
+                if (expectedStatus !== actualStatus) {
+                    console.log(`Actual status: [${actualStatus}], Expected status: [${expectedStatus}]`);
+                    if (response.headers()['content-type'] === "application/json") {
+                        console.log(await response.json());
+                    }
+                } else {
+                    console.log("--Status verification Passed--");
+                }
+            } else {
+                expect(actualStatus, `Status code should be ${expectedStatus}`).toEqual(expectedStatus);
+            }    
         }
 
         this.cleanUpFields();        

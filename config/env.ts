@@ -16,6 +16,7 @@ const USER_ID = process.env.USER_ID ? process.env.USER_ID : "149";
 const USER_LOCATION = process.env.USER_LOCATION ? process.env.USER_LOCATION : "Kyiv, Ukraine";
 const PROJECT_NAME = process.env.PROJECT_NAME ? process.env.PROJECT_NAME : "GREENCITY";
 const TIMEOUT = 5000;
+const DEBUG = false;
 
 export default {
     BASE_CLIENT_URL,
@@ -30,6 +31,7 @@ export default {
     USER_LOCATION,
     USER_PASSWORD,
     PROJECT_NAME,
-    TIMEOUT
+    TIMEOUT,
+    DEBUG
 };
 
