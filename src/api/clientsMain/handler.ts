@@ -1,6 +1,8 @@
-import { APIRequestContext, APIResponse, expect } from "@playwright/test";
+import test, { APIRequestContext, APIResponse, expect } from "@playwright/test";
 import { ApiMethod } from "../models/types";
 import env from "config/env";
+import { APILogger } from "@/utils/logger";
+
 
 export class RequestHandler {
     private request: APIRequestContext
@@ -12,10 +14,12 @@ export class RequestHandler {
     private apiMultipart: any;
     private bodyType!: "json" | "multipart" | null;
     private apiMethod!: ApiMethod | null;
+    private logger: APILogger
 
-    constructor(request: APIRequestContext, apiBaseUrl: string) {
+    constructor(request: APIRequestContext, apiBaseUrl: string, logger: APILogger) {
         this.request = request;
         this.baseUrl = apiBaseUrl;
+        this.logger = logger;
     }
 
     method(method: ApiMethod): RequestHandler {
@@ -73,34 +77,32 @@ export class RequestHandler {
         const options: any = {
             headers: this.apiHeaders
         }
-
+        
         if (this.bodyType === "json") {
             options.data = this.apiBody;
         } else if (this.bodyType === "multipart") {
             options.multipart = this.apiMultipart;
         }
 
+        this.logger.logRequest(this.apiMethod!, url, this.apiHeaders, this.apiBody);
+
         const response = await this.request[this.apiMethod!](url, options);     
         const actualStatus = response.status();     
 
-        if (expectedStatus !== undefined) {  
-            if (env.DEBUG) {
-                if (expectedStatus !== actualStatus) {
-                    console.log(`Actual status: [${actualStatus}], Expected status: [${expectedStatus}]`);
-                    if (response.headers()['content-type'] === "application/json") {
-                        console.log(await response.json());
-                    }
-                } else {
-                    console.log("--Status verification Passed--");
-                }
-            } else {
-                expect(actualStatus, `Status code should be ${expectedStatus}`).toEqual(expectedStatus);
-            }    
-        }
-
+        await this.logger.logResponse(actualStatus, response);
+        this.statusCodeValidator(actualStatus, expectedStatus!)
         this.cleanUpFields();        
 
         return response;
+    }
+
+    private statusCodeValidator(actualStatus: number, expectedStatus: number) {
+        if (actualStatus !== expectedStatus) {
+            const recentLogs = this.logger.getRecentLogs();
+            const error = new Error(`Expected - ${expectedStatus}, Actual - ${actualStatus}\n${recentLogs}`);
+            Error.captureStackTrace(error, this.getResponse);
+            throw error;
+        }
     }
 
     private cleanUpFields(): void {
@@ -113,3 +115,6 @@ export class RequestHandler {
         this.bodyType = null;
     }    
 }
+
+
+

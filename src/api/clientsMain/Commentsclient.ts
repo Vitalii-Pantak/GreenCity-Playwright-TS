@@ -6,11 +6,12 @@ import { IdAndStatus } from "../models/ecoNewsModel";
 import { AddComment, UpdateComment } from "../models/commentsModels";
 import env from "config/env";
 import fs from "fs";
+import { APILogger } from "@/utils/logger";
 
 export class CommentsClient extends BaseApi {
 
-    constructor(request: APIRequestContext) {
-        super(request, env.API_BASE_URL + "/eco-news")
+    constructor(request: APIRequestContext, logger: APILogger) {
+        super(request, env.API_BASE_URL + "/eco-news", logger)
     }
 
     async getCommentsCount({id: newsId, expectedStatus}: IdAndStatus): Promise<number> {

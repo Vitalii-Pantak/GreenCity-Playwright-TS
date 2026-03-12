@@ -21,5 +21,5 @@ export interface UpdateEcoNewsModel  {
 
 export interface IdAndStatus {
     id: number,
-    expectedStatus?: number,
+    expectedStatus: number,
 }

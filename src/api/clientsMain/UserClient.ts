@@ -2,13 +2,14 @@ import { APIRequestContext, APIResponse } from "@playwright/test";
 import { PasswordStatusDto, SignInDto, UpdateAccessTokenDto } from "../models/dto/user.dto";
 import { BaseApi } from "./BaseApi";
 import env from "config/env";
+import { APILogger } from "@/utils/logger";
 
 export class UserClient extends BaseApi {
     private authToken!: string;
     private refreshToken!: string;
 
-    constructor(request: APIRequestContext) {
-        super(request, env.API_BASE_USER_URL);
+    constructor(request: APIRequestContext, logger: APILogger) {
+        super(request, env.API_BASE_USER_URL, logger);
     }
 
     async signIn({email, password, expectedStatus, projectName = env.PROJECT_NAME}: {
@@ -20,7 +21,7 @@ export class UserClient extends BaseApi {
         const response = await this.handler.method("post")
                                            .path("/signIn")
                                            .body({email, password, projectName})
-                                           .getResponse(expectedStatus);
+                                           .getResponse(expectedStatus);                                           
 
         const responseJSON = await response.json();
         this.authToken = "Bearer " + responseJSON.accessToken;

@@ -7,11 +7,12 @@ import { EcoNewsDto, TagDto, NewsSummaryDto,
          BaseEcoNewsDto, NewsPagesDto } from "../models/dto/news.dto";
 import env from "config/env";
 import fs from "fs";
+import { APILogger } from "@/utils/logger";
 
 export class NewsClient extends BaseApi {
 
-    constructor(request: APIRequestContext) {
-        super(request, env.API_BASE_URL + "/eco-news");
+    constructor(request: APIRequestContext, logger: APILogger) {
+        super(request, env.API_BASE_URL + "/eco-news", logger);
     }
 
     async getById({id, expectedStatus}: IdAndStatus): Promise<BaseEcoNewsDto> {
