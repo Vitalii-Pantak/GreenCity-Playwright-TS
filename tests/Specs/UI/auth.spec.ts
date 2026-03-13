@@ -1,6 +1,6 @@
 import { test, expect } from "@/fixtures/fixturePages";
-import { SUCCESS_REGISTRATION_MESSAGE } from "@tests/Data/messages.data";
-import { NON_VALID_USER, REGISTER_USER } from "@tests/Data/users.data";
+import { SUCCESS_REGISTRATION_MESSAGE } from "@tests/data/messages.data";
+import { NON_VALID_USER, REGISTER_USER } from "@tests/data/users.data";
 import { feature, step, severity, epic } from "allure-js-commons";
 import env from "config/env";
 

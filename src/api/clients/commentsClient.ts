@@ -1,5 +1,5 @@
 import { APIRequestContext, APIResponse } from "@playwright/test";
-import { BASE_IMAGE_1 } from "@tests/Data/images/images.data";
+import { BASE_IMAGE_1 } from "@tests/data/images/images.data";
 import { BaseApiClient } from "./baseApiClient";
 import fs from "fs";
 

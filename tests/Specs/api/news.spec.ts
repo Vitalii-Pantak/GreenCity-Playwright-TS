@@ -1,6 +1,6 @@
 import { STATUS } from "@/enums/enums";
 import { test, expect } from "@/fixtures/fixtureAPI";
-import { BASE_NEWS_DATA, UPDATE_NEWS_DATA } from "@tests/Data/news.data";
+import { BASE_NEWS_DATA, UPDATE_NEWS_DATA } from "@tests/data/news.data";
 import { feature, step, severity, epic } from "allure-js-commons";
 import env from "config/env";
 

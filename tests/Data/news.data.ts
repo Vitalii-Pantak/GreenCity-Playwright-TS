@@ -1,4 +1,4 @@
-import { Tags } from "@/enums/Tags";
+import { Tags } from "@/enums/enums";
 import { BASE_IMAGE_1, BASE_IMAGE_3, BASE_IMAGE_4 } from "./images/images.data";
 
 export const BASE_NEWS_DATA = {

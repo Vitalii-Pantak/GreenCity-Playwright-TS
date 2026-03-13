@@ -1,7 +1,7 @@
 import { STATUS } from "@/enums/enums";
 import { test, expect } from "@/fixtures/fixtureAPIAuth";
-import { BASE_NEWS_DATA } from "@tests/Data/news.data";
-import { COMMENT_DATA } from "@tests/Data/comments.data";
+import { BASE_NEWS_DATA } from "@tests/data/news.data";
+import { COMMENT_DATA } from "@tests/data/comments.data";
 import { feature, step, severity, epic } from "allure-js-commons";
 import { ecoNewsSchema } from "@/api/schemas/news.schema";
 import { addCommentSchema, commentSchema } from "@/api/schemas/comments.schema";

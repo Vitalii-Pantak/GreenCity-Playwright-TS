@@ -2,7 +2,7 @@ import { APIRequestContext, APIResponse } from "@playwright/test";
 import { CreateEcoNewsModel, UpdateEcoNewsModel } from "../models/ecoNewsModel";
 import { FindNewsParams } from "../models/interfaces";
 import { paramBuilder } from "@/utils/utils";
-import { BASE_IMAGE_1, BASE_IMAGE_2 } from "@tests/Data/images/images.data";
+import { BASE_IMAGE_1, BASE_IMAGE_2 } from "@tests/data/images/images.data";
 import { BaseApiClient } from "./baseApiClient";
 import fs from "fs";
 
@@ -120,7 +120,8 @@ export class EcoNewsClient extends BaseApiClient {
     async findByPage(token: string, data: FindNewsParams) {
         const { expectedStatus, ...params} = data
         return await this.get({url: "", options: {headers: {Authorization: token},
-            params: paramBuilder(params) }});
+            params: paramBuilder(params)
+        }});
     }
 
     private imagePathHandler(path?: string) {

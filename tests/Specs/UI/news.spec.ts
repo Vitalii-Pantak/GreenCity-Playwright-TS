@@ -1,6 +1,6 @@
 import { test, expect } from "@/fixtures/fixtureEcoNews";
-import { SUCCESS_NEWS_CREATION_MESSAGE } from "@tests/Data/messages.data";
-import { BASE_NEWS_DATA } from "@tests/Data/news.data";
+import { SUCCESS_NEWS_CREATION_MESSAGE } from "@tests/data/messages.data";
+import { BASE_NEWS_DATA } from "@tests/data/news.data";
 import { feature, step, severity, epic } from "allure-js-commons";
 import env from "config/env";
 

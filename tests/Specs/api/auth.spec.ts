@@ -1,6 +1,6 @@
 import { STATUS } from "@/enums/enums";
 import { test, expect } from "@/fixtures/fixtureAPI";
-import { NON_VALID_USER } from "@tests/Data/users.data";
+import { NON_VALID_USER } from "@tests/data/users.data";
 import { feature, step, severity, epic } from "allure-js-commons";
 import env from "config/env";
 

@@ -5,7 +5,7 @@ import { CreateNewsPage,
 
 type TestOptions = {
     createNewsPage: CreateNewsPage,
-    setup: string,
+    setup: void,
 };
 
 export const test = base.extend<TestOptions>( {
@@ -20,7 +20,7 @@ export const test = base.extend<TestOptions>( {
             await ecoNewsPage.createNews();
         });
 
-        await use('');
+        await use();
     },
     
     createNewsPage: async ({page, setup}, use) => {

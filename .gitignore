@@ -160,4 +160,7 @@ vite.config.ts.timestamp-*
 allure-results/
 allure-report/
 
+#config
+config/
+
 

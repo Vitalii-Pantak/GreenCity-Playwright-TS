@@ -1,13 +1,13 @@
 import { test as base, expect as baseExpect } from "@playwright/test";
 import { CreateNewsPage, Navigation, EcoNewsPage } from "@/pages";
 import { EcoNewsClient, OwnSecurityClient } from "@/api";
-import { BASE_NEWS_DATA } from "@tests/Data/news.data";
+import { BASE_NEWS_DATA } from "@tests/data/news.data";
 import env from "config/env";
 
 type TestOptions = {
     createNewsPage: CreateNewsPage,
     ecoNewsPage: EcoNewsPage,
-    setup: string,
+    setup: void,
 }
 
 export const test = base.extend<TestOptions>( {
@@ -23,7 +23,7 @@ export const test = base.extend<TestOptions>( {
             await ecoNewsPage.createNews();
         });
 
-        await use('');
+        await use();
         
         await test.step("Teardown: delete created news article", async() => {
             console.log("Starting teardown");

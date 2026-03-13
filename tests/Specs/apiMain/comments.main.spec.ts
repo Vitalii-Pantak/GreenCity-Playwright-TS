@@ -1,6 +1,6 @@
 import { STATUS } from "@/enums/enums";
 import { test, expect } from "@/fixtures/fixtureAPIAuth";
-import { COMMENT_DATA } from "@tests/Data/comments.data";
+import { COMMENT_DATA } from "@tests/data/comments.data";
 import { feature, step, severity, epic } from "allure-js-commons";
 import { addCommentSchema, commentSchema } from "@/api/schemas/comments.schema";
 import { validateSchema } from "@/utils/utils";

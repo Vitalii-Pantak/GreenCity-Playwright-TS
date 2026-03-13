@@ -11,5 +11,5 @@ export { HeaderComponent } from "./HeaderComponent";
 export { NewsComponent } from "./NewsComponent";
 export { NewsItemComponent } from "./NewsItemComponent";
 export { NotificationsComponent } from "./NotificationsComponent";
-export { TagItem } from "./TagItem";
+export { TagItem } from "./TagItemComponent";
 

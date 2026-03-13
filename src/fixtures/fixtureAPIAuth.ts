@@ -2,8 +2,8 @@ import { test as base, expect as baseExpect, request as req, APIRequestContext }
 import { NewsClient } from "@/api/clientsMain/NewsClient";
 import { UserClient } from "@/api/clientsMain/UserClient";
 import { CommentsClient } from "@/api/clientsMain/Commentsclient"
-import env from "config/env";
 import { APILogger } from "@/utils/logger";
+import env from "config/env";
 
 type TestOptions = {
     newsClient: NewsClient,

@@ -1,5 +1,5 @@
 import { test, expect } from "@/fixtures/fixtureEcoNewsErrors";
-import { NON_VALID_NEWS_DATA } from "@tests/Data/news.data";
+import { NON_VALID_NEWS_DATA } from "@tests/data/news.data";
 import { feature, step, severity, epic } from "allure-js-commons";
 
 

@@ -17,3 +17,11 @@ export enum STATUS {
     FORBIDDEN_403 = 403,
     NOT_FOUND_404 = 404,
 };
+
+export enum Tags {
+    NEWS = "News",
+    EVENTS = "Events",
+    EDUCATION = "Education",
+    INITIATIVES = "Initiatives",
+    ADS = "Ads"
+};

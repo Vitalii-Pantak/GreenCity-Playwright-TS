@@ -1,5 +1,5 @@
 import { APIRequestContext } from "@playwright/test";
-import { RequestHandler } from "./handler";
+import { RequestHandler } from "./Handler";
 import { APILogger } from "@/utils/logger";
 
 export abstract class BaseApi {

@@ -1,6 +1,6 @@
 import { APIRequestContext, APIResponse } from "@playwright/test";
 import { CreateEcoNewsModel, UpdateEcoNewsModel, IdAndStatus } from "../models/ecoNewsModel";
-import { BASE_IMAGE_1, BASE_IMAGE_2 } from "@tests/Data/images/images.data";
+import { BASE_IMAGE_1, BASE_IMAGE_2 } from "@tests/data/images/images.data";
 import { FindByRelevantParams, FindNewsParams } from "../models/interfaces";
 import { BaseApi } from "./BaseApi";
 import { EcoNewsDto, TagDto, NewsSummaryDto,
