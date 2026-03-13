@@ -2,6 +2,8 @@ import { STATUS } from "@/enums/enums";
 import { test, expect } from "@/fixtures/fixtureAPIMain";
 import { NON_VALID_USER } from "@tests/Data/users.data";
 import { feature, step, severity, epic } from "allure-js-commons";
+import { validateSchema } from "@/utils/utils";
+import { signInSchema } from "@/api/schemas/auth.schema";
 import env from "config/env";
 
 test.describe("Checking Sign in feature", async() => {
@@ -25,6 +27,7 @@ test.describe("Checking Sign in feature", async() => {
             expect(String(userId)).toEqual(env.USER_ID);
             expect(name).toEqual(env.USER_NAME);
             expect(accessToken).toEqual(token.replace("Bearer", '').trim());
+            validateSchema(signInSchema, response);
         });
     });
     

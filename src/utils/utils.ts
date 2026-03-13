@@ -1,4 +1,6 @@
 import { Locator } from "@playwright/test";
+import Ajv from "ajv";
+import addFormats from "ajv-formats";
 
 type QueryPrimitive = string | number | boolean;
 type QueryInput = Record<string, QueryPrimitive | QueryPrimitive[] | undefined>;
@@ -23,7 +25,6 @@ export function getCurrentDate(): string {
     return formattedDate;
 };
 
-
 export async function isWarningAttributeUp(locator: Locator): Promise<boolean> {
     const value = "warning";
     const status = await locator.getAttribute("class");
@@ -33,3 +34,19 @@ export async function isWarningAttributeUp(locator: Locator): Promise<boolean> {
     }
     return false;
 };
+
+const ajv = new Ajv({allErrors: true});
+addFormats(ajv);
+
+export function validateSchema(schema: any, response: object) {
+    const validate = ajv.compile(schema);
+    const valid = validate(response)
+    if (!valid) {
+        throw new Error(
+            `${schema.$id} Validation Failed\n\n` +
+            `${JSON.stringify(validate.errors, null, 2)}\n\n` +
+            `Response:\n\n` +
+            `${JSON.stringify(response, null, 2)}`
+        )
+    }
+}

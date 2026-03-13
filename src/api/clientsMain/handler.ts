@@ -1,8 +1,6 @@
-import test, { APIRequestContext, APIResponse, expect } from "@playwright/test";
+import { APIRequestContext, APIResponse } from "@playwright/test";
 import { ApiMethod } from "../models/types";
-import env from "config/env";
 import { APILogger } from "@/utils/logger";
-
 
 export class RequestHandler {
     private request: APIRequestContext

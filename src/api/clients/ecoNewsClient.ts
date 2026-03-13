@@ -45,7 +45,8 @@ export class EcoNewsClient extends BaseApiClient {
         return response;
     }
 
-    async addNews(token: string, data: CreateEcoNewsModel, imagePath?: string): Promise<APIResponse> {
+    async addNews(token: string, model: CreateEcoNewsModel, imagePath?: string): Promise<APIResponse> {
+        const { expectedStatus, ...data } = model
         const response = await this.post({url: "", options: {headers: { Authorization: token },
             multipart: {
                 image: {
@@ -117,8 +118,9 @@ export class EcoNewsClient extends BaseApiClient {
     }
 
     async findByPage(token: string, data: FindNewsParams) {
+        const { expectedStatus, ...params} = data
         return await this.get({url: "", options: {headers: {Authorization: token},
-            params: paramBuilder(data) }});
+            params: paramBuilder(params) }});
     }
 
     private imagePathHandler(path?: string) {

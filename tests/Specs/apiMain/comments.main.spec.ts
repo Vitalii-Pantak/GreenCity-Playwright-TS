@@ -2,6 +2,8 @@ import { STATUS } from "@/enums/enums";
 import { test, expect } from "@/fixtures/fixtureAPIAuth";
 import { COMMENT_DATA } from "@tests/Data/comments.data";
 import { feature, step, severity, epic } from "allure-js-commons";
+import { addCommentSchema, commentSchema } from "@/api/schemas/comments.schema";
+import { validateSchema } from "@/utils/utils";
 import env from "config/env";
 
 test.beforeEach("Set test metadata", async() => {
@@ -23,12 +25,14 @@ test("Create comment, update, delete", {tag: ["@positive", "@smoke", "@regressio
         expect(comment.author.id).toEqual(Number(env.USER_ID));
         expect(comment.author.name).toEqual(env.USER_NAME);
         expect(comment.text).toEqual(COMMENT_DATA.message);
+        validateSchema(addCommentSchema, comment)
     });
 
     await step("Update comment", async() => {
         await commentsClient.updateComment({id: comment.id,
                                             text: COMMENT_DATA.messageUpdate,
-                                            expectedStatus: STATUS.SUCCESSFUL_200});          
+                                            expectedStatus: STATUS.SUCCESSFUL_200});     
+
     });
 
     await step("Delete comment", async() => {
@@ -41,17 +45,20 @@ test("Like comment ", {tag: ["@positive", "@regression"]}, async ({ commentsClie
 
     const beforeLike = await step("Get comment and comment likes status", async() => {
         const comment = await commentsClient.getComment({id: COMMENT_DATA.commentId, 
-                                                         expectedStatus: STATUS.SUCCESSFUL_200});      
+                                                         expectedStatus: STATUS.SUCCESSFUL_200});  
+        validateSchema(commentSchema, comment);
         return Boolean(comment.likes);      
     });
 
     const afterLike = await step("Like comment and get updated likes status", async() => {
-        return await commentsClient.likeCommentAndGetInstance({id: COMMENT_DATA.commentId,
-                                                               expectedStatus: STATUS.SUCCESSFUL_200});     
+        const comment = await commentsClient.likeCommentAndGetInstance({id: COMMENT_DATA.commentId,
+                                                                        expectedStatus: STATUS.SUCCESSFUL_200});  
+        validateSchema(commentSchema, comment);
+        return Boolean(comment.likes);   
     });
     
     await step("Vefiry like comment status changes", async() => {
-        expect(beforeLike).not.toEqual(Boolean(afterLike.likes));
+        expect(beforeLike).not.toEqual(afterLike);
     });
 });
 

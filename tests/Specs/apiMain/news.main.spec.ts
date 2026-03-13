@@ -2,6 +2,8 @@ import { STATUS } from "@/enums/enums";
 import { test, expect } from "@/fixtures/fixtureAPIAuth";
 import { BASE_NEWS_DATA, NON_VALID_NEWS_DATA, UPDATE_NEWS_DATA } from "@tests/Data/news.data";
 import { feature, step, severity, epic } from "allure-js-commons";
+import { ecoNewsSchema } from "@/api/schemas/news.schema";
+import { validateSchema } from "@/utils/utils";
 
 test.beforeEach("Set test metadata", async() => {
     severity("normal");
@@ -25,6 +27,7 @@ test("Add news, update news, delete news", {tag: ["@positive", "@smoke", "@regre
         expect(news.content).toEqual(BASE_NEWS_DATA.content);
         expect(news.source).toEqual(BASE_NEWS_DATA.source);
         expect(news.tagsEn.sort()).toEqual(BASE_NEWS_DATA.tags);  
+        validateSchema(ecoNewsSchema, news);
     });
     
     const updatedNews = await step("Update News", async() => {
@@ -41,6 +44,7 @@ test("Add news, update news, delete news", {tag: ["@positive", "@smoke", "@regre
         expect(updatedNews.content).toEqual(UPDATE_NEWS_DATA.content);
         expect(updatedNews.source).toEqual(UPDATE_NEWS_DATA.source);
         expect(updatedNews.tagsEn).toEqual(UPDATE_NEWS_DATA.tags);
+        validateSchema(ecoNewsSchema, updatedNews)
     });
 
     await step("Delete news article", async() => {

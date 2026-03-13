@@ -3,6 +3,9 @@ import { test, expect } from "@/fixtures/fixtureAPIAuth";
 import { BASE_NEWS_DATA } from "@tests/Data/news.data";
 import { COMMENT_DATA } from "@tests/Data/comments.data";
 import { feature, step, severity, epic } from "allure-js-commons";
+import { ecoNewsSchema } from "@/api/schemas/news.schema";
+import { addCommentSchema, commentSchema } from "@/api/schemas/comments.schema";
+import { validateSchema } from "@/utils/utils";
 import env from "config/env";
 
 test("Create news, add comment, cleanup",
@@ -27,6 +30,7 @@ test("Create news, add comment, cleanup",
         expect(news.content).toEqual(BASE_NEWS_DATA.content);
         expect(news.source).toEqual(BASE_NEWS_DATA.source);
         expect(news.tagsEn.sort()).toEqual(BASE_NEWS_DATA.tags);  
+        validateSchema(ecoNewsSchema, news)
     });
 
     const comment = await step("Add comment", async() => {
@@ -43,11 +47,13 @@ test("Create news, add comment, cleanup",
 
         const countComments = await commentsClient.getCommentsCount({id: news.id, expectedStatus: STATUS.SUCCESSFUL_200});
         expect(countComments).toEqual(1);
+        validateSchema(addCommentSchema, comment)
     });
 
     await step("Delete Comment and verify it deleted", async() => {
         await commentsClient.deleteComment({id: comment.id, expectedStatus: STATUS.SUCCESSFUL_200});
         const deletedComment = await commentsClient.getComment({id: comment.id, expectedStatus: STATUS.SUCCESSFUL_200});
+        validateSchema(commentSchema, deletedComment)
         expect(deletedComment.status).toEqual("DELETED");
 
         const countComments = await commentsClient.getCommentsCount({id: news.id, expectedStatus: STATUS.SUCCESSFUL_200});
